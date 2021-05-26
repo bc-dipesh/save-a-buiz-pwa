@@ -1,20 +1,14 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  ProgressBar,
+  Button, Card, Col, Container, ProgressBar, Row,
 } from 'react-bootstrap';
-
-import { Link } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
+import { Link } from 'react-router-dom';
 import { listFundraisers } from '../actions/fundraiserActions';
-import { calculateProgress } from '../utils/common-functions';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { calculateProgress } from '../utils/commonFunctions';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -35,57 +29,53 @@ const HomeScreen = () => {
           ) : error ? (
             <Message variant="danger">{error}</Message>
           ) : (
-					  fundraisers.map((f) => {
-					    const {
-					      _id,
-					      image,
-					      title,
-					      shortDescription,
-					      collected,
-					      goal,
-					    } = f;
-					    return (
-  <Col key={_id} className="py-3" xs={12} sm={3}>
-    <Card>
-      <Link to={`fundraiser/${_id}`}>
-        <Card.Img
-          variant="top"
-          src={image}
-        />
-      </Link>
-      <Card.Body>
-        <Card.Title>
-          <h5>{title}</h5>
-        </Card.Title>
-        <Card.Text>
-          {shortDescription}
-        </Card.Text>
-      </Card.Body>
-      <Card.Footer>
-        <Row className="py-2">
-          <ProgressBar
-            now={calculateProgress(
-													  collected,
-													  goal,
-            )}
-          />
-        </Row>
-        <Row className="py-2">
-          <small>
-            NRS.
-            {collected}
-            {' '}
-            raised of
-            NRS.
-            {goal}
-            .
-          </small>
-        </Row>
-      </Card.Footer>
-    </Card>
-  </Col>
-					    );
-					  })
+            fundraisers.map((f) => {
+              const {
+                _id,
+                image,
+                title,
+                shortDescription,
+                collected,
+                goal,
+              } = f;
+              return (
+                <Col key={_id} className="py-3" xs={12} sm={3}>
+                  <Card>
+                    <Link to={`fundraiser/${_id}`}>
+                      <Card.Img
+                        variant="top"
+                        src={image}
+                      />
+                    </Link>
+                    <Card.Body>
+                      <Card.Title>
+                        <h5>{title}</h5>
+                      </Card.Title>
+                      <Card.Text>
+                        {shortDescription}
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                      <Row className="py-2">
+                        <ProgressBar
+                          now={calculateProgress(collected, goal)}
+                        />
+                      </Row>
+                      <Row className="py-2">
+                        <small>
+                          NRS.
+                          {collected}
+                          {' '}
+                          raised of NRS.
+                          {goal}
+                          .
+                        </small>
+                      </Row>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              );
+            })
           )}
         </Row>
       </Container>
@@ -112,8 +102,7 @@ const HomeScreen = () => {
                 <h4 className="py-3">
                   <i className="fas fa-wrench" />
                   {' '}
-                  Simple
-                  setup
+                  Simple setup
                 </h4>
                 <p>
                   You can personalize and share your SaveABuiz
@@ -161,8 +150,8 @@ const HomeScreen = () => {
                 <h4 className="py-3">
                   <i className="fas fa-headset" />
                   {' '}
-                  24/7
-                  expert advice
+                  24/7 expert
+                  advice
                 </h4>
                 <p>
                   Our best-in-class Customer Happiness agents
