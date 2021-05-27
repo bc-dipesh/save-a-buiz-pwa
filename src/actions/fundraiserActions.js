@@ -9,7 +9,7 @@ const listFundraisers = () => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_LIST_REQUEST });
 
-    const { data } = await axios.get('/api/v1/fundraisers');
+    const { data: { data } } = await axios.get('/api/v1/fundraisers');
     dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -25,7 +25,7 @@ const listFundraiserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/fundraisers/${id}`);
+    const { data: { data } } = await axios.get(`/api/v1/fundraisers/${id}`);
     dispatch({ type: FUNDRAISER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
