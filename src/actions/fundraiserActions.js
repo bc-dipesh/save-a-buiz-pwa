@@ -14,8 +14,8 @@ const listFundraisers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FUNDRAISER_LIST_FAIL,
-      payload: error.response && error.response.data.message
-        ? error.response.data.message
+      payload: error.response && error.response.data.data
+        ? error.response.data.data
         : error.response,
     });
   }
@@ -30,8 +30,8 @@ const listFundraiserDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FUNDRAISER_DETAILS_FAIL,
-      payload: error.response && error.response.data.message
-        ? error.response.data.message
+      payload: error.response && error.response.data.data
+        ? error.response.data.data
         : error.response,
     });
   }

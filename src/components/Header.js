@@ -1,24 +1,23 @@
 import React from 'react';
 import {
-  Container,
-  Navbar,
-  NavDropdown,
-  Nav,
+  Button, Container,
   Form,
-  FormControl,
-  Button,
+  FormControl, Nav, Navbar,
+  NavDropdown,
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const Header = () => (
   <header>
     <Navbar bg="light" variant="light" expand="lg">
       <Container>
-        <Navbar.Brand
-          href="#"
-          style={{ textTransform: 'capitalize' }}
-        >
-          SaveABuiz
-        </Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand
+            style={{ textTransform: 'capitalize' }}
+          >
+            SaveABuiz
+          </Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="mr-auto my-2 my-lg-0" navbarScroll>
@@ -44,7 +43,7 @@ const Header = () => (
                 What is crowdfunding?
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#">Sign in</Nav.Link>
+            <LinkContainer to="/login"><Nav.Link>Sign in</Nav.Link></LinkContainer>
           </Nav>
           <Form className="d-flex ms-auto">
             <FormControl
