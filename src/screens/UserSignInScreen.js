@@ -10,7 +10,7 @@ import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
-const UserLoginScreen = ({ location, history }) => {
+const UserSignInScreen = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -66,7 +66,7 @@ const UserLoginScreen = ({ location, history }) => {
   );
 };
 
-UserLoginScreen.propTypes = {
+UserSignInScreen.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string,
   }),
@@ -75,4 +75,4 @@ UserLoginScreen.propTypes = {
   }),
 };
 
-export default UserLoginScreen;
+export default UserSignInScreen;

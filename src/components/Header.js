@@ -36,9 +36,11 @@ const Header = () => {
                 title="Discover"
                 id="navbarScrollingDropdown"
               >
-                <NavDropdown.Item href="#action3">
-                  Fundraisers
-                </NavDropdown.Item>
+                <LinkContainer to="/fundraisers">
+                  <NavDropdown.Item>
+                    Fundraisers
+                  </NavDropdown.Item>
+                </LinkContainer>
                 <NavDropdown.Item href="#action4">
                   Success Stories
                 </NavDropdown.Item>
@@ -57,7 +59,7 @@ const Header = () => {
               {userInfo
                 ? (
                   <NavDropdown title={userInfo.name} id={userInfo.email}>
-                    <LinkContainer to="users/profile">
+                    <LinkContainer to="/users/profile">
                       <NavDropdown.Item>
                         Profile
                       </NavDropdown.Item>
@@ -67,7 +69,7 @@ const Header = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                 )
-                : <LinkContainer to="/login"><Nav.Link>Sign in</Nav.Link></LinkContainer>}
+                : <LinkContainer to="/sign-in"><Nav.Link>Sign in</Nav.Link></LinkContainer>}
             </Nav>
             <Form className="d-flex ms-auto">
               <FormControl

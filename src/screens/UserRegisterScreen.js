@@ -67,7 +67,7 @@ const UserRegisterScreen = ({ location, history }) => {
           <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </Form.Group>
 
-        <Form.Group controlId="password" className="py-3">
+        <Form.Group controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </Form.Group>
@@ -84,7 +84,7 @@ const UserRegisterScreen = ({ location, history }) => {
         <Col>
           Have an account?
           {' '}
-          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login</Link>
+          <Link to={redirect ? `/sign-in?redirect=${redirect}` : '/sign-in'}>Sign In</Link>
         </Col>
       </Row>
     </FormContainer>

@@ -5,11 +5,13 @@ import {
   FUNDRAISER_LIST_SUCCESS,
 } from '../constants/fundraiserConstants';
 
+const BASE_URL = 'http://127.0.0.1:5000/api/v1';
+
 const listFundraisers = () => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_LIST_REQUEST });
 
-    const { data: { data } } = await axios.get('/api/v1/fundraisers');
+    const { data: { data } } = await axios.get(`${BASE_URL}/fundraisers`);
     dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -25,7 +27,7 @@ const listFundraiserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_DETAILS_REQUEST });
 
-    const { data: { data } } = await axios.get(`/api/v1/fundraisers/${id}`);
+    const { data: { data } } = await axios.get(`${BASE_URL}/api/v1/fundraisers/${id}`);
     dispatch({ type: FUNDRAISER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

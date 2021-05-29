@@ -41,7 +41,7 @@ const HomeScreen = () => {
               return (
                 <Col key={_id} className="py-3" sm={12} md={4} lg={3}>
                   <Card>
-                    <Link to={`fundraiser/${_id}`}>
+                    <Link to={`fundraisers/${_id}`}>
                       <Card.Img
                         variant="top"
                         src={image}
