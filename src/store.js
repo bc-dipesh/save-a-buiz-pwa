@@ -4,11 +4,12 @@ import thunk from 'redux-thunk';
 import {
   fundraiserDetailsReducer, fundraiserListReducer,
 } from './reducers/fundraiserReducers';
-import { userLoginReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
   fundraiserList: fundraiserListReducer,
   fundraiserDetails: fundraiserDetailsReducer,
+  userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
 });
 

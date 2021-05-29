@@ -5,21 +5,24 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { login } from '../actions/userActions';
+import { register } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
-const LoginScreen = ({ location, history }) => {
+const UserRegisterScreen = ({ location, history }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
@@ -27,14 +30,26 @@ const LoginScreen = ({ location, history }) => {
     }
   }, [history, userInfo, redirect]);
 
+  const checkPassword = () => {
+    setMessage('Passwords do not match');
+    return password === confirmPassword;
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    if (checkPassword()) {
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>Register</h1>
+      {message && (
+      <Message variant="danger">
+        {String(message)}
+      </Message>
+      )}
       {error && (
       <Message variant="danger">
         {String(error)}
@@ -42,7 +57,12 @@ const LoginScreen = ({ location, history }) => {
       )}
       {loading && <Loader />}
       <Form onSubmit={submitHandler} className="py-3">
-        <Form.Group controlId="email">
+        <Form.Group controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control type="text" placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group controlId="email" className="py-3">
           <Form.Label>Email Address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </Form.Group>
@@ -52,21 +72,26 @@ const LoginScreen = ({ location, history }) => {
           <Form.Control type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </Form.Group>
 
-        <Button type="submit" variant="outline-primary">Sign In</Button>
+        <Form.Group controlId="confirmPassword" className="py-3">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+        </Form.Group>
+
+        <Button type="submit" variant="outline-primary">Register</Button>
       </Form>
 
       <Row className="py-3">
         <Col>
-          New User?
+          Have an account?
           {' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
+          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login</Link>
         </Col>
       </Row>
     </FormContainer>
   );
 };
 
-LoginScreen.propTypes = {
+UserRegisterScreen.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string,
   }),
@@ -75,4 +100,4 @@ LoginScreen.propTypes = {
   }),
 };
 
-export default LoginScreen;
+export default UserRegisterScreen;

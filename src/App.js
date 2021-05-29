@@ -4,7 +4,8 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import FundraiserScreen from './screens/FundraiserScreen';
 import HomeScreen from './screens/HomeScreen';
-import LoginScreen from './screens/LoginScreen';
+import UserLoginScreen from './screens/UserLoginScreen';
+import UserRegisterScreen from './screens/UserRegisterScreen';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
         <main className="py-3">
           <Route path="/" component={HomeScreen} exact />
           <Route path="/fundraiser/:id" component={FundraiserScreen} />
-          <Route path="/login" component={LoginScreen} />
+          <Route path="/login" component={UserLoginScreen} />
+          <Route path="/register" component={UserRegisterScreen} />
         </main>
         <Footer />
       </Router>
