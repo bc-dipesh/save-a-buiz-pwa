@@ -9,7 +9,7 @@ import {
   USER_REGISTER_SUCCESS,
 } from '../constants/userConstants';
 
-const BASE_URL = 'http://127.0.0.1:5000/api/v1';
+const BASE_URL = 'http://127.0.0.1:5000/api/v1/users';
 
 const axiosConfig = {
   headers: {
@@ -23,7 +23,7 @@ const register = (name, email, password) => async (dispatch) => {
     const {
       data: { data },
     } = await axios.post(
-      `${BASE_URL}/users/register`,
+      `${BASE_URL}/register`,
       { name, email, password },
       axiosConfig,
     );
@@ -50,7 +50,7 @@ const login = (email, password) => async (dispatch) => {
     const {
       data: { data },
     } = await axios.post(
-      `${BASE_URL}/users/login`,
+      `${BASE_URL}/login`,
       { email, password },
       axiosConfig,
     );
