@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Button, Container,
   Form,
-  FormControl, Nav, Navbar,
+  FormControl,
+  Image, Nav, Navbar,
   NavDropdown,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +27,7 @@ const Header = () => {
             <Navbar.Brand
               style={{ textTransform: 'capitalize' }}
             >
-              SaveABuiz
+              <Image src="/logo.png" alt="logo" />
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="navbarScroll" />

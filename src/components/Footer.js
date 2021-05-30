@@ -1,14 +1,14 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import {
+  Col, Container, Image, Row,
+} from 'react-bootstrap';
 
 const Footer = () => (
   <footer>
     <Container className="py-5">
       <Row>
         <Col xs={12} sm={6}>
-          <h4 style={{ textTransform: 'capitalize' }}>
-            SaveABuiz
-          </h4>
+          <Image src="/logo.png" alt="logo" />
         </Col>
         <Col xs={12} sm={3}>
           <h4>

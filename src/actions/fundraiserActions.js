@@ -27,7 +27,7 @@ const listFundraiserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_DETAILS_REQUEST });
 
-    const { data: { data } } = await axios.get(`${BASE_URL}/api/v1/fundraisers/${id}`);
+    const { data: { data } } = await axios.get(`${BASE_URL}/fundraisers/${id}`);
     dispatch({ type: FUNDRAISER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
