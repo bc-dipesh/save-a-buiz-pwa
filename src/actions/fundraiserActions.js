@@ -5,7 +5,7 @@ import {
   FUNDRAISER_LIST_SUCCESS,
 } from '../constants/fundraiserConstants';
 
-const BASE_URL = 'http://127.0.0.1:5000/api/v1/fundraisers';
+const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
 
 const listFundraisers = () => async (dispatch) => {
   try {

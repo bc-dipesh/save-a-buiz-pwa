@@ -8,7 +8,7 @@ const Footer = () => (
     <Container className="py-5">
       <Row>
         <Col xs={12} sm={6}>
-          <Image src="/logo.png" alt="logo" />
+          <Image src="/images/logo.png" alt="logo" />
         </Col>
         <Col xs={12} sm={3}>
           <h4>

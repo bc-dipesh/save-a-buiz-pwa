@@ -27,7 +27,7 @@ const Header = () => {
             <Navbar.Brand
               style={{ textTransform: 'capitalize' }}
             >
-              <Image src="/logo.png" alt="logo" />
+              <Image src="/images/logo.png" alt="logo" />
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="navbarScroll" />
