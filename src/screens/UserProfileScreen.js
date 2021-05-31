@@ -91,8 +91,8 @@ const UserProfileScreen = ({ history }) => {
             <Button className="mt-5" type="submit" variant="outline-primary">Update Profile</Button>
           </Form>
         </Col>
-        <Col nd={9}>
-          <h2>Orders</h2>
+        <Col md={9}>
+          <h2>Donations</h2>
         </Col>
       </Row>
     </Container>

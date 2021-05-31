@@ -13,8 +13,7 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants';
 
-// const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
-const BASE_URL = 'http://127.0.0.1:5000/api/v1/users';
+const BASE_URL = 'https://save-a-buiz-api.bcdipesh.repl.co/api/v1/users';
 
 const axiosConfig = {
   headers: {
