@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
 
-const Message = ({ variant, children }) => (
-  <Alert variant={variant}>
-    {children}
-  </Alert>
-);
+const Message = ({ variant, children }) => {
+  const [show, setShow] = useState(true);
+
+  if (show) {
+    return (
+      <Alert variant={variant} onClick={() => setShow(!show)}>
+        {children}
+      </Alert>
+    );
+  }
+  return <> </>;
+};
 
 Message.defaultProps = {
   variant: 'info',

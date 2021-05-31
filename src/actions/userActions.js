@@ -4,12 +4,17 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_REGISTER_FAIL,
+  USER_PROFILE_FAIL,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS, USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants';
 
-const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+// const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+const BASE_URL = 'http://127.0.0.1:5000/api/v1/users';
 
 const axiosConfig = {
   headers: {
@@ -71,9 +76,82 @@ const login = (email, password) => async (dispatch) => {
   }
 };
 
+const getUserProfile = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_PROFILE_REQUEST,
+    });
+
+    const { userLogin: { userInfo } } = getState();
+
+    const {
+      data: { data },
+    } = await axios.get(
+      `${BASE_URL}/${id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      },
+    );
+
+    dispatch({
+      type: USER_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_PROFILE_FAIL,
+      payload:
+      error.response && error.response.data.data
+        ? error.response.data.data
+        : error.response,
+    });
+  }
+};
+
+const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_PROFILE_REQUEST,
+    });
+
+    const { userLogin: { userInfo } } = getState();
+
+    const {
+      data: { data },
+    } = await axios.put(
+      `${BASE_URL}/profile`,
+      user,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      },
+    );
+
+    dispatch({
+      type: USER_UPDATE_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_PROFILE_FAIL,
+      payload:
+      error.response && error.response.data.data
+        ? error.response.data.data
+        : error.response,
+    });
+  }
+};
+
 const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
 };
 
-export { register, login, logout };
+export {
+  register, login, logout, getUserProfile, updateUserProfile,
+};

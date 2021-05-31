@@ -7,6 +7,7 @@ import FundraiserScreen from './screens/FundraiserScreen';
 import HomeScreen from './screens/HomeScreen';
 import UserRegisterScreen from './screens/UserRegisterScreen';
 import UserSignInScreen from './screens/UserSignInScreen';
+import UserProfileScreen from './screens/UserProfileScreen';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/fundraisers" component={FundraiserListScreen} exact />
           <Route path="/fundraisers/:id" component={FundraiserScreen} />
           <Route path="/sign-in" component={UserSignInScreen} />
+          <Route path="/users/profile" component={UserProfileScreen} />
           <Route path="/register" component={UserRegisterScreen} />
         </main>
         <Footer />

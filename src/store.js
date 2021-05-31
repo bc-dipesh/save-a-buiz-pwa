@@ -4,13 +4,17 @@ import thunk from 'redux-thunk';
 import {
   fundraiserDetailsReducer, fundraiserListReducer,
 } from './reducers/fundraiserReducers';
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import {
+  userLoginReducer, userProfileReducer, userRegisterReducer, userUpdateProfileReducer,
+} from './reducers/userReducers';
 
 const reducer = combineReducers({
   fundraiserList: fundraiserListReducer,
   fundraiserDetails: fundraiserDetailsReducer,
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
+  userProfile: userProfileReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 });
 
 const userInfo = localStorage.getItem('userInfo');
