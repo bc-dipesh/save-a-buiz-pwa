@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { listFundraisers } from '../actions/fundraiserActions';
-import Loader from '../components/Loader';
+import SkeletonCard from '../skeletons/SkeletonCard';
 import Message from '../components/Message';
 import { calculateProgress } from '../utils/commonFunctions';
 
@@ -34,7 +34,11 @@ const HomeScreen = () => {
               restaurant, bar, coffee shop, or boutique.
             </p>
             {loading ? (
-              <Loader />
+              [1, 2, 3].map((item) => (
+                <Col key={item} className="py-3" sm={12} md={4} lg={3}>
+                  <SkeletonCard />
+                </Col>
+              ))
             ) : error ? (
               <Message variant="danger">{error}</Message>
             ) : (

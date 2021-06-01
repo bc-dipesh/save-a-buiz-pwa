@@ -9,6 +9,7 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
+import { toast } from 'react-toastify';
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost'
@@ -38,7 +39,11 @@ function registerValidSW(swUrl, config) {
                 'New content is available and will be used when all '
                   + 'tabs for this page are closed. See https://cra.link/PWA.',
               );
-
+              toast.info('Update available! To update, close all windows and reopen.', {
+                toastId: 'appUpdateAvailable',
+                onClick: () => window.close(),
+                autoClose: false,
+              });
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);

@@ -6,9 +6,9 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { listFundraisers } from '../actions/fundraiserActions';
-import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { calculateProgress } from '../utils/commonFunctions';
+import SkeletonCard from '../skeletons/SkeletonCard';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,11 @@ const HomeScreen = () => {
         <Row className="justify-content-center">
           <h2 className="py-3">Top fundraisers</h2>
           {loading ? (
-            <Loader />
+            [1, 2, 3].map((item) => (
+              <Col key={item} className="py-3" sm={12} md={4} lg={3}>
+                <SkeletonCard />
+              </Col>
+            ))
           ) : error ? (
             <Message variant="danger">{error}</Message>
           ) : (
