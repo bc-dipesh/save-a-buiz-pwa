@@ -39,6 +39,8 @@ const FundraiserScreen = ({ match }) => {
           <Row>
             <Col md={8}>
               <Skeleton type="thumbnail" />
+              <Skeleton type="thumbnail" />
+              <Skeleton type="thumbnail" />
             </Col>
             <Col md={4}>
               <Card>

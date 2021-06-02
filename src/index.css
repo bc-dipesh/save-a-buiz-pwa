@@ -9,6 +9,11 @@
 	background: #a6fff8;
 }
 
+.logo {
+	width: 250px;
+	height: 100px;
+}
+
 footer a {
 	text-decoration: none;
 }

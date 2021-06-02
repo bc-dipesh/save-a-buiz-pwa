@@ -6,21 +6,21 @@
 	"start_url": ".",
 	"name": "SaveABuiz",
 	"short_name": "SaveABuiz",
-	"description": "Platform to create COVID relief fundraiser to save a business",
+	"description": "COVID relief fundraiser platform for all businesses",
 	"icons": [
 		{
-			"src": "/images/android-chrome-192x192.png",
+			"src": "/images/icons/android-chrome-192x192.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/android-chrome-512x512.png",
+			"src": "/images/icons/android-chrome-512x512.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/maskable_icon.png",
-			"sizes": "512x512",
+			"src": "/images/icons/maskable_icon.png",
+			"sizes": "1024x1024",
 			"type": "image/png",
 			"purpose": "any maskable"
 		}
