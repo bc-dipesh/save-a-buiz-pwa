@@ -57,12 +57,12 @@ const UserProfileScreen = ({ history }) => {
           <h2>User Profile</h2>
           {message && (
           <Message variant="danger">
-            {String(message)}
+            {message}
           </Message>
           )}
           {error && (
           <Message variant="danger">
-            {String(error)}
+            {error}
           </Message>
           )}
           {success && (
@@ -82,11 +82,11 @@ const UserProfileScreen = ({ history }) => {
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control autocomplete="off" type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Form.Control autoComplete="off" type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
             <Form.Group controlId="confirmPassword" className="py-3">
               <Form.Label>Confirm Password</Form.Label>
-              <Form.Control autocomplete="off" type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <Form.Control autoComplete="off" type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </Form.Group>
             <Button className="mt-5" type="submit" variant="outline-primary">Update Profile</Button>
           </Form>

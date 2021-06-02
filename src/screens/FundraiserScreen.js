@@ -10,9 +10,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { listFundraiserDetails } from '../actions/fundraiserActions';
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { calculateProgress, numFormatter } from '../utils/commonFunctions';
+import Skeleton from '../skeletons/SkeletonElement';
 
 const FundraiserScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,43 @@ const FundraiserScreen = ({ match }) => {
         <Link className="btn btn-outline-primary my-3" to="/">
           Go Back
         </Link>
-        {loading && <Loader />}
+        {loading && (
+        <>
+          <Row>
+            <Col md={8}>
+              <Skeleton type="thumbnail" />
+            </Col>
+            <Col md={4}>
+              <Card>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>
+                        <Skeleton type="title" />
+                        {' '}
+                        <small className="text-muted">
+                          <Skeleton type="text" />
+                        </small>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Skeleton type="text" />
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Skeleton type="text" />
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Skeleton type="text" />
+                    </Row>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
+            </Col>
+          </Row>
+        </>
+        )}
         {error && <Message variant="danger">{String(error)}</Message>}
         {loading || error
             || (

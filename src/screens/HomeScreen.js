@@ -83,6 +83,7 @@ const HomeScreen = () => {
           )}
         </Row>
       </Container>
+
       <Container style={{ backgroundColor: '#fbf8f6' }} fluid>
         <Container>
           <Row className="my-5 py-5">
