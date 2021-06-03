@@ -36,9 +36,6 @@ const Footer = () => (
               <a href="https://facebook.com">Help Center</a>
             </li>
             <li>
-              <a href="https://facebook.com">SaveABuiz Stories</a>
-            </li>
-            <li>
               <Link to="/about">About</Link>
             </li>
           </ul>
@@ -57,7 +54,7 @@ const Footer = () => (
               <a href="https://facebook.com">Privacy</a>
             </Col>
             <Col xs={3} sm={2}>
-              <a href="https://facebook.com">Legal</a>
+              <Link to="/legal">Legal</Link>
             </Col>
           </Row>
         </Col>

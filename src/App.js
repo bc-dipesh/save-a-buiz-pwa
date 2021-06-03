@@ -13,6 +13,7 @@ import UserProfileScreen from './screens/UserProfileScreen';
 import AboutScreen from './screens/AboutScreen';
 import HowItWorksScreen from './screens/HowItWorksScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfundingScreen';
+import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
     <>
       <Router>
         <Header />
-        <main className="py-3">
+        <main>
           <Route path="/" component={HomeScreen} exact />
           <Route path="/fundraisers" component={FundraiserListScreen} exact />
           <Route path="/fundraisers/:id" component={FundraiserScreen} />
@@ -69,6 +70,7 @@ function App() {
           <Route path="/about" component={AboutScreen} />
           <Route path="/how-it-works" component={HowItWorksScreen} />
           <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} />
+          <Route path="/legal" component={LegalContactInfoScreen} />
         </main>
         <Footer />
       </Router>

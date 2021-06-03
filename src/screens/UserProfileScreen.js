@@ -51,7 +51,7 @@ const UserProfileScreen = ({ history }) => {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="mt-5">
       <Row>
         <Col md={3}>
           <h2>User Profile</h2>

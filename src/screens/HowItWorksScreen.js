@@ -5,9 +5,9 @@ import {
 
 const HowItWorksScreen = () => (
   <>
-    <Container>
+    <Container className="mt-5">
       <Row>
-        <h1 className="py-3">How SaveABuizWorks</h1>
+        <h1 className="pb-3">How SaveABuizWorks</h1>
         <p>
           SaveABuiz is the best place to fundraise, whether you are an individual,
           group, or organization.

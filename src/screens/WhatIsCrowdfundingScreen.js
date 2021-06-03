@@ -5,10 +5,10 @@ import {
 
 const WhatIsCrowdfundingScreen = () => (
   <>
-    <Container>
+    <Container className="mt-5">
       <Row>
         <Col xs={12} sm={7}>
-          <h1 className="py-3">What Is Crowdfunding? The Clear and Simple Answer</h1>
+          <h1 className="pb-3">What Is Crowdfunding? The Clear and Simple Answer</h1>
           <p>
             Crowdfunding harness the power of social networks and the Internet
             to give people the means to raise funds, help others overcome hardship,

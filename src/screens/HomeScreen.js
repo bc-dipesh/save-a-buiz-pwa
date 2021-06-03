@@ -21,9 +21,9 @@ const HomeScreen = () => {
 
   return (
     <>
-      <Container className="py-5">
+      <Container className="mt-5">
         <Row className="justify-content-center">
-          <h2 className="py-3">Top fundraisers</h2>
+          <h2 className="pb-3">Top fundraisers</h2>
           {loading ? (
             [1, 2, 3].map((item) => (
               <Col key={item} className="py-3" sm={12} md={4} lg={3}>

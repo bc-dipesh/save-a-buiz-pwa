@@ -26,9 +26,9 @@ const HomeScreen = () => {
   return (
     <>
       <Container style={{ backgroundColor: '#fbf8f6' }} fluid>
-        <Container className="py-5">
+        <Container>
           <Row className="justify-content-center">
-            <h2 className="py-3">Browse fundraisers</h2>
+            <h2 className="pt-5 pb-3">Browse fundraisers</h2>
             <p>
               Starting a fundraiser for your favorite local
               restaurant, bar, coffee shop, or boutique.
