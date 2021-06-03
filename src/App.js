@@ -11,6 +11,7 @@ import UserRegisterScreen from './screens/UserRegisterScreen';
 import UserSignInScreen from './screens/UserSignInScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import AboutScreen from './screens/AboutScreen';
+import HowItWorksScreen from './screens/HowItWorksScreen';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
           <Route path="/users/profile" component={UserProfileScreen} />
           <Route path="/register" component={UserRegisterScreen} />
           <Route path="/about" component={AboutScreen} />
+          <Route path="/how-it-works" component={HowItWorksScreen} />
         </main>
         <Footer />
       </Router>

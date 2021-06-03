@@ -50,9 +50,11 @@ const Header = () => {
                 title="How it works"
                 id="navbarScrollingDropdown"
               >
-                <NavDropdown.Item href="#action3">
-                  How SaveABuiz works
-                </NavDropdown.Item>
+                <LinkContainer to="/how-it-works">
+                  <NavDropdown.Item>
+                    How SaveABuiz works
+                  </NavDropdown.Item>
+                </LinkContainer>
                 <NavDropdown.Item href="#action4">
                   What is crowdfunding?
                 </NavDropdown.Item>

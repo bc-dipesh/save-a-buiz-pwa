@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 
 const AboutScreen = () => (
-  <Container className="py-5">
+  <Container className="py-3">
     <Row>
       <h1 className="py-3">About SaveABuiz</h1>
       <p>
