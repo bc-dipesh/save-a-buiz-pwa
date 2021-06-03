@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Col, Container, Image, Row,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer>
@@ -41,7 +42,7 @@ const Footer = () => (
               <a href="https://facebook.com">SaveABuiz Stories</a>
             </li>
             <li>
-              <a href="https://facebook.com">About</a>
+              <Link to="/about">About</Link>
             </li>
           </ul>
         </Col>
