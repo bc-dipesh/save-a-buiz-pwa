@@ -17,9 +17,6 @@ const Footer = () => (
           </h4>
           <ul className="list-unstyled">
             <li>
-              <Link to="/how-it-works">How SaveABuiz works</Link>
-            </li>
-            <li>
               <a href="https://facebook.com">Common questions</a>
             </li>
             <li>
