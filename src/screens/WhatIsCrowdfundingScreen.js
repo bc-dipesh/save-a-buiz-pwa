@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 
 const WhatIsCrowdfundingScreen = () => (
-  <Container className="py-5" fluid>
+  <>
     <Container>
       <Row>
         <Col xs={12} sm={7}>
@@ -182,7 +182,7 @@ const WhatIsCrowdfundingScreen = () => (
         </Row>
       </Container>
     </Container>
-  </Container>
+  </>
 );
 
 export default WhatIsCrowdfundingScreen;

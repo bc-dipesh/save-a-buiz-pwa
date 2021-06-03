@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 
 const HowItWorksScreen = () => (
-  <Container className="py-3" fluid>
+  <>
     <Container>
       <Row>
         <h1 className="py-3">How SaveABuizWorks</h1>
@@ -64,7 +64,7 @@ const HowItWorksScreen = () => (
         </Row>
       </Container>
     </Container>
-  </Container>
+  </>
 );
 
 export default HowItWorksScreen;

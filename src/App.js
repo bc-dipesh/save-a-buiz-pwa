@@ -12,7 +12,7 @@ import UserSignInScreen from './screens/UserSignInScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import AboutScreen from './screens/AboutScreen';
 import HowItWorksScreen from './screens/HowItWorksScreen';
-import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding';
+import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfundingScreen';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 function App() {
