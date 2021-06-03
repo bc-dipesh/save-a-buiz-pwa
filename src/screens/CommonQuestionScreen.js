@@ -7,7 +7,7 @@ const CommonQuestionScreen = () => (
   <>
     <Container className="my-5">
       <Row>
-        <h1 className="pb-3">Answers to Commond Fundraising Questions</h1>
+        <h1 className="pb-3">Answers to Common Fundraising Questions</h1>
         <p>
           Learn more about fundraising, donating, or receiving
           dontaions.
