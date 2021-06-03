@@ -12,6 +12,7 @@ import UserSignInScreen from './screens/UserSignInScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import AboutScreen from './screens/AboutScreen';
 import HowItWorksScreen from './screens/HowItWorksScreen';
+import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
           <Route path="/register" component={UserRegisterScreen} />
           <Route path="/about" component={AboutScreen} />
           <Route path="/how-it-works" component={HowItWorksScreen} />
+          <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} />
         </main>
         <Footer />
       </Router>

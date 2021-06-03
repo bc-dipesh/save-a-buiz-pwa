@@ -25,6 +25,21 @@
 	justify-content: center;
 }
 
+.common-questions.card {
+	border: none;
+	background-color: transparent;
+}
+
+.common-questions.card > .card-header {
+	background-color: transparent;
+	padding: 1rem;
+	cursor: pointer;
+}
+
+strong {
+	font-weight: bold;
+}
+
 footer a {
 	text-decoration: none;
 }

@@ -55,9 +55,11 @@ const Header = () => {
                     How SaveABuiz works
                   </NavDropdown.Item>
                 </LinkContainer>
-                <NavDropdown.Item href="#action4">
-                  What is crowdfunding?
-                </NavDropdown.Item>
+                <LinkContainer to="/what-is-crowdfunding">
+                  <NavDropdown.Item>
+                    What is crowdfunding?
+                  </NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
               {userInfo
                 ? (

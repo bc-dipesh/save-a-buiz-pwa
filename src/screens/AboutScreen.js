@@ -37,10 +37,10 @@ const AboutScreen = () => (
       </p>
     </Row>
     <Row>
-      <Col>
-        <Image src="/images/mapOfNepal.png" alt="Map of nepal showing supported provinces" />
+      <Col xs={12} sm={8}>
+        <Image src="/images/mapOfNepal.png" alt="Map of nepal showing supported provinces" fluid />
       </Col>
-      <Col>
+      <Col xs={12} sm={4}>
         By
         {' '}
         <a
