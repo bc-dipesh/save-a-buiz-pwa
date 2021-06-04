@@ -16,6 +16,7 @@ import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfundingScreen';
 import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import CommonQuestionScreen from './screens/CommonQuestionScreen';
+import SupportedProvinceScreen from './screens/SupportedProvinceScreen';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -73,6 +74,7 @@ function App() {
           <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} />
           <Route path="/legal" component={LegalContactInfoScreen} />
           <Route path="/common-questions" component={CommonQuestionScreen} />
+          <Route path="/supported-provinces" component={SupportedProvinceScreen} />
         </main>
         <Footer />
       </Router>

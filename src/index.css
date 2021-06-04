@@ -36,6 +36,31 @@
 	cursor: pointer;
 }
 
+.supported-provinces {
+	list-style: none;
+	margin-top: 24px;
+}
+
+.supported-provinces > li {
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+}
+
+.square {
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+}
+
+.supported {
+	background-color: #6aaa4e;
+}
+
+.not-supported {
+	background-color: #fefeeb;
+}
+
 strong {
 	font-weight: bold;
 }

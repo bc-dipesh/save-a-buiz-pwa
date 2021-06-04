@@ -23,7 +23,7 @@ const Footer = () => (
               <a href="https://facebook.com">Success stories</a>
             </li>
             <li>
-              <a href="https://facebook.com">Supported cities</a>
+              <Link to="/supported-provinces">Supported provinces</Link>
             </li>
           </ul>
         </Col>

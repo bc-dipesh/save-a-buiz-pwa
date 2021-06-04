@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Col, Image,
+  Container, Row,
 } from 'react-bootstrap';
 
 const AboutScreen = () => (
@@ -28,7 +28,7 @@ const AboutScreen = () => (
       <p>
         Thousands of small business affected by the coronavirus are now
         suffering severe economic hardship because of the outbreak.
-        Starting afundraiser for your favorite local restaurant, bar,
+        Starting a fundraiser for your favorite local restaurant, bar,
         coffee shop, or boutique is one way to help business owners as well
         as service industry workers. SaveABuiz is a platform specially
         made for helping these businesses. Even though we cannot leave home,
@@ -36,38 +36,6 @@ const AboutScreen = () => (
         them and donate them.
       </p>
     </Row>
-    <Row>
-      <Col xs={12} sm={8}>
-        <Image src="/images/mapOfNepal.png" alt="Map of nepal showing supported provinces" fluid />
-      </Col>
-      <Col xs={12} sm={4}>
-        By
-        {' '}
-        <a
-          href="https://commons.wikimedia.org/wiki/User:Nirjal_stha"
-          title="
-        User:Nirjal stha"
-        >
-          Nirjal stha
-        </a>
-        {' '}
-        -
-        {' '}
-        <span
-          className="int-own-work"
-          lang="en"
-        >
-          Own work
-        </span>
-        ,
-        {' '}
-        <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>
-        ,
-        {' '}
-        <a href="https://commons.wikimedia.org/w/index.php?curid=35222160">Link</a>
-      </Col>
-    </Row>
-
   </Container>
 );
 
