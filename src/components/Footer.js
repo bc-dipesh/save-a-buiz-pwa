@@ -1,22 +1,52 @@
-import React from 'react';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
+import React, { useState } from 'react';
 import {
   Button, Col, Container, Form, Image, Row,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const SubscribeToNewsLetterForm = () => (
-  <>
-    <Form>
-      <Form.Group controlId="formGroupEmail">
-        <Form.Label>Subscribe to our news letter</Form.Label>
-        <Row>
-          <Col xs={12} sm={6}><Form.Control type="email" placeholder="Enter email your email" /></Col>
-          <Col xs={12} sm={6}><Button variant="outline-primary" type="submit">Subscribe</Button></Col>
-        </Row>
-      </Form.Group>
-    </Form>
-  </>
-);
+const SubscribeToNewsLetterForm = () => {
+  const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/subscribe-to-news-letter';
+
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { enqueueSnackbar } = useSnackbar();
+  const [email, setEmail] = useState('');
+
+  const handleNewsLetterSubscriptionRequest = async (e) => {
+    try {
+      e.preventDefault();
+      const { data: { data } } = await axios.post(`${BASE_URL}`, { email }, axiosConfig);
+
+      enqueueSnackbar(data, {
+        variant: 'success',
+      });
+    } catch (error) {
+      enqueueSnackbar(error.response.data.data, {
+        variant: 'error',
+      });
+    }
+    setEmail('');
+  };
+  return (
+    <>
+      <Form onSubmit={handleNewsLetterSubscriptionRequest}>
+        <Form.Group controlId="formGroupEmail">
+          <Form.Label>Subscribe to our news letter</Form.Label>
+          <Row>
+            <Col xs={12} sm={6}><Form.Control type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} value={email} /></Col>
+            <Col xs={12} sm={6}><Button variant="outline-primary" type="submit">Subscribe</Button></Col>
+          </Row>
+        </Form.Group>
+      </Form>
+    </>
+  );
+};
 
 const Footer = () => (
   <footer>
