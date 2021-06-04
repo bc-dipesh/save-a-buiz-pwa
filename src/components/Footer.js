@@ -1,8 +1,22 @@
 import React from 'react';
 import {
-  Col, Container, Image, Row,
+  Button, Col, Container, Form, Image, Row,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+const SubscribeToNewsLetterForm = () => (
+  <>
+    <Form>
+      <Form.Group controlId="formGroupEmail">
+        <Form.Label>Subscribe to our news letter</Form.Label>
+        <Row>
+          <Col xs={12} sm={6}><Form.Control type="email" placeholder="Enter email your email" /></Col>
+          <Col xs={12} sm={6}><Button variant="outline-primary" type="submit">Subscribe</Button></Col>
+        </Row>
+      </Form.Group>
+    </Form>
+  </>
+);
 
 const Footer = () => (
   <footer>
@@ -11,34 +25,42 @@ const Footer = () => (
         <Col xs={12} sm={6}>
           <Image src="/images/logo.png" alt="logo" />
         </Col>
-        <Col xs={12} sm={3}>
-          <h4>
-            <strong>Learn More</strong>
-          </h4>
-          <ul className="list-unstyled">
-            <li>
-              <Link to="/common-questions">Common questions</Link>
-            </li>
-            <li>
-              <a href="https://facebook.com">Success stories</a>
-            </li>
-            <li>
-              <Link to="/supported-provinces">Supported provinces</Link>
-            </li>
-          </ul>
-        </Col>
-        <Col xs={12} sm={3}>
-          <h4>
-            <strong>Resources</strong>
-          </h4>
-          <ul className="list-unstyled">
-            <li>
-              <a href="https://facebook.com">Help Center</a>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
+
+        <Col xs={12} sm={6}>
+          <Row>
+            <SubscribeToNewsLetterForm />
+          </Row>
+          <Row>
+            <Col xs={12} sm={6}>
+              <h4>
+                <strong>Learn More</strong>
+              </h4>
+              <ul className="list-unstyled">
+                <li>
+                  <Link to="/common-questions">Common questions</Link>
+                </li>
+                <li>
+                  <a href="https://facebook.com">Success stories</a>
+                </li>
+                <li>
+                  <Link to="/supported-provinces">Supported provinces</Link>
+                </li>
+              </ul>
+            </Col>
+            <Col xs={12} sm={6}>
+              <h4>
+                <strong>Resources</strong>
+              </h4>
+              <ul className="list-unstyled">
+                <li>
+                  <a href="https://facebook.com">Help Center</a>
+                </li>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+              </ul>
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Row>
