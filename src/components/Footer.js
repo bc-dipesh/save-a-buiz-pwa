@@ -36,10 +36,10 @@ const SubscribeToNewsLetterForm = () => {
   return (
     <>
       <Form onSubmit={handleNewsLetterSubscriptionRequest}>
-        <Form.Group controlId="formGroupEmail">
+        <Form.Group className="my-3" controlId="formGroupEmail">
           <Form.Label>Subscribe to our news letter</Form.Label>
-          <Row>
-            <Col xs={12} sm={6}><Form.Control type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} value={email} /></Col>
+          <Row className="align-items-center">
+            <Col className="my-3" xs={12} sm={6}><Form.Control type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} value={email} /></Col>
             <Col xs={12} sm={6}><Button variant="outline-primary" type="submit">Subscribe</Button></Col>
           </Row>
         </Form.Group>
