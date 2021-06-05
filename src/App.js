@@ -17,6 +17,7 @@ import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import CommonQuestionScreen from './screens/CommonQuestionScreen';
 import SupportedProvinceScreen from './screens/SupportedProvinceScreen';
+import PageNotFoundScreen from './screens/PageNotFoundScreen';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -76,6 +77,7 @@ function App() {
           <Route path="/legal" component={LegalContactInfoScreen} exact />
           <Route path="/common-questions" component={CommonQuestionScreen} exact />
           <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
+          <Route component={PageNotFoundScreen} />
         </main>
         <Footer />
       </Router>
