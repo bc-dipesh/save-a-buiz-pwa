@@ -2,18 +2,15 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
-  Card,
   Col,
   Container,
-  ProgressBar,
   Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { listFundraisers } from '../actions/fundraiserActions';
 import SkeletonCard from '../skeletons/SkeletonCard';
 import Message from '../components/Message';
-import { calculateProgress } from '../utils/commonFunctions';
+import Fundraiser from '../components/Fundraiser';
 
 const FundraiserListScreen = ({ match }) => {
   const { keyword } = match.params;
@@ -45,62 +42,17 @@ const FundraiserListScreen = ({ match }) => {
             ) : error ? (
               <Message variant="danger">{error}</Message>
             ) : (
-              fundraisers.map((f) => {
-                const {
-                  _id,
-                  image,
-                  title,
-                  shortDescription,
-                  collected,
-                  goal,
-                } = f;
-                return (
-                  <Col
-                    key={_id}
-                    className="py-3"
-                    sm={12}
-                    md={4}
-                    lg={3}
-                  >
-                    <Card>
-                      <Link to={`/fundraisers/${_id}`}>
-                        <Card.Img
-                          variant="top"
-                          src={image}
-                        />
-                      </Link>
-                      <Card.Body>
-                        <Card.Title>
-                          <h5>{title}</h5>
-                        </Card.Title>
-                        <Card.Text>
-                          {shortDescription}
-                        </Card.Text>
-                      </Card.Body>
-                      <Card.Footer>
-                        <Row className="py-2">
-                          <ProgressBar
-                            now={calculateProgress(
-                              collected,
-                              goal,
-                            )}
-                          />
-                        </Row>
-                        <Row className="py-2">
-                          <small>
-                            NRS.
-                            {collected}
-                            {' '}
-                            raised of NRS.
-                            {goal}
-                            .
-                          </small>
-                        </Row>
-                      </Card.Footer>
-                    </Card>
-                  </Col>
-                );
-              })
+              fundraisers.map((fundraiser) => (
+                <Col
+                  key={fundraiser._id}
+                  className="py-3"
+                  sm={12}
+                  md={4}
+                  lg={3}
+                >
+                  <Fundraiser fundraiser={fundraiser} />
+                </Col>
+              ))
             )}
           </Row>
         </Container>
