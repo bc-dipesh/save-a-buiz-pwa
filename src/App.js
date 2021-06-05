@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useSnackbar, withSnackbar } from 'notistack';
 import Footer from './components/Footer';
@@ -64,20 +64,22 @@ function App() {
       <Router>
         <Header />
         <main>
-          <Route path="/" component={HomeScreen} exact />
-          <Route path="/search/:keyword" component={FundraiserListScreen} exact />
-          <Route path="/fundraisers" component={FundraiserListScreen} exact />
-          <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
-          <Route path="/sign-in" component={UserSignInScreen} exact />
-          <Route path="/users/profile" component={UserProfileScreen} exact />
-          <Route path="/register" component={UserRegisterScreen} exact />
-          <Route path="/about" component={AboutScreen} exact />
-          <Route path="/how-it-works" component={HowItWorksScreen} exact />
-          <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
-          <Route path="/legal" component={LegalContactInfoScreen} exact />
-          <Route path="/common-questions" component={CommonQuestionScreen} exact />
-          <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
-          <Route component={PageNotFoundScreen} />
+          <Switch>
+            <Route path="/" component={HomeScreen} exact />
+            <Route path="/search/:keyword" component={FundraiserListScreen} exact />
+            <Route path="/fundraisers" component={FundraiserListScreen} exact />
+            <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
+            <Route path="/sign-in" component={UserSignInScreen} exact />
+            <Route path="/users/profile" component={UserProfileScreen} exact />
+            <Route path="/register" component={UserRegisterScreen} exact />
+            <Route path="/about" component={AboutScreen} exact />
+            <Route path="/how-it-works" component={HowItWorksScreen} exact />
+            <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
+            <Route path="/legal" component={LegalContactInfoScreen} exact />
+            <Route path="/common-questions" component={CommonQuestionScreen} exact />
+            <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
+            <Route component={PageNotFoundScreen} />
+          </Switch>
         </main>
         <Footer />
       </Router>
