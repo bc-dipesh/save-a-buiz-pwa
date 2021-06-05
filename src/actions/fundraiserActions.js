@@ -7,11 +7,11 @@ import {
 
 const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
 
-const listFundraisers = () => async (dispatch) => {
+const listFundraisers = (keyword = '') => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_LIST_REQUEST });
 
-    const { data: { data } } = await axios.get(`${BASE_URL}`);
+    const { data: { data } } = await axios.get(`${BASE_URL}/?keyword=${keyword}`);
     dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
   Card,
@@ -14,14 +15,16 @@ import SkeletonCard from '../skeletons/SkeletonCard';
 import Message from '../components/Message';
 import { calculateProgress } from '../utils/commonFunctions';
 
-const HomeScreen = () => {
+const FundraiserListScreen = ({ match }) => {
+  const { keyword } = match.params;
+
   const dispatch = useDispatch();
   const fundraiserList = useSelector((state) => state.fundraiserList);
   const { loading, error, fundraisers } = fundraiserList;
 
   useEffect(() => {
-    dispatch(listFundraisers());
-  }, [dispatch]);
+    dispatch(listFundraisers(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>
@@ -60,7 +63,7 @@ const HomeScreen = () => {
                     lg={3}
                   >
                     <Card>
-                      <Link to={`fundraisers/${_id}`}>
+                      <Link to={`/fundraisers/${_id}`}>
                         <Card.Img
                           variant="top"
                           src={image}
@@ -106,4 +109,12 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+FundraiserListScreen.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      keyword: PropTypes.string,
+    }),
+  }),
+};
+
+export default FundraiserListScreen;

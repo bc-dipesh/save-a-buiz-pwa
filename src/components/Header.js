@@ -1,4 +1,5 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {
   Button, Container,
   Form,
@@ -8,7 +9,34 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Route } from 'react-router-dom';
 import { logout } from '../actions/userActions';
+
+const SearchBox = ({ history }) => {
+  const [keyword, setKeyword] = useState('');
+
+  const searchFundraiser = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      history.push(`/search/${keyword}`);
+    } else {
+      history.push('/fundraisers');
+    }
+  };
+
+  return (
+    <Form className="d-flex ms-auto" onSubmit={searchFundraiser}>
+      <FormControl
+        type="search"
+        placeholder="Enter fundraiser title"
+        className="mr-2"
+        aria-label="Search"
+        onChange={(e) => setKeyword(e.target.value)}
+      />
+      <Button type="submit" variant="outline-dark">Search</Button>
+    </Form>
+  );
+};
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -76,20 +104,18 @@ const Header = () => {
                 )
                 : <LinkContainer to="/sign-in"><Nav.Link>Sign in</Nav.Link></LinkContainer>}
             </Nav>
-            <Form className="d-flex ms-auto">
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="mr-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-dark">Search</Button>
-            </Form>
+            <Route render={({ history }) => <SearchBox history={history} />} />
           </Navbar.Collapse>
         </Container>
       </Navbar>
     </header>
   );
+};
+
+SearchBox.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 export default Header;

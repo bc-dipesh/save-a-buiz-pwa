@@ -64,17 +64,18 @@ function App() {
         <Header />
         <main>
           <Route path="/" component={HomeScreen} exact />
+          <Route path="/search/:keyword" component={FundraiserListScreen} exact />
           <Route path="/fundraisers" component={FundraiserListScreen} exact />
-          <Route path="/fundraisers/:id" component={FundraiserScreen} />
-          <Route path="/sign-in" component={UserSignInScreen} />
-          <Route path="/users/profile" component={UserProfileScreen} />
-          <Route path="/register" component={UserRegisterScreen} />
-          <Route path="/about" component={AboutScreen} />
-          <Route path="/how-it-works" component={HowItWorksScreen} />
-          <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} />
-          <Route path="/legal" component={LegalContactInfoScreen} />
-          <Route path="/common-questions" component={CommonQuestionScreen} />
-          <Route path="/supported-provinces" component={SupportedProvinceScreen} />
+          <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
+          <Route path="/sign-in" component={UserSignInScreen} exact />
+          <Route path="/users/profile" component={UserProfileScreen} exact />
+          <Route path="/register" component={UserRegisterScreen} exact />
+          <Route path="/about" component={AboutScreen} exact />
+          <Route path="/how-it-works" component={HowItWorksScreen} exact />
+          <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
+          <Route path="/legal" component={LegalContactInfoScreen} exact />
+          <Route path="/common-questions" component={CommonQuestionScreen} exact />
+          <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
         </main>
         <Footer />
       </Router>
