@@ -4,7 +4,7 @@
   }
   /* line 11, ../sass/_content.sass */
   .offline-ui.offline-ui-up .offline-ui-content:before {
-    content: "Your computer is connected to the internet.";
+    content: "Your device is connected to the internet.";
   }
   @media (max-width: 1024px) {
     /* line 11, ../sass/_content.sass */
@@ -20,7 +20,7 @@
   }
   /* line 22, ../sass/_content.sass */
   .offline-ui.offline-ui-down .offline-ui-content:before {
-    content: "Your computer lost its internet connection.";
+    content: "Your device lost its internet connection.";
   }
   @media (max-width: 1024px) {
     /* line 22, ../sass/_content.sass */
