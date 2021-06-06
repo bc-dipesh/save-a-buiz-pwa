@@ -71,7 +71,7 @@ const FundraiserListScreen = ({ match }) => {
 
 Children.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   fundraisers: PropTypes.arrayOf(PropTypes.object),
 };
 

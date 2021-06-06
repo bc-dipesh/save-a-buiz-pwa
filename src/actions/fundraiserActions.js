@@ -14,11 +14,12 @@ const listFundraisers = (keyword = '') => async (dispatch) => {
     const { data: { data } } = await axios.get(`${BASE_URL}/?keyword=${keyword}`);
     dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
   } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
     dispatch({
       type: FUNDRAISER_LIST_FAIL,
-      payload: error.response && error.response.data.data
-        ? error.response.data.data
-        : error.response,
+      payload: errorMessage || 'Something went wrong',
     });
   }
 };
@@ -30,11 +31,12 @@ const listFundraiserDetails = (id) => async (dispatch) => {
     const { data: { data } } = await axios.get(`${BASE_URL}/${id}`);
     dispatch({ type: FUNDRAISER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
     dispatch({
       type: FUNDRAISER_DETAILS_FAIL,
-      payload: error.response && error.response.data.data
-        ? error.response.data.data
-        : error.response,
+      payload: errorMessage || 'Something went wrong',
     });
   }
 };

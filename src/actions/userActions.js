@@ -35,12 +35,12 @@ const register = (name, email, password) => async (dispatch) => {
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload:
-      error.response && error.response.data.data
-        ? error.response.data.data
-        : error.response,
+      payload: errorMessage || 'Something went wrong',
     });
   }
 };
@@ -65,12 +65,12 @@ const login = (email, password) => async (dispatch) => {
 
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload:
-      error.response && error.response.data.data
-        ? error.response.data.data
-        : error.response,
+      payload: errorMessage || 'Something went wrong',
     });
   }
 };
@@ -100,12 +100,12 @@ const getUserProfile = (id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
     dispatch({
       type: USER_PROFILE_FAIL,
-      payload:
-      error.response && error.response.data.data
-        ? error.response.data.data
-        : error.response,
+      payload: errorMessage || 'Something went wrong',
     });
   }
 };
@@ -136,12 +136,12 @@ const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
-      payload:
-      error.response && error.response.data.data
-        ? error.response.data.data
-        : error.response,
+      payload: errorMessage || 'Something went wrong',
     });
   }
 };
