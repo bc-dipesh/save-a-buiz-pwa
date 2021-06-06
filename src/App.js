@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useSnackbar, withSnackbar } from 'notistack';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import AboutScreen from './screens/AboutScreen';
+import CommonQuestionScreen from './screens/CommonQuestionScreen';
 import FundraiserListScreen from './screens/FundraiserListScreen';
 import FundraiserScreen from './screens/FundraiserScreen';
 import HomeScreen from './screens/HomeScreen';
+import HowItWorksScreen from './screens/HowItWorksScreen';
+import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
+import PageNotFoundScreen from './screens/PageNotFoundScreen';
+import SupportedProvinceScreen from './screens/SupportedProvinceScreen';
+import UserProfileScreen from './screens/UserProfileScreen';
 import UserRegisterScreen from './screens/UserRegisterScreen';
 import UserSignInScreen from './screens/UserSignInScreen';
-import UserProfileScreen from './screens/UserProfileScreen';
-import AboutScreen from './screens/AboutScreen';
-import HowItWorksScreen from './screens/HowItWorksScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfundingScreen';
-import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import CommonQuestionScreen from './screens/CommonQuestionScreen';
-import SupportedProvinceScreen from './screens/SupportedProvinceScreen';
-import PageNotFoundScreen from './screens/PageNotFoundScreen';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);

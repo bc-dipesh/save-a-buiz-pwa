@@ -16,6 +16,12 @@
 	margin-bottom: 15px;
 }
 
+.skeleton.button {
+	width: 40%;
+	height: 50px;
+	margin-bottom: 15px;
+}
+
 .skeleton.avatar {
 	width: 100px;
 	height: 100px;

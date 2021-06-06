@@ -1,16 +1,44 @@
-/* eslint-disable no-nested-ternary */
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
-  Col,
+  Button, Col,
   Container,
   Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listFundraisers } from '../actions/fundraiserActions';
-import SkeletonCard from '../skeletons/SkeletonCard';
-import Message from '../components/Message';
 import Fundraiser from '../components/Fundraiser';
+import Message from '../components/Message';
+import SkeletonCard from '../skeletons/SkeletonCard';
+
+const Children = ({ loading, error, fundraisers }) => {
+  if (loading) {
+    return [1, 2, 3].map((item) => (
+      <Col key={item} className="my-3" sm={12} md={4} lg={3}>
+        <SkeletonCard />
+      </Col>
+    ));
+  }
+  if (!error) {
+    return fundraisers.map((fundraiser) => (
+      <Col
+        key={fundraiser._id}
+        className="py-3"
+        sm={12}
+        md={4}
+        lg={3}
+      >
+        <Fundraiser fundraiser={fundraiser} isCard />
+      </Col>
+    ));
+  }
+  return (
+    <Container className="my-5">
+      <Message variant="danger">Something went wrong</Message>
+      <Button variant="outline-primary" onClick={() => window.location.reload()}>Refresh page ?</Button>
+    </Container>
+  );
+};
 
 const FundraiserListScreen = ({ match }) => {
   const { keyword } = match.params;
@@ -28,37 +56,23 @@ const FundraiserListScreen = ({ match }) => {
       <Container style={{ backgroundColor: '#fbf8f6' }} fluid>
         <Container>
           <Row className="justify-content-center">
-            <h2 className="pt-5 pb-3">Browse fundraisers</h2>
+            <h2 className="mt-5 mb-3">Browse fundraisers</h2>
             <p>
               Starting a fundraiser for your favorite local
               restaurant, bar, coffee shop, or boutique.
             </p>
-            {loading ? (
-              [1, 2, 3].map((item) => (
-                <Col key={item} className="py-3" sm={12} md={4} lg={3}>
-                  <SkeletonCard />
-                </Col>
-              ))
-            ) : error ? (
-              <Message variant="danger">{error}</Message>
-            ) : (
-              fundraisers.map((fundraiser) => (
-                <Col
-                  key={fundraiser._id}
-                  className="py-3"
-                  sm={12}
-                  md={4}
-                  lg={3}
-                >
-                  <Fundraiser fundraiser={fundraiser} />
-                </Col>
-              ))
-            )}
+            <Children loading={loading} error={error} fundraisers={fundraisers} />
           </Row>
         </Container>
       </Container>
     </>
   );
+};
+
+Children.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+  fundraisers: PropTypes.arrayOf(PropTypes.object),
 };
 
 FundraiserListScreen.propTypes = {
