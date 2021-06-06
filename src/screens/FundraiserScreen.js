@@ -68,6 +68,10 @@ const Children = ({ loading, error, fundraiser }) => {
             <Row className="py-5">
               <Col md={8}>
                 <Skeleton type="text" />
+                <Skeleton type="text" />
+                <Skeleton type="text" />
+                <Skeleton type="text" />
+                <Skeleton type="text" />
               </Col>
             </Row>
           </Container>
