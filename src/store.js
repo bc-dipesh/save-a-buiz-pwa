@@ -6,6 +6,9 @@ import {
 } from './reducers/fundraiserReducers';
 import {
   userLoginReducer, userProfileReducer, userRegisterReducer, userUpdateProfileReducer,
+  userListReducer,
+  userDeleteReducer,
+  userUpdateReducer,
 } from './reducers/userReducers';
 
 const reducer = combineReducers({
@@ -15,6 +18,9 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userProfile: userProfileReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userList: userListReducer,
+  userUpdate: userUpdateReducer,
+  userDelete: userDeleteReducer,
 });
 
 const userInfo = localStorage.getItem('userInfo');

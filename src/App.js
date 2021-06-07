@@ -13,6 +13,8 @@ import HowItWorksScreen from './screens/HowItWorksScreen';
 import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
 import PageNotFoundScreen from './screens/PageNotFoundScreen';
 import SupportedProvinceScreen from './screens/SupportedProvinceScreen';
+import UserEditScreen from './screens/UserEditScreen';
+import UserListScreen from './screens/UserListScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import UserRegisterScreen from './screens/UserRegisterScreen';
 import UserSignInScreen from './screens/UserSignInScreen';
@@ -78,6 +80,8 @@ function App() {
             <Route path="/legal" component={LegalContactInfoScreen} exact />
             <Route path="/common-questions" component={CommonQuestionScreen} exact />
             <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
+            <Route path="/admin/user-list" component={UserListScreen} exact />
+            <Route path="/admin/user/:id/edit" component={UserEditScreen} exact />
             <Route component={PageNotFoundScreen} />
           </Switch>
         </main>

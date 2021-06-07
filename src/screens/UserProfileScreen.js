@@ -28,8 +28,8 @@ const UserProfileScreen = ({ history }) => {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push('/login');
-    } else if (user.name) {
+      history.push('/sign-in');
+    } else if (user.name === userInfo.name) {
       setName(user.name);
       setEmail(user.email);
     } else {

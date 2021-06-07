@@ -103,6 +103,16 @@ const Header = () => {
                   </NavDropdown>
                 )
                 : <LinkContainer to="/sign-in"><Nav.Link>Sign in</Nav.Link></LinkContainer>}
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="Admin" id="adminMenu">
+                  <LinkContainer to="/admin/user-list">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/fundraiserList">
+                    <NavDropdown.Item>Fundraisers</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
             </Nav>
             <Route render={({ history }) => <SearchBox history={history} />} />
           </Navbar.Collapse>
