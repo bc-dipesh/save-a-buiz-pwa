@@ -13,7 +13,7 @@ const Fundraiser = ({ fundraiser, isCard }) => {
     donors, organizer,
   } = fundraiser;
 
-  const { name = '' } = organizer || {};
+  const { name } = organizer || {};
 
   if (isCard) {
     return (
