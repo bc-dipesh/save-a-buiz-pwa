@@ -166,7 +166,7 @@ const getUserList = () => async (dispatch, getState) => {
     const {
       data: { data: { users } },
     } = await axios.get(
-      `${BASE_URL}/`,
+      `${BASE_URL}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

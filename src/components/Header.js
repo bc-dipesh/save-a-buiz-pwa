@@ -33,7 +33,11 @@ const SearchBox = ({ history }) => {
         aria-label="Search"
         onChange={(e) => setKeyword(e.target.value)}
       />
-      <Button type="submit" variant="outline-dark">Search</Button>
+      <Button type="submit" variant="outline-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+        </svg>
+      </Button>
     </Form>
   );
 };
@@ -91,7 +95,10 @@ const Header = () => {
               </NavDropdown>
               {userInfo
                 ? (
-                  <NavDropdown title={userInfo.name} id={userInfo.email}>
+                  <NavDropdown
+                    title={userInfo.name}
+                    id={userInfo.email}
+                  >
                     <LinkContainer to="/users/profile">
                       <NavDropdown.Item>
                         Profile
@@ -104,7 +111,7 @@ const Header = () => {
                 )
                 : <LinkContainer to="/sign-in"><Nav.Link>Sign in</Nav.Link></LinkContainer>}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminMenu">
+                <NavDropdown title="Admin Panel" id="adminMenu">
                   <LinkContainer to="/admin/user-list">
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </LinkContainer>

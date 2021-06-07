@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import ScrollToTop from './components/ScrollToTop';
 import AboutScreen from './screens/AboutScreen';
 import CommonQuestionScreen from './screens/CommonQuestionScreen';
 import FundraiserListScreen from './screens/FundraiserListScreen';
@@ -64,6 +65,7 @@ function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Header />
         <main>
           <Switch>

@@ -49,7 +49,7 @@ const UserEditScreen = ({ match, history }) => {
       </Container>
     );
   }
-  if (!error || !errorUpdate) {
+  if (!error && !errorUpdate) {
     const updateProfile = (e) => {
       e.preventDefault();
       dispatch(updateUser({
