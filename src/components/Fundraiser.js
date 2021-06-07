@@ -8,8 +8,12 @@ import { calculateProgress, numFormatter } from '../utils/commonFunctions';
 
 const Fundraiser = ({ fundraiser, isCard }) => {
   const {
-    _id, image, title, shortDescription, description, collected = 0, goal = 0, donors, organizer,
+    _id, image, title, shortDescription, description,
+    collected = 0, goal = 0,
+    donors, organizer,
   } = fundraiser;
+
+  const { name = '' } = organizer || {};
 
   if (isCard) {
     return (
@@ -51,7 +55,6 @@ const Fundraiser = ({ fundraiser, isCard }) => {
       </Card>
     );
   }
-
   return (
     <>
       <Container>
@@ -115,9 +118,11 @@ const Fundraiser = ({ fundraiser, isCard }) => {
           <Row>
             <Col md={8}>
               <p>
-                <i className="fas fa-user" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                </svg>
                 {' '}
-                {organizer}
+                {name}
                 {' '}
                 is organizing this
                 fundraiser.
@@ -145,9 +150,11 @@ const Fundraiser = ({ fundraiser, isCard }) => {
                 <Row>
                   <Col>
                     <p>
-                      <i className="fas fa-user" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                      </svg>
                       {' '}
-                      {organizer}
+                      {name}
                     </p>
                   </Col>
                   <Col>
@@ -172,7 +179,9 @@ const Fundraiser = ({ fundraiser, isCard }) => {
                 <ListGroup.Item className="py-3" key={item}>
                   <Row>
                     <p>
-                      <i className="fas fa-user" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                      </svg>
                       {' '}
                       Caroline and Alan Igoe donated
                       NRS.20000
@@ -201,7 +210,9 @@ Fundraiser.propTypes = {
     collected: PropTypes.number,
     goal: PropTypes.number,
     donors: PropTypes.number,
-    organizer: PropTypes.string,
+    organizer: PropTypes.shape({
+      name: PropTypes.string,
+    }),
   }).isRequired,
   isCard: PropTypes.bool.isRequired,
 };

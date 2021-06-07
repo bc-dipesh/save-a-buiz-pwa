@@ -84,12 +84,12 @@ const Header = () => {
               >
                 <LinkContainer to="/how-it-works">
                   <NavDropdown.Item>
-                    How SaveABuiz works
+                    How SaveABuiz works ?
                   </NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/what-is-crowdfunding">
                   <NavDropdown.Item>
-                    What is crowdfunding?
+                    What is crowdfunding ?
                   </NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

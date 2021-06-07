@@ -137,12 +137,12 @@ const Children = ({ loading, error, fundraiser }) => {
 const FundraiserScreen = ({ match }) => {
   const dispatch = useDispatch();
 
+  const fundraiserDetails = useSelector((state) => state.fundraiserDetails);
+  const { loading, error, fundraiser } = fundraiserDetails;
+
   useEffect(() => {
     dispatch(listFundraiserDetails(match.params.id));
   }, [dispatch, match]);
-
-  const fundraiserDetails = useSelector((state) => state.fundraiserDetails);
-  const { loading, error, fundraiser } = fundraiserDetails;
 
   return (
     <>
@@ -158,7 +158,7 @@ const FundraiserScreen = ({ match }) => {
 
 Children.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   fundraiser: PropTypes.shape({
     _id: PropTypes.string,
     image: PropTypes.string,
@@ -168,7 +168,9 @@ Children.propTypes = {
     collected: PropTypes.number,
     goal: PropTypes.number,
     donors: PropTypes.number,
-    organizer: PropTypes.string,
+    organizer: PropTypes.shape({
+      name: PropTypes.string,
+    }),
   }).isRequired,
 };
 
