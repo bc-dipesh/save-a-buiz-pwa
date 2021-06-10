@@ -5,21 +5,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
-import AboutScreen from './screens/AboutScreen';
-import CommonQuestionScreen from './screens/CommonQuestionScreen';
-import FundraiserListScreen from './screens/FundraiserListScreen';
-import FundraiserScreen from './screens/FundraiserScreen';
-import HomeScreen from './screens/HomeScreen';
-import HowItWorksScreen from './screens/HowItWorksScreen';
-import LegalContactInfoScreen from './screens/LegalContactInfoScreen';
-import PageNotFoundScreen from './screens/PageNotFoundScreen';
-import SupportedProvinceScreen from './screens/SupportedProvinceScreen';
-import UserEditScreen from './screens/UserEditScreen';
-import UserListScreen from './screens/UserListScreen';
-import UserProfileScreen from './screens/UserProfileScreen';
-import UserRegisterScreen from './screens/UserRegisterScreen';
-import UserSignInScreen from './screens/UserSignInScreen';
-import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfundingScreen';
+import {
+  AboutScreen,
+  CommonQuestionScreen,
+  FundraiserListScreen, FundraiserScreen, HomeScreen,
+  HowItWorksScreen,
+  LegalContactInfoScreen,
+  PageNotFoundScreen,
+  SupportedProvinceScreen,
+  UserEditScreen,
+  UserListScreen,
+  UserProfileScreen,
+  UserRegisterScreen,
+  UserSignInScreen,
+  WhatIsCrowdfundingScreen,
+} from './screens';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 function App() {

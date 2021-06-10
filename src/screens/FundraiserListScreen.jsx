@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listFundraisers } from '../actions/fundraiserActions';
 import Fundraiser from '../components/Fundraiser';
 import Message from '../components/Message';
-import SkeletonCard from '../skeletons/SkeletonCard';
+import SkeletonCard from '../components/skeletons/SkeletonCard';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {

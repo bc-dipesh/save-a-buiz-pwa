@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { Button, Container, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { getUserList, deleteUserById } from '../actions/userActions';
+import { deleteUserById, getUserList } from '../actions/userActions';
 import Message from '../components/Message';
-import SkeletonUserListTable from '../skeletons/SkeletonUserListTable';
+import SkeletonUserListTable from '../components/skeletons/SkeletonUserListTable';
 
 const Children = ({ loading, error, users }) => {
   const dispatch = useDispatch();
