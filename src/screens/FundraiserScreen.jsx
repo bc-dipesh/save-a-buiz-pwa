@@ -1,3 +1,4 @@
+import Skeleton from '@material-ui/lab/Skeleton';
 import { PropTypes } from 'prop-types';
 import { React, useEffect } from 'react';
 import {
@@ -5,10 +6,10 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { listFundraiserDetails } from '../actions/fundraiserActions';
 import Fundraiser from '../components/Fundraiser';
 import Message from '../components/Message';
-import Skeleton from '../skeletons/SkeletonElement';
 
 const Children = ({ loading, error, fundraiser }) => {
   if (loading) {
@@ -17,9 +18,7 @@ const Children = ({ loading, error, fundraiser }) => {
         <Container>
           <Row>
             <Col md={8}>
-              <Skeleton type="thumbnail" />
-              <Skeleton type="thumbnail" />
-              <Skeleton type="thumbnail" />
+              <Skeleton variant="rect" height={200} />
             </Col>
             <Col md={4}>
               <Card>
@@ -27,20 +26,21 @@ const Children = ({ loading, error, fundraiser }) => {
                   <ListGroup.Item>
                     <Row>
                       <Col>
-                        <Skeleton type="title" />
+                        <Skeleton variant="text" width="40%" />
+                        <Skeleton variant="text" width="50%" height={10} />
                       </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <Skeleton type="text" />
+                    <Skeleton variant="text" />
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <Skeleton type="text" />
+                    <Skeleton variant="text" width="40%" />
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>
-                        <Skeleton type="title" />
+                        <Skeleton variant="rect" height={48} />
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -57,21 +57,21 @@ const Children = ({ loading, error, fundraiser }) => {
           <Container>
             <Row className="py-5">
               <Col md={8}>
-                <Skeleton type="title" />
+                <Skeleton variant="text" width="30%" />
               </Col>
             </Row>
             <Row>
               <Col md={8}>
-                <Skeleton type="text" />
+                <Skeleton variant="text" width="30%" />
               </Col>
             </Row>
             <Row className="py-5">
               <Col md={8}>
-                <Skeleton type="text" />
-                <Skeleton type="text" />
-                <Skeleton type="text" />
-                <Skeleton type="text" />
-                <Skeleton type="text" />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
+                <Skeleton variant="text" />
               </Col>
             </Row>
           </Container>
@@ -81,15 +81,15 @@ const Children = ({ loading, error, fundraiser }) => {
             <Col md={8}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <Skeleton type="title" />
+                  <Skeleton variant="text" width="20%" />
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>
-                      <Skeleton type="text" />
+                      <Skeleton variant="text" width="20%" />
                     </Col>
                     <Col>
-                      <Skeleton type="title" />
+                      <Skeleton variant="rect" width="50%" height={48} />
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -102,17 +102,15 @@ const Children = ({ loading, error, fundraiser }) => {
             <Col md={8}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <Skeleton type="title" />
+                  <Skeleton variant="text" width="20%" />
                 </ListGroup.Item>
-                { [1, 2, 3].map((item) => (
-                  <ListGroup.Item className="py-3" key={item}>
+                { [1, 2, 3].map(() => (
+                  <ListGroup.Item className="py-3" key={uuidv4()}>
                     <Row>
-                      <Skeleton type="title" />
+                      <Skeleton variant="text" width="20%" />
                     </Row>
                     <Row>
-                      <Skeleton type="text" />
-                      <Skeleton type="text" />
-                      <Skeleton type="text" />
+                      <Skeleton variant="text" width="50%" />
                     </Row>
                   </ListGroup.Item>
                 ))}
