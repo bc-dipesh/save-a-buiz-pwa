@@ -15,7 +15,7 @@ const CommonQuestionScreen = () => (
       </Row>
     </Container>
     <Container>
-      <Image src="/images/commonQuestions.png" alt="demonstration of questioning and answering" fluid />
+      <Image src="/images/common-questions.png" alt="demonstration of questioning and answering" fluid />
     </Container>
     <Container className="py-5 my-5" style={{ backgroundColor: '#fbf8f6' }} fluid>
       <Container>

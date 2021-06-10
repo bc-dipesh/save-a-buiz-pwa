@@ -15,7 +15,7 @@ const HowItWorksScreen = () => (
       </Row>
       <Row>
         <Image
-          src="/images/howItWorks.png"
+          src="/images/how-it-works.png"
           alt="Image illustration on how
             SaveABuiz works"
           className="pt-3"

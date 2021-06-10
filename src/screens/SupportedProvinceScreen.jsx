@@ -27,7 +27,7 @@ const SupportedProvinceScreen = () => (
     </Row>
     <Row className="my-5">
       <Col xs={12} sm={8}>
-        <Image src="/images/saveABuizSupportedProvincesOfNepal.png" alt="Map of nepal showing supported provinces" fluid />
+        <Image src="/images/save-a-buiz-supported-provinces-of-nepal.png" alt="Map of nepal showing supported provinces" fluid />
       </Col>
       <Col xs={12} sm={4}>
         By Karte:
