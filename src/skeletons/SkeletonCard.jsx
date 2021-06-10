@@ -1,4 +1,5 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Card, Row } from 'react-bootstrap';
 
@@ -9,20 +10,26 @@ const SkeletonCard = () => (
     </Card.Img>
     <Card.Body>
       <Card.Title>
-        <Skeleton variant="text" />
+        <Typography variant="h5">
+          <Skeleton />
+        </Typography>
       </Card.Title>
       <Card.Text>
-        <Skeleton variant="text" height={14} />
-        <Skeleton variant="text" height={14} />
-        <Skeleton variant="text" height={14} />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
       </Card.Text>
     </Card.Body>
     <Card.Footer>
       <Row className="py-2">
-        <Skeleton variant="text" />
+        <Typography variant="overline">
+          <Skeleton />
+        </Typography>
       </Row>
       <Row className="py-2">
-        <Skeleton variant="text" height={10} />
+        <Typography variant="caption">
+          <Skeleton />
+        </Typography>
       </Row>
     </Card.Footer>
   </Card>
