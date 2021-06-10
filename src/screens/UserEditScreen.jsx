@@ -1,8 +1,7 @@
+import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import {
-  Container, Button, Form,
-} from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUserProfile, updateUser } from '../actions/userActions';
@@ -39,16 +38,6 @@ const UserEditScreen = ({ match, history }) => {
     }
   }, [dispatch, user, userId, successUpdate]);
 
-  if (loading || loadingUpdate) {
-    return (
-      <Container>
-        <Link to="/admin/user-list" className="btn btn-outline-primary my-5">
-          Go Back
-        </Link>
-        <p>Loading...</p>
-      </Container>
-    );
-  }
   if (!error && !errorUpdate) {
     const updateProfile = (e) => {
       e.preventDefault();
@@ -67,17 +56,20 @@ const UserEditScreen = ({ match, history }) => {
           <Form onSubmit={updateProfile} className="py-3">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
+              { loading || loadingUpdate ? <Skeleton type="text" />
+                : <Form.Control type="text" placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />}
             </Form.Group>
 
             <Form.Group controlId="email" className="py-3">
               <Form.Label>Email Address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              { loading || loadingUpdate ? <Skeleton type="text" />
+                : <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />}
             </Form.Group>
 
             <Form.Group controlId="isAdmin">
               <Form.Label>Is Admin</Form.Label>
-              <Form.Check type="checkbox" checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
+              { loading || loadingUpdate ? <Skeleton type="rect" width={20} height={20} />
+                : <Form.Check type="checkbox" checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />}
             </Form.Group>
 
             <Button type="submit" variant="outline-primary">Update Profile</Button>
