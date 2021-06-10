@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import {
   Button, Col, Container, Form, Row,
 } from 'react-bootstrap';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile, updateUserProfile } from '../actions/userActions';
-import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 const UserProfileScreen = ({ history }) => {
@@ -76,23 +76,26 @@ const UserProfileScreen = ({ history }) => {
             User profile updated
           </Message>
           )}
-          {loading && <Loader />}
           <Form onSubmit={submitHandler} className="py-3">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
+              { loading ? <Skeleton variant="text" />
+                : <Form.Control type="text" placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />}
             </Form.Group>
             <Form.Group controlId="email" className="py-3">
               <Form.Label>Email Address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              { loading ? <Skeleton variant="text" />
+                : <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />}
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control autoComplete="off" type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              { loading ? <Skeleton variant="text" />
+                : <Form.Control autoComplete="off" type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />}
             </Form.Group>
             <Form.Group controlId="confirmPassword" className="py-3">
               <Form.Label>Confirm Password</Form.Label>
-              <Form.Control autoComplete="off" type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              { loading ? <Skeleton variant="text" />
+                : <Form.Control autoComplete="off" type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} /> }
             </Form.Group>
             <Button className="mt-5" type="submit" variant="outline-primary">Update Profile</Button>
           </Form>
