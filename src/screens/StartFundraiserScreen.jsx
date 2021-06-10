@@ -1,12 +1,13 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button, Container, Form, InputGroup, Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { createFundraiser } from '../actions/fundraiserActions';
+import { FUNDRAISER_CREATE_RESET } from '../constants/fundraiserConstants';
 
 const StartFundraiserScreen = ({ history }) => {
   const API_END_POINT = 'https://save-a-buiz-api.herokuapp.com/api/v1/file-uploads/fundraiser-image';
@@ -42,11 +43,14 @@ const StartFundraiserScreen = ({ history }) => {
   };
 
   const dispatch = useDispatch();
-  const { fundraiser } = useSelector((state) => state.fundraiserCreate);
+  const { loading, error, fundraiser } = useSelector((state) => state.fundraiserCreate);
 
-  if (fundraiser) {
-    history.push(`fundraisers/${fundraiser._id}`);
-  }
+  useEffect(() => {
+    if (fundraiser) {
+      dispatch({ type: FUNDRAISER_CREATE_RESET });
+      history.push(`fundraisers/${fundraiser._id}`);
+    }
+  }, [fundraiser, loading, error, dispatch]);
 
   const submitCreateFundraiserForm = (e) => {
     e.preventDefault();

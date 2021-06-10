@@ -2,6 +2,7 @@ import {
   FUNDRAISER_CREATE_REQUEST,
   FUNDRAISER_CREATE_SUCCESS,
   FUNDRAISER_CREATE_FAIL,
+  FUNDRAISER_CREATE_RESET,
   FUNDRAISER_LIST_REQUEST,
   FUNDRAISER_LIST_SUCCESS,
   FUNDRAISER_LIST_FAIL,
@@ -18,6 +19,8 @@ const fundraiserCreateReducer = (state = {}, action) => {
       return { loading: false, fundraiser: action.payload };
     case FUNDRAISER_CREATE_FAIL:
       return { loading: false, error: action.payload };
+    case FUNDRAISER_CREATE_RESET:
+      return {};
     default:
       return state;
   }
