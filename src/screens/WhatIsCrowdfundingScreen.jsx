@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Accordion, Button, Card, Col, Container, Image, Row,
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const WhatIsCrowdfundingScreen = () => (
   <>
@@ -28,7 +29,7 @@ const WhatIsCrowdfundingScreen = () => (
           <Image src="/images/fundraising.png" alt="Illustration of fundraising" fluid />
         </Col>
         <Col className="mt-5">
-          <Button variant="outline-primary">Start Crowdfunding</Button>
+          <LinkContainer to="/start-fundraiser"><Button variant="outline-primary">Start Crowdfunding</Button></LinkContainer>
         </Col>
       </Row>
     </Container>

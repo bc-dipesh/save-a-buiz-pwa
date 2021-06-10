@@ -6,6 +6,7 @@ import HomeScreen from './HomeScreen';
 import HowItWorksScreen from './HowItWorksScreen';
 import LegalContactInfoScreen from './LegalContactInfoScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
+import StartFundraiserScreen from './StartFundraiserScreen';
 import SupportedProvinceScreen from './SupportedProvinceScreen';
 import UserEditScreen from './UserEditScreen';
 import UserListScreen from './UserListScreen';
@@ -29,5 +30,6 @@ export {
   UserProfileScreen,
   UserRegisterScreen,
   UserSignInScreen,
+  StartFundraiserScreen,
   WhatIsCrowdfundingScreen,
 };

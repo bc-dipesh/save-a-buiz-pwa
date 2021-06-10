@@ -1,11 +1,53 @@
 import axios from 'axios';
 import {
+  FUNDRAISER_CREATE_FAIL,
+  FUNDRAISER_CREATE_REQUEST,
+  FUNDRAISER_CREATE_SUCCESS,
   FUNDRAISER_DETAILS_FAIL, FUNDRAISER_DETAILS_REQUEST,
   FUNDRAISER_DETAILS_SUCCESS, FUNDRAISER_LIST_FAIL, FUNDRAISER_LIST_REQUEST,
   FUNDRAISER_LIST_SUCCESS,
 } from '../constants/fundraiserConstants';
 
 const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
+
+const createFundraiser = ({
+  location,
+  title,
+  goal,
+  description,
+  image,
+  youTubeVideoLink,
+}) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FUNDRAISER_CREATE_REQUEST });
+
+    const { userLogin: { userInfo } } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data: { data } } = await axios.post(`${BASE_URL}`, {
+      location,
+      title,
+      goal,
+      description,
+      image,
+      youTubeVideoLink,
+    }, config);
+    dispatch({ type: FUNDRAISER_CREATE_SUCCESS, payload: data });
+  } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
+    dispatch({
+      type: FUNDRAISER_CREATE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
 
 const listFundraisers = (keyword = '') => async (dispatch) => {
   try {
@@ -41,4 +83,4 @@ const listFundraiserDetails = (id) => async (dispatch) => {
   }
 };
 
-export { listFundraisers, listFundraiserDetails };
+export { createFundraiser, listFundraisers, listFundraiserDetails };

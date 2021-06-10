@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { calculateProgress, numFormatter } from '../utils/commonFunctions';
 
 const Fundraiser = ({ fundraiser, isCard }) => {
+  const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';
   const {
     _id, image, title, shortDescription, description,
     collected = 0, goal = 0,
@@ -21,7 +22,7 @@ const Fundraiser = ({ fundraiser, isCard }) => {
         <Link to={`/fundraisers/${_id}`}>
           <Card.Img
             variant="top"
-            src={image}
+            src={`${BASE_URL}/${image}`}
           />
         </Link>
         <Card.Body>
@@ -60,7 +61,7 @@ const Fundraiser = ({ fundraiser, isCard }) => {
       <Container>
         <Row>
           <Col md={8}>
-            <Image src={image} alt={title} fluid />
+            <Image src={`${BASE_URL}/${image}`} alt={title} fluid />
           </Col>
           <Col md={4}>
             <Card>

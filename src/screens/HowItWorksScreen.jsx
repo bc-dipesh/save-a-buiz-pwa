@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  Button, Col, Container, Row, Image,
+  Button, Col, Container, Image, Row,
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const HowItWorksScreen = () => (
   <>
@@ -53,13 +54,15 @@ const HowItWorksScreen = () => (
             </ul>
           </Col>
           <Col>
-            <Button variant="outline-primary">
-              Start a
-              {' '}
-              <span style={{ textTransform: 'none' }}>
-                SaveABuiz
-              </span>
-            </Button>
+            <LinkContainer to="/start-fundraiser">
+              <Button variant="outline-primary">
+                Start a
+                {' '}
+                <span style={{ textTransform: 'none' }}>
+                  SaveABuiz
+                </span>
+              </Button>
+            </LinkContainer>
           </Col>
         </Row>
       </Container>

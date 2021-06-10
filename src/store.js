@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import {
-  fundraiserDetailsReducer, fundraiserListReducer,
+  fundraiserCreateReducer, fundraiserDetailsReducer, fundraiserListReducer,
 } from './reducers/fundraiserReducers';
 import {
   userLoginReducer, userProfileReducer, userRegisterReducer, userUpdateProfileReducer,
@@ -12,6 +12,7 @@ import {
 } from './reducers/userReducers';
 
 const reducer = combineReducers({
+  fundraiserCreate: fundraiserCreateReducer,
   fundraiserList: fundraiserListReducer,
   fundraiserDetails: fundraiserDetailsReducer,
   userRegister: userRegisterReducer,

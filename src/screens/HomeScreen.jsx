@@ -4,6 +4,7 @@ import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { listFundraisers } from '../actions/fundraiserActions';
 import Fundraiser from '../components/Fundraiser';
 import Message from '../components/Message';
@@ -160,13 +161,15 @@ const HomeScreen = () => {
               </Col>
             </Row>
             <Col>
-              <Button variant="outline-primary">
-                Start a
-                {' '}
-                <span style={{ textTransform: 'none' }}>
-                  SaveABuiz
-                </span>
-              </Button>
+              <LinkContainer to="/start-fundraiser">
+                <Button variant="outline-primary">
+                  Start a
+                  {' '}
+                  <span style={{ textTransform: 'none' }}>
+                    SaveABuiz
+                  </span>
+                </Button>
+              </LinkContainer>
             </Col>
           </Row>
         </Container>
