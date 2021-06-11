@@ -9,7 +9,7 @@ import { calculateProgress, numFormatter } from '../utils/commonFunctions';
 const Fundraiser = ({ fundraiser, isCard }) => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';
   const {
-    _id, image, title, shortDescription, description,
+    _id, image = '', title, shortDescription, description,
     collected = 0, goal = 0,
     donors, organizer,
   } = fundraiser;
@@ -178,7 +178,7 @@ const Fundraiser = ({ fundraiser, isCard }) => {
           <Col md={8}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h4>Comments (44)</h4>
+                <h4>Comments (5)</h4>
               </ListGroup.Item>
               { [1, 2, 3, 4, 5].map((item) => (
                 <ListGroup.Item className="py-3" key={item}>

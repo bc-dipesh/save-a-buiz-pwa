@@ -44,13 +44,18 @@ const StartFundraiserScreen = ({ history }) => {
 
   const dispatch = useDispatch();
   const { loading, error, fundraiser } = useSelector((state) => state.fundraiserCreate);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
+    if (!userInfo) {
+      history.push('/sign-in');
+    }
     if (fundraiser) {
       dispatch({ type: FUNDRAISER_CREATE_RESET });
       history.push(`fundraisers/${fundraiser._id}`);
     }
-  }, [fundraiser, loading, error, dispatch]);
+  }, [userInfo, fundraiser, loading, error, dispatch]);
 
   const submitCreateFundraiserForm = (e) => {
     e.preventDefault();
@@ -102,7 +107,7 @@ const StartFundraiserScreen = ({ history }) => {
             <Form.Label>Add a cover photo or video</Form.Label>
             {isImageUploading
               ? <Skeleton variant="text" />
-              : <Form.File label="A high-quality photo or video will help tell your story and build trust with donors." onChange={imageUploadHanlder} />}
+              : <Form.File label={image || 'A high-quality photo or video will help tell your story and build trust with donors.'} onChange={imageUploadHanlder} />}
           </Form.Group>
           <Form.Group controlId="fundraisingYouTubeVideoLink" className="mb-4">
             <InputGroup>
