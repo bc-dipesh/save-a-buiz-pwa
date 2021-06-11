@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { createFundraiser } from '../actions/fundraiserActions';
+import Message from '../components/Message';
 import { FUNDRAISER_CREATE_RESET } from '../constants/fundraiserConstants';
 
 const StartFundraiserScreen = ({ history }) => {
@@ -37,8 +38,13 @@ const StartFundraiserScreen = ({ history }) => {
       setImage(data);
       setIsImageUploading(false);
     } catch (error) {
-      console.error(error);
       setIsImageUploading(false);
+      (
+        <Container className="my-5">
+          <Message variant="danger">Something went wrong</Message>
+          <Button variant="outline-primary" onClick={() => window.location.reload()}>Refresh page ?</Button>
+        </Container>
+      );
     }
   };
 
@@ -68,6 +74,15 @@ const StartFundraiserScreen = ({ history }) => {
       youTubeVideoLink,
     }));
   };
+
+  if (error) {
+    return (
+      <Container className="my-5">
+        <Message variant="danger">Something went wrong</Message>
+        <Button variant="outline-primary" onClick={() => window.location.reload()}>Refresh page ?</Button>
+      </Container>
+    );
+  }
 
   return (
     <Container className="my-5">

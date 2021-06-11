@@ -42,14 +42,50 @@ const SearchBox = ({ history }) => {
   );
 };
 
-const Header = () => {
+const LoggedInUserLinks = ({ history, name, email }) => {
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
+    history.push('/sign-in');
   };
+
+  return (
+    <NavDropdown
+      title={name}
+      id={email}
+    >
+      <LinkContainer to="/users/profile">
+        <NavDropdown.Item>
+          Profile
+        </NavDropdown.Item>
+      </LinkContainer>
+      <NavDropdown.Item onClick={logoutHandler}>
+        Logout
+      </NavDropdown.Item>
+    </NavDropdown>
+  );
+};
+
+const LoggedOutUserLinks = () => <LinkContainer to="/sign-in"><Nav.Link>Sign in</Nav.Link></LinkContainer>;
+
+const AdminUserLinks = () => (
+  <NavDropdown title="Admin Panel" id="adminMenu">
+    <LinkContainer to="/admin/user-list">
+      <NavDropdown.Item>Users</NavDropdown.Item>
+    </LinkContainer>
+    <LinkContainer to="/admin/fundraiserList">
+      <NavDropdown.Item>Fundraisers</NavDropdown.Item>
+    </LinkContainer>
+  </NavDropdown>
+);
+
+const Header = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const isUserLoggedIn = () => userInfo;
+  const isUserAdmin = () => userInfo.isAdmin;
 
   return (
     <header>
@@ -93,33 +129,20 @@ const Header = () => {
                   </NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              {userInfo
+              {isUserLoggedIn()
                 ? (
-                  <NavDropdown
-                    title={userInfo.name}
-                    id={userInfo.email}
-                  >
-                    <LinkContainer to="/users/profile">
-                      <NavDropdown.Item>
-                        Profile
-                      </NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Route
+                    render={({ history }) => (
+                      <LoggedInUserLinks
+                        history={history}
+                        name={userInfo.name}
+                        email={userInfo.email}
+                      />
+                    )}
+                  />
                 )
-                : <LinkContainer to="/sign-in"><Nav.Link>Sign in</Nav.Link></LinkContainer>}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin Panel" id="adminMenu">
-                  <LinkContainer to="/admin/user-list">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/fundraiserList">
-                    <NavDropdown.Item>Fundraisers</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-              )}
+                : <LoggedOutUserLinks />}
+              {isUserLoggedIn() && isUserAdmin() && <AdminUserLinks />}
             </Nav>
             <Route render={({ history }) => <SearchBox history={history} />} />
           </Navbar.Collapse>
@@ -133,6 +156,14 @@ SearchBox.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+};
+
+LoggedInUserLinks.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  name: PropTypes.string,
+  email: PropTypes.string,
 };
 
 export default Header;
