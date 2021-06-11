@@ -23,6 +23,7 @@ const Fundraiser = ({ fundraiser, isCard }) => {
           <Card.Img
             variant="top"
             src={`${BASE_URL}/${image}`}
+            alt={title}
           />
         </Link>
         <Card.Body>
