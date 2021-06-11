@@ -2,8 +2,8 @@ import axios from 'axios';
 import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
-  USER_DELETE_SUCCESS,
-  USER_LIST_FAIL,
+  USER_DELETE_SUCCESS, USER_FUNDRAISER_FAIL, USER_FUNDRAISER_REQUEST,
+  USER_FUNDRAISER_SUCCESS, USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_RESET, USER_LIST_SUCCESS,
   USER_LOGIN_FAIL,
@@ -259,6 +259,40 @@ const deleteUserById = (id) => async (dispatch, getState) => {
   }
 };
 
+const getUserFundraiserList = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_FUNDRAISER_REQUEST,
+    });
+
+    const { userLogin: { userInfo } } = getState();
+
+    const {
+      data: { data: { fundraisers } },
+    } = await axios.get(
+      `${BASE_URL}/fundraisers`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      },
+    );
+
+    dispatch({
+      type: USER_FUNDRAISER_SUCCESS,
+      payload: fundraisers,
+    });
+  } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
+    dispatch({
+      type: USER_FUNDRAISER_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
 const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
@@ -267,5 +301,5 @@ const logout = () => (dispatch) => {
 
 export {
   register, login, logout, getUserProfile, updateUserProfile, getUserList,
-  updateUser, deleteUserById,
+  updateUser, deleteUserById, getUserFundraiserList,
 };

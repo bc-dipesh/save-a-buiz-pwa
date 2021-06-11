@@ -13,8 +13,7 @@ import {
   LegalContactInfoScreen,
   PageNotFoundScreen, StartFundraiserScreen,
   SupportedProvinceScreen,
-  UserEditScreen,
-  UserListScreen,
+  UserEditScreen, UserFundraiserScreen, UserListScreen,
   UserProfileScreen,
   UserRegisterScreen,
   UserSignInScreen,
@@ -75,7 +74,8 @@ function App() {
             <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
             <Route path="/start-fundraiser" component={StartFundraiserScreen} exact />
             <Route path="/sign-in" component={UserSignInScreen} exact />
-            <Route path="/users/profile" component={UserProfileScreen} exact />
+            <Route path="/user/profile" component={UserProfileScreen} exact />
+            <Route path="/user/fundraisers" component={UserFundraiserScreen} exact />
             <Route path="/register" component={UserRegisterScreen} exact />
             <Route path="/about" component={AboutScreen} exact />
             <Route path="/how-it-works" component={HowItWorksScreen} exact />

@@ -5,10 +5,8 @@ import {
   fundraiserCreateReducer, fundraiserDetailsReducer, fundraiserListReducer,
 } from './reducers/fundraiserReducers';
 import {
-  userLoginReducer, userProfileReducer, userRegisterReducer, userUpdateProfileReducer,
-  userListReducer,
-  userDeleteReducer,
-  userUpdateReducer,
+  userDeleteReducer, userFundraiserReducer, userListReducer, userLoginReducer,
+  userProfileReducer, userRegisterReducer, userUpdateProfileReducer, userUpdateReducer,
 } from './reducers/userReducers';
 
 const reducer = combineReducers({
@@ -18,6 +16,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
   userProfile: userProfileReducer,
+  userFundraiser: userFundraiserReducer,
   userUpdateProfile: userUpdateProfileReducer,
   userList: userListReducer,
   userUpdate: userUpdateReducer,

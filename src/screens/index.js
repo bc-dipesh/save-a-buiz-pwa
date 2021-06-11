@@ -9,6 +9,7 @@ import PageNotFoundScreen from './PageNotFoundScreen';
 import StartFundraiserScreen from './StartFundraiserScreen';
 import SupportedProvinceScreen from './SupportedProvinceScreen';
 import UserEditScreen from './UserEditScreen';
+import UserFundraiserScreen from './UserFundraiserScreen';
 import UserListScreen from './UserListScreen';
 import UserProfileScreen from './UserProfileScreen';
 import UserRegisterScreen from './UserRegisterScreen';
@@ -28,6 +29,7 @@ export {
   UserEditScreen,
   UserListScreen,
   UserProfileScreen,
+  UserFundraiserScreen,
   UserRegisterScreen,
   UserSignInScreen,
   StartFundraiserScreen,

@@ -55,11 +55,22 @@ const LoggedInUserLinks = ({ history, name, email }) => {
       title={name}
       id={email}
     >
-      <LinkContainer to="/users/profile">
+      <LinkContainer to="/user/fundraisers">
         <NavDropdown.Item>
-          Profile
+          Your fundraisers
         </NavDropdown.Item>
       </LinkContainer>
+      <NavDropdown.Item>
+        Donations you&apos;ve made
+      </NavDropdown.Item>
+      <LinkContainer to="/user/profile">
+        <NavDropdown.Item>
+          Account settings
+        </NavDropdown.Item>
+      </LinkContainer>
+      <NavDropdown.Item>
+        Start a new fundraiser
+      </NavDropdown.Item>
       <NavDropdown.Item onClick={logoutHandler}>
         Logout
       </NavDropdown.Item>
