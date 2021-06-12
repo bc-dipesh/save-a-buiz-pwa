@@ -68,9 +68,11 @@ const LoggedInUserLinks = ({ history, name, email }) => {
           Account settings
         </NavDropdown.Item>
       </LinkContainer>
-      <NavDropdown.Item>
-        Start a new fundraiser
-      </NavDropdown.Item>
+      <LinkContainer to="/start-fundraiser">
+        <NavDropdown.Item>
+          Start a new fundraiser
+        </NavDropdown.Item>
+      </LinkContainer>
       <NavDropdown.Item onClick={logoutHandler}>
         Logout
       </NavDropdown.Item>
