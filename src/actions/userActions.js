@@ -30,14 +30,18 @@ const axiosConfig = {
   },
 };
 
-const register = (name, email, password) => async (dispatch) => {
+const register = ({
+  name, email, mobilePhoneNumber, password,
+}) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
     const {
       data: { data },
     } = await axios.post(
       `${BASE_URL}/register`,
-      { name, email, password },
+      {
+        name, email, mobilePhoneNumber, password,
+      },
       axiosConfig,
     );
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });

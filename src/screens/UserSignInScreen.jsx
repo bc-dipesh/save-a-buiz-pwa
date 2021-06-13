@@ -37,7 +37,7 @@ const UserSignInScreen = ({ location, history }) => {
     }
   }, [history, userInfo, redirect]);
 
-  const submitLoginForm = (data) => {
+  const submitUserLoginForm = (data) => {
     dispatch(login(data.email, data.password));
   };
 
@@ -50,7 +50,7 @@ const UserSignInScreen = ({ location, history }) => {
       </Message>
       )}
       {loading && <Loader />}
-      <Form noValidate onSubmit={handleSubmit(submitLoginForm)} className="py-3">
+      <Form noValidate onSubmit={handleSubmit(submitUserLoginForm)} className="py-3">
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control type="email" name="email" placeholder="Enter email" {...register('email')} isInvalid={!!errors.email?.message} />
