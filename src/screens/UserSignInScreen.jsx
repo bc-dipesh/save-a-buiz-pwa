@@ -14,14 +14,14 @@ import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
-const loginSchema = yup.object().shape({
+const userLoginSchema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
 const UserSignInScreen = ({ location, history }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(userLoginSchema),
   });
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
