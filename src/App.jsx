@@ -26,12 +26,6 @@ function App() {
   const [waitingWorker, setWaitingWorker] = useState({});
   const { enqueueSnackbar } = useSnackbar();
 
-  const onServiceWorkerUpdate = (registration) => {
-    setWaitingWorker(registration && registration.waiting);
-    setIsNewVersionAvailable(true);
-    console.log(waitingWorker, isNewVersionAvailable);
-  };
-
   const updateServiceWorker = () => {
     if (waitingWorker) {
       waitingWorker.postMessage({ type: 'SKIP_WAITING' });
@@ -48,6 +42,12 @@ function App() {
       </Button>
     </>
   );
+
+  const onServiceWorkerUpdate = (registration) => {
+    setWaitingWorker(registration && registration.waiting);
+    setIsNewVersionAvailable(true);
+    console.log(waitingWorker, isNewVersionAvailable);
+  };
 
   // make app work offline
   serviceWorkerRegistration.register({ onUpdate: onServiceWorkerUpdate });

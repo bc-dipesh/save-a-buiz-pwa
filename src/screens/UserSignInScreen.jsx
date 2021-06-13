@@ -1,18 +1,28 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Button, Col, Form, Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
+const loginSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+});
+
 const UserSignInScreen = ({ location, history }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
@@ -27,9 +37,8 @@ const UserSignInScreen = ({ location, history }) => {
     }
   }, [history, userInfo, redirect]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(login(email, password));
+  const submitLoginForm = (data) => {
+    dispatch(login(data.email, data.password));
   };
 
   return (
@@ -41,15 +50,21 @@ const UserSignInScreen = ({ location, history }) => {
       </Message>
       )}
       {loading && <Loader />}
-      <Form onSubmit={submitHandler} className="py-3">
+      <Form noValidate onSubmit={handleSubmit(submitLoginForm)} className="py-3">
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Form.Control type="email" name="email" placeholder="Enter email" {...register('email')} isInvalid={!!errors.email?.message} />
+          <Form.Control.Feedback type="invalid">
+            {errors.email?.message}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="password" className="py-3">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Form.Control type="password" name="password" placeholder="Enter password" {...register('password')} isInvalid={!!errors.password?.message} />
+          <Form.Control.Feedback type="invalid">
+            {errors.password?.message}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Button type="submit" variant="outline-primary">Sign In</Button>
