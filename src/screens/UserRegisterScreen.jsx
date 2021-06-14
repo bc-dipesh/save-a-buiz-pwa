@@ -42,7 +42,6 @@ const UserRegisterScreen = ({ location, history }) => {
   }, [history, userInfo, redirect]);
 
   const submitUserRegistrationForm = (data) => {
-    console.log(data);
     dispatch(registerUser(data));
   };
 

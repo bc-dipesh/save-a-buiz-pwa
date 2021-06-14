@@ -16,9 +16,10 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
-  USER_UPDATE_FAIL,
-  USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST,
-  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_FAIL, USER_UPDATE_PASSWORD_FAIL,
+  USER_UPDATE_PASSWORD_REQUEST,
+  USER_UPDATE_PASSWORD_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
@@ -183,37 +184,37 @@ const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
-const getUserList = () => async (dispatch, getState) => {
+/**
+   * @desc    Update user password
+   * @route   PUT /api/v1/auth/update-password
+   * @access  Private
+   */
+const updateUserPassword = ({ currentPassword, newPassword }) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: USER_LIST_REQUEST,
+      type: USER_UPDATE_PASSWORD_REQUEST,
     });
 
     const { userLogin: { userInfo } } = getState();
 
-    const {
-      data: { data },
-    } = await axios.get(
-      `${USERS_ROUTE_BASE_URL}`,
+    await axios.put(
+      `${AUTH_ROUTE_BASE_URL}/update-password`,
+      { currentPassword, newPassword },
       {
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
       },
     );
 
-    const filteredUsers = data.filter((user) => user._id !== userInfo.user._id);
-
-    dispatch({
-      type: USER_LIST_SUCCESS,
-      payload: filteredUsers,
-    });
+    dispatch({ type: USER_UPDATE_PASSWORD_SUCCESS });
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
       ? error.response.data.data
       : error.response;
     dispatch({
-      type: USER_LIST_FAIL,
+      type: USER_UPDATE_PASSWORD_FAIL,
       payload: errorMessage || 'Something went wrong',
     });
   }
@@ -253,6 +254,42 @@ const updateUser = (user) => async (dispatch, getState) => {
       : error.response;
     dispatch({
       type: USER_UPDATE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
+const getUserList = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIST_REQUEST,
+    });
+
+    const { userLogin: { userInfo } } = getState();
+
+    const {
+      data: { data },
+    } = await axios.get(
+      `${USERS_ROUTE_BASE_URL}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      },
+    );
+
+    const filteredUsers = data.filter((user) => user._id !== userInfo.user._id);
+
+    dispatch({
+      type: USER_LIST_SUCCESS,
+      payload: filteredUsers,
+    });
+  } catch (error) {
+    const errorMessage = error.response && error.response.data.data
+      ? error.response.data.data
+      : error.response;
+    dispatch({
+      type: USER_LIST_FAIL,
       payload: errorMessage || 'Something went wrong',
     });
   }
@@ -331,5 +368,5 @@ const logout = () => (dispatch) => {
 
 export {
   register, login, logout, getUserProfile, updateUserProfile, getUserList,
-  updateUser, deleteUserById, getUserFundraiserList,
+  updateUser, deleteUserById, getUserFundraiserList, updateUserPassword,
 };
