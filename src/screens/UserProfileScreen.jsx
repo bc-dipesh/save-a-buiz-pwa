@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import React, { useEffect } from 'react';
 import {
   Button, Col, Container, Form, Row,
@@ -10,8 +11,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import 'yup-phone';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button as SnackbarButton } from '@material-ui/core';
 import { getUserProfile, updateUserProfile, updateUserPassword } from '../actions/userActions';
-import Message from '../components/Message';
+import {
+  enqueueSnackbar as enqueueSnackbarAction,
+  closeSnackbar as closeSnackbarAction,
+} from '../actions/snackbarActions';
 
 const userProfileSchema = yup.object().shape({
   name: yup.string().required('Please enter a valid name.'),
@@ -45,6 +50,22 @@ const UserProfileScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+        ),
+      },
+    });
+  };
+
   const userProfile = useSelector((state) => state.userProfile);
   const { loading, error, user } = userProfile;
 
@@ -59,15 +80,32 @@ const UserProfileScreen = ({ history }) => {
 
   useEffect(() => {
     if (!(!!userInfo?.token && !!userInfo?.user)) {
+      displaySnackbar('You are not signed in. Please sign in to access user profile page.', 'info');
       history.push('/sign-in');
-    } else if (user.name && user.email && user.mobilePhoneNumber) {
-      setUpdateUserProfileFormValue('name', user.name);
-      setUpdateUserProfileFormValue('email', user.email);
-      setUpdateUserProfileFormValue('mobilePhoneNumber', user.mobilePhoneNumber);
+    } else if (userInfo.user.name && userInfo.user.email && userInfo.user.mobilePhoneNumber) {
+      setUpdateUserProfileFormValue('name', userInfo.user.name);
+      setUpdateUserProfileFormValue('email', userInfo.user.email);
+      setUpdateUserProfileFormValue('mobilePhoneNumber', userInfo.user.mobilePhoneNumber);
     } else {
       dispatch(getUserProfile());
     }
-  }, [history, userInfo, user]);
+    if (isUserProfileUpdateSuccessful) {
+      displaySnackbar('User profile updated successfully.');
+    }
+    if (isUserPasswordUpdateSuccessful) {
+      displaySnackbar('User password updated successfully.');
+    }
+    if (error) {
+      displaySnackbar(error, 'error');
+    }
+  }, [
+    history,
+    userInfo,
+    user,
+    error,
+    isUserProfileUpdateSuccessful,
+    isUserPasswordUpdateSuccessful,
+  ]);
 
   const submitUpdateUserProfileForm = (data) => {
     dispatch(updateUserProfile(data));
@@ -88,17 +126,6 @@ const UserProfileScreen = ({ history }) => {
             {' '}
             User Profile
           </h2>
-          {error && (
-          <Message variant="danger">
-            {error}
-          </Message>
-          )}
-          {isUserProfileUpdateSuccessful && (
-          <Message variant="success">
-            User profile updated successfully.
-          </Message>
-          )}
-
           <Form
             noValidate
             onSubmit={handleSubmitUserProfileUpdate(submitUpdateUserProfileForm)}
@@ -137,17 +164,6 @@ const UserProfileScreen = ({ history }) => {
 
         <Col xs={12} sm={4}>
           <h2 className="mb-3">Update Password</h2>
-          {error && (
-          <Message variant="danger">
-            {error}
-          </Message>
-          )}
-          {isUserPasswordUpdateSuccessful && (
-          <Message variant="success">
-            User password updated successfully.
-          </Message>
-          )}
-
           <Form
             noValidate
             onSubmit={handleSubmitUserPasswordUpdate(submitUpdateUserPasswordForm)}

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
+import Notifier from './components/Notifier';
 import {
   AboutScreen,
   CommonQuestionScreen,
@@ -67,6 +68,7 @@ function App() {
         <ScrollToTop />
         <Header />
         <main>
+          <Notifier />
           <Switch>
             <Route path="/" component={HomeScreen} exact />
             <Route path="/search/:keyword" component={FundraiserListScreen} exact />

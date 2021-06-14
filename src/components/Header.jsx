@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
+import { Button as SnackbarButton } from '@material-ui/core';
 import React, { useState } from 'react';
 import {
   Button, Container,
@@ -10,6 +12,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route } from 'react-router-dom';
+import {
+  enqueueSnackbar as enqueueSnackbarAction,
+  closeSnackbar as closeSnackbarAction,
+} from '../actions/snackbarActions';
 import { logout } from '../actions/userActions';
 
 const SearchBox = ({ history }) => {
@@ -45,8 +51,25 @@ const SearchBox = ({ history }) => {
 const LoggedInUserLinks = ({ history, name, email }) => {
   const dispatch = useDispatch();
 
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+        ),
+      },
+    });
+  };
+
   const logoutHandler = () => {
     dispatch(logout());
+    displaySnackbar('You have successfully logged out from the app.');
     history.push('/sign-in');
   };
 

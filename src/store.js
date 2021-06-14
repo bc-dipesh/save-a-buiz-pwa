@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import {
   fundraiserCreateReducer, fundraiserDetailsReducer, fundraiserListReducer,
 } from './reducers/fundraiserReducers';
+import snackbarReducer from './reducers/snackbarReducers';
 import {
   userDeleteReducer, userFundraiserReducer, userListReducer, userLoginReducer,
   userProfileReducer, userRegisterReducer, userUpdatePasswordReducer, userUpdateProfileReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   userUpdatePassword: userUpdatePasswordReducer,
   userDelete: userDeleteReducer,
+  snackbar: snackbarReducer,
 });
 
 const userInfo = localStorage.getItem('userInfo');
@@ -31,6 +33,7 @@ const userInfoFromStorage = userInfo ? JSON.parse(userInfo) : null;
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
 };
+
 const middleware = [thunk];
 
 const store = createStore(

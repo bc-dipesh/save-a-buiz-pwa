@@ -9,10 +9,15 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { Button as SnackbarButton } from '@material-ui/core';
+import { v4 as uuidv4 } from 'uuid';
 import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
-import Message from '../components/Message';
+import {
+  enqueueSnackbar as enqueueSnackbarAction,
+  closeSnackbar as closeSnackbarAction,
+} from '../actions/snackbarActions';
 
 const userLoginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -28,14 +33,34 @@ const UserSignInScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+        ),
+      },
+    });
+  };
+
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
     if (!!userInfo?.token && !!userInfo?.user) {
+      displaySnackbar('You have successfully signed in to the app.');
       history.push(redirect);
     }
-  }, [history, userInfo, redirect]);
+    if (error) {
+      displaySnackbar(error, 'error');
+    }
+  }, [history, userInfo, redirect, error]);
 
   const submitUserLoginForm = (data) => {
     dispatch(login(data.email, data.password));
@@ -44,11 +69,6 @@ const UserSignInScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      {error && (
-      <Message variant="danger">
-        {String(error)}
-      </Message>
-      )}
       {loading && <Loader />}
       <Form noValidate onSubmit={handleSubmit(submitUserLoginForm)} className="py-3">
         <Form.Group controlId="email">

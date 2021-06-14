@@ -18,8 +18,10 @@ import {
   USER_REGISTER_SUCCESS,
   USER_UPDATE_FAIL, USER_UPDATE_PASSWORD_FAIL,
   USER_UPDATE_PASSWORD_REQUEST,
+  USER_UPDATE_PASSWORD_RESET,
   USER_UPDATE_PASSWORD_SUCCESS,
-  USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_RESET, USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
@@ -169,6 +171,8 @@ const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data,
     });
 
+    dispatch({ type: USER_UPDATE_PROFILE_RESET });
+
     // update userInfo in the local storage
     localStorage.removeItem('userInfo');
     userInfo.user = data;
@@ -209,6 +213,7 @@ const updateUserPassword = ({ currentPassword, newPassword }) => async (dispatch
     );
 
     dispatch({ type: USER_UPDATE_PASSWORD_SUCCESS });
+    dispatch({ type: USER_UPDATE_PASSWORD_RESET });
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
       ? error.response.data.data

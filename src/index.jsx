@@ -1,3 +1,4 @@
+import Fade from '@material-ui/core/Fade';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,7 +10,7 @@ import store from './store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <SnackbarProvider>
+    <SnackbarProvider TransitionComponent={Fade}>
       <App />
     </SnackbarProvider>
   </Provider>,
