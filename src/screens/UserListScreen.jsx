@@ -146,7 +146,7 @@ const UserListScreen = ({ history }) => {
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
 
-  const checkIsUserAdmin = () => userInfo && userInfo.isAdmin;
+  const checkIsUserAdmin = () => !!userInfo?.user && !!userInfo?.token && !!userInfo?.user.isAdmin;
 
   useEffect(() => {
     if (checkIsUserAdmin()) {

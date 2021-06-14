@@ -32,7 +32,7 @@ const UserSignInScreen = ({ location, history }) => {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo) {
+    if (!!userInfo?.token && !!userInfo?.user) {
       history.push(redirect);
     }
   }, [history, userInfo, redirect]);

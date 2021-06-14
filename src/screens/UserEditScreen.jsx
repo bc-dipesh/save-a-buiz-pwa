@@ -23,18 +23,16 @@ const UserEditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const checkIfUserIsEmptyOrDifferent = () => !user.name || user._id !== userId;
-
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       history.push('/admin/user-list');
-    } else if (checkIfUserIsEmptyOrDifferent()) {
-      dispatch(getUserProfile(userId));
-    } else {
+    } else if (user?._id === userId) {
       setName(user.name);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
+    } else {
+      dispatch(getUserProfile(userId));
     }
   }, [dispatch, user, userId, successUpdate]);
 

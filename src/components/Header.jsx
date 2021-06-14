@@ -97,8 +97,8 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const isUserLoggedIn = () => userInfo;
-  const isUserAdmin = () => userInfo.isAdmin;
+  const isUserLoggedIn = () => !!userInfo?.token && !!userInfo?.user;
+  const isUserAdmin = () => !!userInfo?.user.isAdmin;
 
   return (
     <header>
@@ -148,8 +148,8 @@ const Header = () => {
                     render={({ history }) => (
                       <LoggedInUserLinks
                         history={history}
-                        name={userInfo.name}
-                        email={userInfo.email}
+                        name={userInfo.user.name}
+                        email={userInfo.user.email}
                       />
                     )}
                   />

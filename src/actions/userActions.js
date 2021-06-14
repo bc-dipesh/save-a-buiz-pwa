@@ -12,7 +12,8 @@ import {
   USER_LOGOUT,
   USER_PROFILE_FAIL,
   USER_PROFILE_REQUEST,
-  USER_PROFILE_SUCCESS, USER_REGISTER_FAIL,
+  USER_PROFILE_SUCCESS,
+  USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_UPDATE_FAIL,
@@ -22,7 +23,10 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
 
-const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+// const AUTH_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
+// const USERS_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+const AUTH_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/auth';
+const USERS_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/users';
 
 const axiosConfig = {
   headers: {
@@ -38,7 +42,7 @@ const register = ({
     const {
       data: { data },
     } = await axios.post(
-      `${BASE_URL}/register`,
+      `${AUTH_ROUTE_BASE_URL}/register`,
       {
         name, email, mobilePhoneNumber, password,
       },
@@ -67,7 +71,7 @@ const login = (email, password) => async (dispatch) => {
     const {
       data: { data },
     } = await axios.post(
-      `${BASE_URL}/login`,
+      `${AUTH_ROUTE_BASE_URL}/login`,
       { email, password },
       axiosConfig,
     );
@@ -96,22 +100,39 @@ const getUserProfile = (id) => async (dispatch, getState) => {
 
     const { userLogin: { userInfo } } = getState();
 
-    const {
-      data: { data },
-    } = await axios.get(
-      `${BASE_URL}/${id}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userInfo.token}`,
+    if (!id) {
+      const {
+        data: { data },
+      } = await axios.get(
+        `${AUTH_ROUTE_BASE_URL}/profile`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userInfo.token}`,
+          },
         },
-      },
-    );
-
-    dispatch({
-      type: USER_PROFILE_SUCCESS,
-      payload: data,
-    });
+      );
+      dispatch({
+        type: USER_PROFILE_SUCCESS,
+        payload: data,
+      });
+    } else {
+      const {
+        data: { data },
+      } = await axios.get(
+        `${USERS_ROUTE_BASE_URL}/${id}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        },
+      );
+      dispatch({
+        type: USER_PROFILE_SUCCESS,
+        payload: data,
+      });
+    }
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
       ? error.response.data.data
@@ -134,7 +155,7 @@ const updateUserProfile = (user) => async (dispatch, getState) => {
     const {
       data: { data },
     } = await axios.put(
-      `${BASE_URL}/profile`,
+      `${AUTH_ROUTE_BASE_URL}/profile`,
       user,
       {
         headers: {
@@ -148,6 +169,11 @@ const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
+
+    // update userInfo in the local storage
+    localStorage.removeItem('userInfo');
+    userInfo.user = data;
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
       ? error.response.data.data
@@ -168,9 +194,9 @@ const getUserList = () => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
 
     const {
-      data: { data: { users } },
+      data: { data },
     } = await axios.get(
-      `${BASE_URL}`,
+      `${USERS_ROUTE_BASE_URL}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -178,9 +204,11 @@ const getUserList = () => async (dispatch, getState) => {
       },
     );
 
+    const filteredUsers = data.filter((user) => user._id !== userInfo.user._id);
+
     dispatch({
       type: USER_LIST_SUCCESS,
-      payload: users,
+      payload: filteredUsers,
     });
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
@@ -204,7 +232,7 @@ const updateUser = (user) => async (dispatch, getState) => {
     const {
       data: { data },
     } = await axios.put(
-      `${BASE_URL}/${user._id}`,
+      `${USERS_ROUTE_BASE_URL}/${user._id}`,
       user,
       {
         headers: {
@@ -241,7 +269,7 @@ const deleteUserById = (id) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
 
     await axios.delete(
-      `${BASE_URL}/${id}`,
+      `${USERS_ROUTE_BASE_URL}/${id}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -272,9 +300,9 @@ const getUserFundraiserList = () => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
 
     const {
-      data: { data: { fundraisers } },
+      data: { data },
     } = await axios.get(
-      `${BASE_URL}/fundraisers`,
+      `${USERS_ROUTE_BASE_URL}/${userInfo.user._id}/fundraisers`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -284,7 +312,7 @@ const getUserFundraiserList = () => async (dispatch, getState) => {
 
     dispatch({
       type: USER_FUNDRAISER_SUCCESS,
-      payload: fundraisers,
+      payload: data,
     });
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
