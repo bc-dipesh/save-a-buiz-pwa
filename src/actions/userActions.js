@@ -23,10 +23,8 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
 
-// const AUTH_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
-// const USERS_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
-const AUTH_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/auth';
-const USERS_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/users';
+const AUTH_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
+const USERS_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
 
 const axiosConfig = {
   headers: {
