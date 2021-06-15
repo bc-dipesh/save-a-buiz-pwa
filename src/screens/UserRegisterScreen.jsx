@@ -9,16 +9,21 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import 'yup-phone';
+import { Button as SnackbarButton } from '@material-ui/core';
+import { v4 as uuidv4 } from 'uuid';
 import { register as registerUser } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
-import Message from '../components/Message';
+import {
+  enqueueSnackbar as enqueueSnackbarAction,
+  closeSnackbar as closeSnackbarAction,
+} from '../actions/snackbarActions';
+import { mobilePhoneNumberRegEx } from '../utils/regex';
 
 const userRegisterSchema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
-  mobilePhoneNumber: yup.string().phone().required(),
+  mobilePhoneNumber: yup.string().matches(mobilePhoneNumberRegEx),
   password: yup.string().required(),
   confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
 });
@@ -32,14 +37,34 @@ const UserRegisterScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+        ),
+      },
+    });
+  };
+
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
+      displaySnackbar('You have successfully registered to the app.');
       history.push(redirect);
     }
-  }, [history, userInfo, redirect]);
+    if (error) {
+      displaySnackbar(error, 'error');
+    }
+  }, [history, userInfo, redirect, error]);
 
   const submitUserRegistrationForm = (data) => {
     dispatch(registerUser(data));
@@ -48,11 +73,6 @@ const UserRegisterScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Register</h1>
-      {error && (
-      <Message variant="danger">
-        {String(error)}
-      </Message>
-      )}
       {loading && <Loader />}
       <Form noValidate onSubmit={handleSubmit(submitUserRegistrationForm)} className="py-3">
         <Form.Group controlId="name">

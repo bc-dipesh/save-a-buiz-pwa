@@ -3,9 +3,15 @@ import React, { useEffect } from 'react';
 import { Button, Container, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
+import { Button as SnackbarButton } from '@material-ui/core';
 import { deleteUserById, getUserList } from '../actions/userActions';
 import Message from '../components/Message';
 import SkeletonUserListTable from '../components/skeletons/SkeletonUserListTable';
+import {
+  enqueueSnackbar as enqueueSnackbarAction,
+  closeSnackbar as closeSnackbarAction,
+} from '../actions/snackbarActions';
 
 const Children = ({ loading, error, users }) => {
   const dispatch = useDispatch();
@@ -139,6 +145,23 @@ const Children = ({ loading, error, users }) => {
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
+
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+        ),
+      },
+    });
+  };
+
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
   const userLogin = useSelector((state) => state.userLogin);
@@ -149,6 +172,9 @@ const UserListScreen = ({ history }) => {
   const checkIsUserAdmin = () => !!userInfo?.user && !!userInfo?.token && !!userInfo?.user.isAdmin;
 
   useEffect(() => {
+    if (successDelete) {
+      displaySnackbar('User successfully deleted.');
+    }
     if (checkIsUserAdmin()) {
       dispatch(getUserList());
     } else {

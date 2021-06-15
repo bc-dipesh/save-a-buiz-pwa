@@ -1,5 +1,6 @@
 import {
   USER_DELETE_FAIL, USER_DELETE_REQUEST,
+  USER_DELETE_RESET,
   USER_DELETE_SUCCESS, USER_FUNDRAISER_FAIL, USER_FUNDRAISER_REQUEST,
   USER_FUNDRAISER_SUCCESS, USER_LIST_FAIL, USER_LIST_REQUEST,
   USER_LIST_RESET, USER_LIST_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST,
@@ -123,6 +124,8 @@ const userDeleteReducer = (state = {}, action) => {
       return { loading: true };
     case USER_DELETE_SUCCESS:
       return { loading: false, success: true };
+    case USER_DELETE_RESET:
+      return { };
     case USER_DELETE_FAIL:
       return { loading: false, error: action.payload };
     default:

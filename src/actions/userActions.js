@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
+  USER_DELETE_RESET,
   USER_DELETE_SUCCESS, USER_FUNDRAISER_FAIL, USER_FUNDRAISER_REQUEST,
   USER_FUNDRAISER_SUCCESS, USER_LIST_FAIL,
   USER_LIST_REQUEST,
@@ -34,7 +35,11 @@ const axiosConfig = {
     'Content-Type': 'application/json',
   },
 };
-
+/**
+ * Create a user for the app.
+ *
+ * @param  {} user The user to register.
+ */
 const register = ({
   name, email, mobilePhoneNumber, password,
 }) => async (dispatch) => {
@@ -62,7 +67,12 @@ const register = ({
     });
   }
 };
-
+/**
+ * Login user to the app.
+ *
+ * @param  {} email     Email address of the user.
+ * @param  {} password  Password of the user.
+ */
 const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -92,7 +102,12 @@ const login = (email, password) => async (dispatch) => {
     });
   }
 };
-
+/**
+ * Get user profile for the currently signed in user
+ * or for the user with the matching id provided.
+ *
+ * @param  {} [id]  The id of the user to get the profile.
+ */
 const getUserProfile = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -145,6 +160,11 @@ const getUserProfile = (id) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Update currently signed in user profile.
+ *
+ * @param  {} user  The user to be updated.
+ */
 const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -189,10 +209,10 @@ const updateUserProfile = (user) => async (dispatch, getState) => {
 };
 
 /**
-   * @desc    Update user password
-   * @route   PUT /api/v1/auth/update-password
-   * @access  Private
-   */
+ * Update user password.
+ *
+ * @param  {} password  Object with currentPassword and newPassword.
+ */
 const updateUserPassword = ({ currentPassword, newPassword }) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -225,6 +245,11 @@ const updateUserPassword = ({ currentPassword, newPassword }) => async (dispatch
   }
 };
 
+/**
+ * Update other user profile by admins.
+ *
+ * @param  {} user  The user to be updated.
+ */
 const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -264,6 +289,12 @@ const updateUser = (user) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Get list of all the users registered
+ * to the app.
+ * Note: This list will not include admins account.
+ *
+ */
 const getUserList = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -283,7 +314,7 @@ const getUserList = () => async (dispatch, getState) => {
       },
     );
 
-    const filteredUsers = data.filter((user) => user._id !== userInfo.user._id);
+    const filteredUsers = data.filter((user) => user.isAdmin !== userInfo.user.isAdmin);
 
     dispatch({
       type: USER_LIST_SUCCESS,
@@ -300,6 +331,11 @@ const getUserList = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Delete a user from the app.
+ *
+ * @param  {} id  The id of the user to be deleted.
+ */
 const deleteUserById = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -317,9 +353,8 @@ const deleteUserById = (id) => async (dispatch, getState) => {
       },
     );
 
-    dispatch({
-      type: USER_DELETE_SUCCESS,
-    });
+    dispatch({ type: USER_DELETE_SUCCESS });
+    dispatch({ type: USER_DELETE_RESET });
   } catch (error) {
     const errorMessage = error.response && error.response.data.data
       ? error.response.data.data
@@ -331,6 +366,11 @@ const deleteUserById = (id) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Get list of fundraiser created by
+ * the currently signed in user.
+ *
+ */
 const getUserFundraiserList = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -365,6 +405,10 @@ const getUserFundraiserList = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Removes userInfo from local storage
+ * that logs out user from the app.
+ */
 const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });

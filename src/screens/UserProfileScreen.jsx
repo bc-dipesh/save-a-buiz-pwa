@@ -1,17 +1,18 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useEffect } from 'react';
 import {
-  Button, Col, Container, Form, Row,
+  Alert, Button, Col, Container, Form, Row,
 } from 'react-bootstrap';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import 'yup-phone';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button as SnackbarButton } from '@material-ui/core';
+import { mobilePhoneNumberRegEx } from '../utils/regex';
 import { getUserProfile, updateUserProfile, updateUserPassword } from '../actions/userActions';
 import {
   enqueueSnackbar as enqueueSnackbarAction,
@@ -21,7 +22,7 @@ import {
 const userProfileSchema = yup.object().shape({
   name: yup.string().required('Please enter a valid name.'),
   email: yup.string().email().required('Please enter a valid email address.'),
-  mobilePhoneNumber: yup.string().phone().required('Please enter a valid mobile phone number.'),
+  mobilePhoneNumber: yup.string().matches(mobilePhoneNumberRegEx),
 });
 
 const userPasswordSchema = yup.object().shape({
@@ -143,7 +144,19 @@ const UserProfileScreen = ({ history }) => {
             <Form.Group controlId="email" className="my-3">
               <Form.Label>Email Address</Form.Label>
               { loading ? <Skeleton variant="text" />
-                : <Form.Control type="email" name="email" placeholder="Enter email" {...registerUpdateUserProfile('email')} isInvalid={!!updateUserProfileErrors.email?.message} />}
+                : !userInfo.user.isEmailConfirmed
+                  ? (
+                    <Alert variant="info">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation" viewBox="0 0 16 16">
+                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z" />
+                      </svg>
+                      {' '}
+                      We&apos;ve sent you a email verification link to the email address
+                      you provided. Please verify your email then
+                      logout and sign in again after email verification.
+                    </Alert>
+                  )
+                  : <Form.Control type="email" name="email" placeholder="Enter email" {...registerUpdateUserProfile('email')} isInvalid={!!updateUserProfileErrors.email?.message} />}
               <Form.Control.Feedback type="invalid">
                 {updateUserProfileErrors.email?.message}
               </Form.Control.Feedback>
