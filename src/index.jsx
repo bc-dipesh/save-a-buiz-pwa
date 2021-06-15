@@ -9,10 +9,10 @@ import './index.css';
 import store from './store';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <SnackbarProvider TransitionComponent={Fade}>
-      <App />
-    </SnackbarProvider>
-  </Provider>,
-  document.getElementById('root'),
+	<Provider store={store}>
+		<SnackbarProvider TransitionComponent={Fade}>
+			<App />
+		</SnackbarProvider>
+	</Provider>,
+	document.getElementById('root')
 );

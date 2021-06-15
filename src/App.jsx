@@ -7,93 +7,166 @@ import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 import Notifier from './components/Notifier';
 import {
-  AboutScreen,
-  CommonQuestionScreen,
-  FundraiserListScreen, FundraiserScreen, HomeScreen,
-  HowItWorksScreen,
-  LegalContactInfoScreen,
-  PageNotFoundScreen, StartFundraiserScreen,
-  SupportedProvinceScreen,
-  UserEditScreen, UserFundraiserScreen, UserListScreen,
-  UserProfileScreen,
-  UserRegisterScreen,
-  UserSignInScreen,
-  WhatIsCrowdfundingScreen,
+	AboutScreen,
+	CommonQuestionScreen,
+	FundraiserListScreen,
+	FundraiserScreen,
+	HomeScreen,
+	HowItWorksScreen,
+	LegalContactInfoScreen,
+	PageNotFoundScreen,
+	StartFundraiserScreen,
+	SupportedProvinceScreen,
+	UserEditScreen,
+	UserFundraiserScreen,
+	UserListScreen,
+	UserProfileScreen,
+	UserRegisterScreen,
+	UserSignInScreen,
+	WhatIsCrowdfundingScreen,
 } from './screens';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 function App() {
-  const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
-  const [waitingWorker, setWaitingWorker] = useState({});
-  const { enqueueSnackbar } = useSnackbar();
+	const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
+	const [waitingWorker, setWaitingWorker] = useState({});
+	const { enqueueSnackbar } = useSnackbar();
 
-  const updateServiceWorker = () => {
-    if (waitingWorker) {
-      waitingWorker.postMessage({ type: 'SKIP_WAITING' });
-    }
-    setIsNewVersionAvailable(false);
-    window.location.reload();
-  };
+	const updateServiceWorker = () => {
+		if (waitingWorker) {
+			waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+		}
+		setIsNewVersionAvailable(false);
+		window.location.reload();
+	};
 
-  // render the snackbar button
-  const refreshAction = () => (
-    <>
-      <Button style={{ color: 'cyan' }} className="snackbar-button" size="small" onClick={updateServiceWorker}>
-        Refresh
-      </Button>
-    </>
-  );
+	// render the snackbar button
+	const refreshAction = () => (
+		<>
+			<Button
+				style={{ color: 'cyan' }}
+				className="snackbar-button"
+				size="small"
+				onClick={updateServiceWorker}
+			>
+				Refresh
+			</Button>
+		</>
+	);
 
-  const onServiceWorkerUpdate = (registration) => {
-    setWaitingWorker(registration && registration.waiting);
-    setIsNewVersionAvailable(true);
-    console.log(waitingWorker, isNewVersionAvailable);
-  };
+	const onServiceWorkerUpdate = (registration) => {
+		setWaitingWorker(registration && registration.waiting);
+		setIsNewVersionAvailable(true);
+		console.log(waitingWorker, isNewVersionAvailable);
+	};
 
-  // make app work offline
-  serviceWorkerRegistration.register({ onUpdate: onServiceWorkerUpdate });
+	// make app work offline
+	serviceWorkerRegistration.register({ onUpdate: onServiceWorkerUpdate });
 
-  // show snackbar with refresh button
-  if (isNewVersionAvailable) {
-    enqueueSnackbar('A new version of the app is available. Please refresh the page to see latest content', {
-      persist: true,
-      variant: 'default',
-      action: refreshAction(),
-    });
-  }
+	// show snackbar with refresh button
+	if (isNewVersionAvailable) {
+		enqueueSnackbar(
+			'A new version of the app is available. Please refresh the page to see latest content',
+			{
+				persist: true,
+				variant: 'default',
+				action: refreshAction(),
+			}
+		);
+	}
 
-  return (
-    <>
-      <Router>
-        <ScrollToTop />
-        <Header />
-        <main>
-          <Notifier />
-          <Switch>
-            <Route path="/" component={HomeScreen} exact />
-            <Route path="/search/:keyword" component={FundraiserListScreen} exact />
-            <Route path="/fundraisers" component={FundraiserListScreen} exact />
-            <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
-            <Route path="/start-fundraiser" component={StartFundraiserScreen} exact />
-            <Route path="/sign-in" component={UserSignInScreen} exact />
-            <Route path="/user/profile" component={UserProfileScreen} exact />
-            <Route path="/user/fundraisers" component={UserFundraiserScreen} exact />
-            <Route path="/register" component={UserRegisterScreen} exact />
-            <Route path="/about" component={AboutScreen} exact />
-            <Route path="/how-it-works" component={HowItWorksScreen} exact />
-            <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
-            <Route path="/legal" component={LegalContactInfoScreen} exact />
-            <Route path="/common-questions" component={CommonQuestionScreen} exact />
-            <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
-            <Route path="/admin/user-list" component={UserListScreen} exact />
-            <Route path="/admin/user/:id/edit" component={UserEditScreen} exact />
-            <Route component={PageNotFoundScreen} />
-          </Switch>
-        </main>
-        <Footer />
-      </Router>
-    </>
-  );
+	return (
+		<>
+			<Router>
+				<ScrollToTop />
+				<Header />
+				<main>
+					<Notifier />
+					<Switch>
+						<Route path="/" component={HomeScreen} exact />
+						<Route
+							path="/search/:keyword"
+							component={FundraiserListScreen}
+							exact
+						/>
+						<Route
+							path="/fundraisers"
+							component={FundraiserListScreen}
+							exact
+						/>
+						<Route
+							path="/fundraisers/:id"
+							component={FundraiserScreen}
+							exact
+						/>
+						<Route
+							path="/start-fundraiser"
+							component={StartFundraiserScreen}
+							exact
+						/>
+						<Route
+							path="/sign-in"
+							component={UserSignInScreen}
+							exact
+						/>
+						<Route
+							path="/user/profile"
+							component={UserProfileScreen}
+							exact
+						/>
+						<Route
+							path="/user/fundraisers"
+							component={UserFundraiserScreen}
+							exact
+						/>
+						<Route
+							path="/register"
+							component={UserRegisterScreen}
+							exact
+						/>
+						<Route path="/about" component={AboutScreen} exact />
+						<Route
+							path="/how-it-works"
+							component={HowItWorksScreen}
+							exact
+						/>
+						<Route
+							path="/what-is-crowdfunding"
+							component={WhatIsCrowdfundingScreen}
+							exact
+						/>
+						<Route
+							path="/legal"
+							component={LegalContactInfoScreen}
+							exact
+						/>
+						<Route
+							path="/common-questions"
+							component={CommonQuestionScreen}
+							exact
+						/>
+						<Route
+							path="/supported-provinces"
+							component={SupportedProvinceScreen}
+							exact
+						/>
+						<Route
+							path="/admin/user-list"
+							component={UserListScreen}
+							exact
+						/>
+						<Route
+							path="/admin/user/:id/edit"
+							component={UserEditScreen}
+							exact
+						/>
+						<Route component={PageNotFoundScreen} />
+					</Switch>
+				</main>
+				<Footer />
+			</Router>
+		</>
+	);
 }
 
 export default withSnackbar(App);
