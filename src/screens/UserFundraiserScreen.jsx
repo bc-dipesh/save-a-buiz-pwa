@@ -11,7 +11,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { Typography } from '@material-ui/core';
 import { getUserFundraiserList } from '../actions/userActions';
 import Message from '../components/Message';
-import { isUserLoggedIn, differenceFromCurrentDate } from '../utils/commonFunctions';
+import { differenceFromCurrentDate } from '../utils/commonFunctions';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {
@@ -47,7 +47,13 @@ const Children = ({ loading, error, fundraisers }) => {
           } = fundraiser;
           const fundraiserCreatedAt = differenceFromCurrentDate(createdAt);
           return (
-            <Col key={_id}>
+            <Col
+              className="my-3"
+              sm={12}
+              md={4}
+              lg={3}
+              key={_id}
+            >
               <Card>
                 <Link to={`/fundraisers/${_id}`}>
                   <Card.Img
@@ -95,7 +101,7 @@ const UserFundraiserScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isUserLoggedIn(userInfo)) {
+    if (!(!!userInfo?.token && !!userInfo?.user)) {
       history.push('/sign-in');
     } else {
       dispatch(getUserFundraiserList());

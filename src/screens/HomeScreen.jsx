@@ -22,7 +22,7 @@ const Children = ({ loading, error, fundraisers }) => {
     return fundraisers.map((fundraiser) => (
       <Col
         key={fundraiser._id}
-        className="py-3"
+        className="my-3"
         sm={12}
         md={4}
         lg={3}
