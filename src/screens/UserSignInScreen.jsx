@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
-  Button, Col, Form, Row,
+  Button, Col, Form, Row, Spinner,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,6 @@ import { Button as SnackbarButton } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
-import Loader from '../components/Loader';
 import {
   enqueueSnackbar as enqueueSnackbarAction,
   closeSnackbar as closeSnackbarAction,
@@ -69,7 +68,6 @@ const UserSignInScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      {loading && <Loader />}
       <Form noValidate onSubmit={handleSubmit(submitUserLoginForm)} className="py-3">
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -87,7 +85,19 @@ const UserSignInScreen = ({ location, history }) => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button type="submit" variant="outline-primary">Sign In</Button>
+        <Button type="submit" variant="outline-primary">
+          {loading && (
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+          )}
+          {' '}
+          Sign In
+        </Button>
       </Form>
 
       <Row className="py-3">

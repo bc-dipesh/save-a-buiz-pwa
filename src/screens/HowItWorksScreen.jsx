@@ -10,7 +10,8 @@ const HowItWorksScreen = () => (
       <Row>
         <h1 className="pb-3">How SaveABuizWorks</h1>
         <p>
-          SaveABuiz is the best place to fundraise, whether you are an individual,
+          SaveABuiz is the best place to create fundraiser and raise funds,
+          whether you are an individual,
           group, or organization.
         </p>
       </Row>

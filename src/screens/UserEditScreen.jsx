@@ -3,7 +3,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
-  Button, Row, Col, Container, Form,
+  Button, Row, Col, Container, Form, Spinner,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -118,7 +118,19 @@ const UserEditScreen = ({ match, history }) => {
               </Row>
             </Form.Group>
 
-            <Button type="submit" variant="outline-primary">Update Profile</Button>
+            <Button type="submit" variant="outline-primary">
+              {loadingUpdate && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              )}
+              {' '}
+              Update Profile
+            </Button>
           </Form>
         </FormContainer>
       </Container>

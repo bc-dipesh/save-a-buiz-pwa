@@ -28,7 +28,7 @@ const Fundraiser = ({ fundraiser, isCard }) => {
         </Link>
         <Card.Body>
           <Card.Title>
-            <h5>{title}</h5>
+            <h2 className="h5">{title}</h2>
           </Card.Title>
           <Card.Text>
             {shortDescription}
