@@ -1,22 +1,14 @@
 import { Button } from '@material-ui/core';
 import { useSnackbar, withSnackbar } from 'notistack';
-import React, { useState, Suspense, lazy } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import ScrollToTop from './components/ScrollToTop';
+import Loader from './components/Loader';
 import Notifier from './components/Notifier';
-import {
-  FundraiserListScreen,
-  FundraiserScreen,
-  HomeScreen,
-  PageNotFoundScreen,
-  StartFundraiserScreen,
-  SupportedProvinceScreen,
-  UserSignInScreen,
-  UserRegisterScreen,
-} from './screens';
+import ScrollToTop from './components/ScrollToTop';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
+const PageNotFoundScreen = lazy(() => import('./screens/PageNotFoundScreen'));
 const Footer = lazy(() => import('./components/Footer'));
 const AboutScreen = lazy(() => import('./screens/AboutScreen'));
 const UserProfileScreen = lazy(() => import('./screens/UserProfileScreen'));
@@ -27,6 +19,13 @@ const CommonQuestionScreen = lazy(() => import('./screens/CommonQuestionScreen')
 const LegalContactInfoScreen = lazy(() => import('./screens/LegalContactInfoScreen'));
 const WhatIsCrowdfundingScreen = lazy(() => import('./screens/WhatIsCrowdfundingScreen'));
 const UserFundraiserScreen = lazy(() => import('./screens/UserFundraiserScreen'));
+const FundraiserListScreen = lazy(() => import('./screens/FundraiserListScreen'));
+const UserSignInScreen = lazy(() => import('./screens/UserSignInScreen'));
+const UserRegisterScreen = lazy(() => import('./screens/UserRegisterScreen'));
+const SupportedProvinceScreen = lazy(() => import('./screens/SupportedProvinceScreen'));
+const StartFundraiserScreen = lazy(() => import('./screens/StartFundraiserScreen'));
+const HomeScreen = lazy(() => import('./screens/HomeScreen'));
+const FundraiserScreen = lazy(() => import('./screens/FundraiserScreen'));
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -83,17 +82,16 @@ function App() {
         <Header />
         <main>
           <Notifier />
-          <Switch>
-            <Route path="/" component={HomeScreen} exact />
-            <Route path="/search/:keyword" component={FundraiserListScreen} exact />
-            <Route path="/fundraisers" component={FundraiserListScreen} exact />
-            <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
-            <Route path="/start-fundraiser" component={StartFundraiserScreen} exact />
-            <Route path="/sign-in" component={UserSignInScreen} exact />
-            <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
-            <Route path="/register" component={UserRegisterScreen} exact />
-
-            <Suspense fallback={<h1>Loading...</h1>}>
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Route path="/" component={HomeScreen} exact />
+              <Route path="/search/:keyword" component={FundraiserListScreen} exact />
+              <Route path="/fundraisers" component={FundraiserListScreen} exact />
+              <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
+              <Route path="/start-fundraiser" component={StartFundraiserScreen} exact />
+              <Route path="/sign-in" component={UserSignInScreen} exact />
+              <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
+              <Route path="/register" component={UserRegisterScreen} exact />
               <Route path="/about" component={AboutScreen} exact />
               <Route path="/user/profile" component={UserProfileScreen} exact />
               <Route path="/user/fundraisers" component={UserFundraiserScreen} exact />
@@ -103,11 +101,11 @@ function App() {
               <Route path="/common-questions" component={CommonQuestionScreen} exact />
               <Route path="/admin/user-list" component={UserListScreen} exact />
               <Route path="/admin/user/:id/edit" component={UserEditScreen} exact />
-            </Suspense>
-            <Route component={PageNotFoundScreen} />
-          </Switch>
+              <Route component={PageNotFoundScreen} />
+            </Switch>
+          </Suspense>
         </main>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={null}>
           <Footer />
         </Suspense>
       </Router>
