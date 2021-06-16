@@ -1,25 +1,34 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
-import React, { useEffect } from 'react';
-import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
-import Skeleton from '@material-ui/lab/Skeleton';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button as SnackbarButton } from '@material-ui/core';
-import { mobilePhoneNumberRegEx } from '../utils/regex';
+import Skeleton from '@material-ui/lab/Skeleton';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import {
+	Alert,
+	Button,
+	Col,
+	Container,
+	Form,
+	Row,
+	Spinner,
+} from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import * as yup from 'yup';
+import {
+	closeSnackbar as closeSnackbarAction,
+	enqueueSnackbar as enqueueSnackbarAction,
+} from '../actions/snackbarActions';
 import {
 	getUserProfile,
-	updateUserProfile,
 	updateUserPassword,
+	updateUserProfile,
 } from '../actions/userActions';
-import {
-	enqueueSnackbar as enqueueSnackbarAction,
-	closeSnackbar as closeSnackbarAction,
-} from '../actions/snackbarActions';
+import { checkIsInternetConnected } from '../utils/commonFunctions';
+import { mobilePhoneNumberRegEx } from '../utils/regex';
 
 const userProfileSchema = yup.object().shape({
 	name: yup.string().required('Please enter a valid name.'),
@@ -86,10 +95,18 @@ const UserProfileScreen = ({ history }) => {
 	const { userInfo } = userLogin;
 
 	const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-	const { success: isUserProfileUpdateSuccessful } = userUpdateProfile;
+	const {
+		loading: loadingProfileUpdate,
+		success: isUserProfileUpdateSuccessful,
+		error: profileUpdateError,
+	} = userUpdateProfile;
 
 	const userUpdatePassword = useSelector((state) => state.userUpdatePassword);
-	const { success: isUserPasswordUpdateSuccessful } = userUpdatePassword;
+	const {
+		loading: loadingPasswordUpdate,
+		success: isUserPasswordUpdateSuccessful,
+		error: passwordUpdateError,
+	} = userUpdatePassword;
 
 	useEffect(() => {
 		if (!(!!userInfo?.token && !!userInfo?.user)) {
@@ -118,8 +135,11 @@ const UserProfileScreen = ({ history }) => {
 		if (isUserPasswordUpdateSuccessful) {
 			displaySnackbar('User password updated successfully.');
 		}
-		if (error) {
-			displaySnackbar(error, 'error');
+		if (error || profileUpdateError || passwordUpdateError) {
+			displaySnackbar(
+				error || profileUpdateError || passwordUpdateError,
+				'error'
+			);
 		}
 	}, [
 		history,
@@ -128,14 +148,30 @@ const UserProfileScreen = ({ history }) => {
 		error,
 		isUserProfileUpdateSuccessful,
 		isUserPasswordUpdateSuccessful,
+		profileUpdateError,
+		passwordUpdateError,
 	]);
 
-	const submitUpdateUserProfileForm = (data) => {
-		dispatch(updateUserProfile(data));
+	const submitUpdateUserProfileForm = async (data) => {
+		if (await checkIsInternetConnected()) {
+			dispatch(updateUserProfile(data));
+		} else {
+			displaySnackbar(
+				'No internet. Please check your internet connection and try again',
+				'error'
+			);
+		}
 	};
 
-	const submitUpdateUserPasswordForm = (data) => {
-		dispatch(updateUserPassword(data));
+	const submitUpdateUserPasswordForm = async (data) => {
+		if (await checkIsInternetConnected()) {
+			dispatch(updateUserPassword(data));
+		} else {
+			displaySnackbar(
+				'No internet. Please check your internet connection and try again',
+				'error'
+			);
+		}
 	};
 
 	return (
@@ -250,6 +286,15 @@ const UserProfileScreen = ({ history }) => {
 							type="submit"
 							variant="outline-primary"
 						>
+							{loadingProfileUpdate && (
+								<Spinner
+									as="span"
+									animation="border"
+									size="sm"
+									role="status"
+									aria-hidden="true"
+								/>
+							)}{' '}
 							Update Profile
 						</Button>
 					</Form>
@@ -327,6 +372,15 @@ const UserProfileScreen = ({ history }) => {
 							type="submit"
 							variant="outline-primary"
 						>
+							{loadingPasswordUpdate && (
+								<Spinner
+									as="span"
+									animation="border"
+									size="sm"
+									role="status"
+									aria-hidden="true"
+								/>
+							)}{' '}
 							Update Password
 						</Button>
 					</Form>

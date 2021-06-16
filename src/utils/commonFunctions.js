@@ -1,3 +1,13 @@
+import isOnline from 'is-online';
+/**
+ * Check if app is connected to the internet.
+ *
+ */
+const checkIsInternetConnected = async () => {
+	const isInternetConnected = await isOnline();
+	return isInternetConnected;
+};
+
 /**
  * Calculate percentage of work completed.
  *
@@ -34,4 +44,9 @@ const differenceFromCurrentDate = (dateToSubtract) => {
 	return currentDate.getDate() - new Date(dateToSubtract).getDate();
 };
 
-export { calculateProgress, numFormatter, differenceFromCurrentDate };
+export {
+	checkIsInternetConnected,
+	calculateProgress,
+	numFormatter,
+	differenceFromCurrentDate,
+};

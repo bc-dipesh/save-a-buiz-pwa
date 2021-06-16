@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button as SnackbarButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Button as SnackbarButton } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
-import isOnline from 'is-online';
+import * as yup from 'yup';
+import {
+	closeSnackbar as closeSnackbarAction,
+	enqueueSnackbar as enqueueSnackbarAction,
+} from '../actions/snackbarActions';
 import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
-import {
-	enqueueSnackbar as enqueueSnackbarAction,
-	closeSnackbar as closeSnackbarAction,
-} from '../actions/snackbarActions';
+import { checkIsInternetConnected } from '../utils/commonFunctions';
 
 const userLoginSchema = yup.object().shape({
 	email: yup.string().email().required(),
@@ -71,8 +71,7 @@ const UserSignInScreen = ({ location, history }) => {
 	}, [history, userInfo, redirect, error]);
 
 	const submitUserLoginForm = async (data) => {
-		const isInternetConnected = await isOnline();
-		if (isInternetConnected) {
+		if (await checkIsInternetConnected()) {
 			dispatch(login(data.email, data.password));
 		} else {
 			displaySnackbar(
