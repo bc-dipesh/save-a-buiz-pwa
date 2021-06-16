@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button as SnackbarButton } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
+import isOnline from 'is-online';
 import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 import {
@@ -45,7 +46,10 @@ const UserSignInScreen = ({ location, history }) => {
 				key: uuidv4(),
 				variant,
 				action: (key) => (
-					<SnackbarButton onClick={() => closeSnackbar(key)}>
+					<SnackbarButton
+						style={{ color: 'cyan' }}
+						onClick={() => closeSnackbar(key)}
+					>
 						dismiss
 					</SnackbarButton>
 				),
@@ -66,8 +70,16 @@ const UserSignInScreen = ({ location, history }) => {
 		}
 	}, [history, userInfo, redirect, error]);
 
-	const submitUserLoginForm = (data) => {
-		dispatch(login(data.email, data.password));
+	const submitUserLoginForm = async (data) => {
+		const isInternetConnected = await isOnline();
+		if (isInternetConnected) {
+			dispatch(login(data.email, data.password));
+		} else {
+			displaySnackbar(
+				'No internet. Please check your internet connection and try again',
+				'error'
+			);
+		}
 	};
 
 	return (

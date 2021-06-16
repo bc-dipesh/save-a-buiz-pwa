@@ -50,7 +50,10 @@ const UserRegisterScreen = ({ location, history }) => {
 				key: uuidv4(),
 				variant,
 				action: (key) => (
-					<SnackbarButton onClick={() => closeSnackbar(key)}>
+					<SnackbarButton
+						style={{ color: 'cyan' }}
+						onClick={() => closeSnackbar(key)}
+					>
 						dismiss
 					</SnackbarButton>
 				),
