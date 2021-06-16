@@ -1,83 +1,83 @@
 @supports (padding: max(0px)) {
-	body,
-	header,
-	footer {
-		padding-left: min(0vmin, env(safe-area-inset-left));
-		padding-right: min(0vmin, env(safe-area-inset-right));
-	}
+  body,
+  header,
+  footer {
+    padding-left: min(0vmin, env(safe-area-inset-left));
+    padding-right: min(0vmin, env(safe-area-inset-right));
+  }
 }
 
 ::-moz-selection {
-	/* Code for Firefox */
-	color: #000;
-	background: #a6fff8;
+  /* Code for Firefox */
+  color: #000;
+  background: #a6fff8;
 }
 
 ::selection {
-	color: #000;
-	background: #a6fff8;
+  color: #000;
+  background: #a6fff8;
 }
 
 .logo {
-	width: 250px;
-	height: 100px;
+  width: 250px;
+  height: 100px;
 }
 
 .green-circle {
-	border: 1px solid cyan;
-	border-radius: 3.125rem;
-	height: 2.5rem;
-	position: relative;
-	width: 2.5rem;
-	align-items: center;
-	display: flex;
-	justify-content: center;
+  border: 1px solid cyan;
+  border-radius: 3.125rem;
+  height: 2.5rem;
+  position: relative;
+  width: 2.5rem;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .common-questions.card {
-	border: none;
-	background-color: transparent;
+  border: none;
+  background-color: transparent;
 }
 
 .common-questions.card > .card-header {
-	background-color: transparent;
-	padding: 1rem;
-	cursor: pointer;
+  background-color: transparent;
+  padding: 1rem;
+  cursor: pointer;
 }
 
 .supported-provinces {
-	list-style: none;
-	margin-top: 24px;
+  list-style: none;
+  margin-top: 24px;
 }
 
 .supported-provinces > li {
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
 }
 
 .square {
-	display: inline-block;
-	height: 50px;
-	width: 50px;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
 }
 
 .supported {
-	background-color: #6aaa4e;
+  background-color: #6aaa4e;
 }
 
 .not-supported {
-	background-color: #fefeeb;
+  background-color: #fefeeb;
 }
 
 strong {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 footer a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 footer h4 {
-	padding: 0.5rem 0;
+  padding: 0.5rem 0;
 }
