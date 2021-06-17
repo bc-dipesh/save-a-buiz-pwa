@@ -1,12 +1,180 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button as SnackbarButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { Button, Card, Col, Container, Image, ListGroup, ProgressBar, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+  Button,
+  Collapse,
+  Card,
+  Col,
+  Container,
+  Form,
+  Image,
+  ListGroup,
+  ProgressBar,
+  Row,
+  Spinner,
+} from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { calculateProgress, numFormatter } from '../../utils/commonFunctions';
+import { v4 as uuidv4 } from 'uuid';
+import * as yup from 'yup';
+import axios from 'axios';
+import {
+  calculateProgress,
+  numFormatter,
+  checkIsInternetConnected,
+} from '../../utils/commonFunctions';
+import {
+  closeSnackbar as closeSnackbarAction,
+  enqueueSnackbar as enqueueSnackbarAction,
+} from '../../actions/snackbarActions';
+
+const DonationForm = ({ fundraiserId }) => {
+  const [displayForm, setDisplayForm] = useState(false);
+
+  const donationSchema = yup.object().shape({
+    donationAmount: yup.number().required(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+  } = useForm({
+    resolver: yupResolver(donationSchema),
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
+            dismiss
+          </SnackbarButton>
+        ),
+      },
+    });
+  };
+
+  const sendPaymentRequestToEsewa = async (donationAmount) => {
+    setIsLoading(true);
+
+    // set eSewa credentials
+    const pid = fundraiserId;
+    const scd = 'EPAYTEST';
+    const su = 'http://localhost:3000/user/donations';
+    const fu = 'http://localhost:3000/user/donations';
+    const url = 'https://cors-anywhere.herokuapp.com/https://uat.esewa.com.np/epay/main';
+
+    try {
+      // submit donation amount to eSewa
+      await axios.post(
+        url,
+        {
+          amt: donationAmount,
+          tAmt: donationAmount,
+          pid,
+          scd,
+          su,
+          fu,
+          txAmt: 0,
+          psc: 0,
+          pdc: 0,
+        },
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+    } catch (error) {
+      displaySnackbar('Something went wrong. Please try again later.', 'error');
+    }
+    setIsLoading(false);
+  };
+
+  const donate = async ({ donationAmount }) => {
+    if (await checkIsInternetConnected()) {
+      sendPaymentRequestToEsewa(donationAmount);
+    } else {
+      displaySnackbar('No internet. Please check your internet connection and try again', 'info');
+    }
+  };
+
+  return (
+    <>
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={() => setDisplayForm(!displayForm)}
+        aria-controls="donate-form"
+        aria-expanded={displayForm}
+      >
+        Donate with eSewa
+      </Button>
+
+      <Collapse in={displayForm}>
+        <Form noValidate onSubmit={handleSubmit(donate)} id="donate-form">
+          <Form.Group controlId="donationAmount">
+            <Form.Label>Enter the amount you want to donate</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter the amount you want to donate"
+              {...register('donationAmount')}
+              isInvalid={!!errors.donationAmount?.message}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid amount.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Row className="justify-content-start mt-3">
+            <Col xs={4}>
+              <Button variant="secondary" type="submit">
+                {isLoading && (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                )}{' '}
+                Donate
+              </Button>
+            </Col>
+            <Col xs={4}>
+              <Button
+                onClick={() => {
+                  setDisplayForm(false);
+                  clearErrors();
+                }}
+                className="outline-danger"
+                type="button"
+              >
+                Cancel
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Collapse>
+    </>
+  );
+};
 
 const FundraiserDetail = ({ fundraiser = {} }) => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';
   const {
+    _id = '',
     image = '',
     title = '',
     description = '',
@@ -49,7 +217,7 @@ const FundraiserDetail = ({ fundraiser = {} }) => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Button type="button">Donate</Button>
+                    <DonationForm fundraiserId={_id} />
                   </Row>
                 </ListGroup.Item>
               </ListGroup>
@@ -172,6 +340,10 @@ const FundraiserDetail = ({ fundraiser = {} }) => {
       </Container>
     </>
   );
+};
+
+DonationForm.propTypes = {
+  fundraiserId: PropTypes.string,
 };
 
 FundraiserDetail.propTypes = {

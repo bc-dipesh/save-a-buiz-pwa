@@ -70,7 +70,7 @@ const UserSignInScreen = ({ location, history }) => {
     if (await checkIsInternetConnected()) {
       dispatch(login(data.email, data.password));
     } else {
-      displaySnackbar('No internet. Please check your internet connection and try again', 'error');
+      displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
   };
 

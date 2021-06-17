@@ -112,7 +112,7 @@ const StartFundraiserScreen = ({ history }) => {
     if (await checkIsInternetConnected()) {
       dispatch(createFundraiser(data));
     } else {
-      displaySnackbar('No internet. Please check your internet connection and try again', 'error');
+      displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
   };
 

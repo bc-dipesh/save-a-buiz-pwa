@@ -17,6 +17,7 @@ import { checkIsInternetConnected } from '../utils/commonFunctions';
 
 const SubscribeToNewsLetterForm = () => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/subscribe-to-news-letter';
+  const EMAIL_ERR_MSG = 'Please enter a valid email.';
   const [isLoading, setIsLoading] = useState(false);
 
   const axiosConfig = {
@@ -26,13 +27,14 @@ const SubscribeToNewsLetterForm = () => {
   };
 
   const subscriptionSchema = yup.object().shape({
-    email: yup.string().email().required(),
+    email: yup.string().email(EMAIL_ERR_MSG).required(EMAIL_ERR_MSG),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm({
     resolver: yupResolver(subscriptionSchema),
   });
@@ -57,6 +59,10 @@ const SubscribeToNewsLetterForm = () => {
     });
   };
 
+  const resetField = () => {
+    clearErrors();
+  };
+
   const submitSubscriptionRequest = async ({ email }) => {
     setIsLoading(true);
     if (await checkIsInternetConnected()) {
@@ -73,7 +79,7 @@ const SubscribeToNewsLetterForm = () => {
       }
     } else {
       setIsLoading(false);
-      displaySnackbar('No internet. Please check your internet connection and try again', 'error');
+      displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
   };
   return (
@@ -102,7 +108,19 @@ const SubscribeToNewsLetterForm = () => {
                 {...register('email')}
                 isInvalid={!!errors.email?.message}
               />
-              <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+              <Form.Control.Feedback onClick={resetField} type="invalid">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-x"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>{' '}
+                {errors.email?.message}
+              </Form.Control.Feedback>
             </Col>
             <Col xs={12} sm={6}>
               <Button variant="outline-primary" type="submit">

@@ -68,7 +68,7 @@ const FundraiserListScreen = ({ match }) => {
     if (await checkIsInternetConnected()) {
       dispatch(listFundraisers(keyword));
     } else {
-      displaySnackbar('No internet. Please check your internet connection and try again', 'error');
+      displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
   }, [dispatch, keyword]);
 
