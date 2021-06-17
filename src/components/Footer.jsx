@@ -1,12 +1,23 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button as SnackbarButton } from '@material-ui/core';
 import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Image, Row, Spinner } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import * as yup from 'yup';
+import {
+  closeSnackbar as closeSnackbarAction,
+  enqueueSnackbar as enqueueSnackbarAction,
+} from '../actions/snackbarActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
 const SubscribeToNewsLetterForm = () => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/subscribe-to-news-letter';
+  const [isLoading, setIsLoading] = useState(false);
 
   const axiosConfig = {
     headers: {
@@ -14,35 +25,60 @@ const SubscribeToNewsLetterForm = () => {
     },
   };
 
-  const { enqueueSnackbar } = useSnackbar();
-  const [email, setEmail] = useState('');
+  const subscriptionSchema = yup.object().shape({
+    email: yup.string().email().required(),
+  });
 
-  const handleNewsLetterSubscriptionRequest = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(subscriptionSchema),
+  });
+
+  const dispatch = useDispatch();
+
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
+            dismiss
+          </SnackbarButton>
+        ),
+      },
+    });
+  };
+
+  const submitSubscriptionRequest = async ({ email }) => {
+    setIsLoading(true);
     if (await checkIsInternetConnected()) {
       try {
         const {
           data: { data },
         } = await axios.post(`${BASE_URL}`, { email }, axiosConfig);
 
-        enqueueSnackbar(data, {
-          variant: 'success',
-        });
+        setIsLoading(false);
+        displaySnackbar(data);
       } catch (error) {
-        enqueueSnackbar(error.response.data.data, {
-          variant: 'error',
-        });
+        setIsLoading(false);
+        displaySnackbar(error.response.data.data, 'error');
       }
     } else {
-      enqueueSnackbar('No internet. Please check your internet connection and try again', {
-        variant: 'error',
-      });
+      setIsLoading(false);
+      displaySnackbar('No internet. Please check your internet connection and try again', 'error');
     }
-    setEmail('');
   };
   return (
     <>
-      <Form onSubmit={handleNewsLetterSubscriptionRequest}>
+      <Form noValidate onSubmit={handleSubmit(submitSubscriptionRequest)}>
         <Form.Group className="my-3" controlId="formGroupEmail">
           <Form.Label>
             Subscribe to our newsletter{' '}
@@ -63,12 +99,22 @@ const SubscribeToNewsLetterForm = () => {
               <Form.Control
                 type="email"
                 placeholder="Enter your email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                {...register('email')}
+                isInvalid={!!errors.email?.message}
               />
+              <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
             </Col>
             <Col xs={12} sm={6}>
               <Button variant="outline-primary" type="submit">
+                {isLoading && (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                )}{' '}
                 Subscribe
               </Button>
             </Col>

@@ -1,7 +1,12 @@
 import { Button } from '@material-ui/core';
-import { useSnackbar, withSnackbar } from 'notistack';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  closeSnackbar as closeSnackbarAction,
+  enqueueSnackbar as enqueueSnackbarAction,
+} from './actions/snackbarActions';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Notifier from './components/Notifier';
@@ -28,7 +33,6 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
   const [waitingWorker, setWaitingWorker] = useState({});
-  const { enqueueSnackbar } = useSnackbar();
 
   const updateServiceWorker = () => {
     if (waitingWorker) {
@@ -38,24 +42,35 @@ function App() {
     window.location.reload();
   };
 
-  // render the snackbar button
-  const refreshAction = () => (
-    <>
-      <Button
-        style={{ color: 'cyan' }}
-        className="snackbar-button"
-        size="small"
-        onClick={updateServiceWorker}
-      >
-        Refresh
-      </Button>
-    </>
-  );
+  const dispatch = useDispatch();
+
+  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
+
+  const displaySnackbar = (message, variant = 'success') => {
+    enqueueSnackbar({
+      message,
+      options: {
+        key: uuidv4(),
+        variant,
+        action: (key) => (
+          <Button
+            style={{ color: 'cyan' }}
+            onClick={() => {
+              updateServiceWorker();
+              closeSnackbar(key);
+            }}
+          >
+            dismiss
+          </Button>
+        ),
+      },
+    });
+  };
 
   const onServiceWorkerUpdate = (registration) => {
     setWaitingWorker(registration && registration.waiting);
     setIsNewVersionAvailable(true);
-    console.log(waitingWorker, isNewVersionAvailable);
   };
 
   // make app work offline
@@ -63,13 +78,9 @@ function App() {
 
   // show snackbar with refresh button
   if (isNewVersionAvailable) {
-    enqueueSnackbar(
-      'A new version of the app is available. Please refresh the page to see latest content',
-      {
-        persist: true,
-        variant: 'default',
-        action: refreshAction(),
-      }
+    displaySnackbar(
+      'A new version of the app is available. Please refresh the page to see latest content.',
+      'info'
     );
   }
 
@@ -107,4 +118,4 @@ function App() {
   );
 }
 
-export default withSnackbar(App);
+export default App;
