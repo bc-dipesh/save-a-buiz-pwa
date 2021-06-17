@@ -11,7 +11,7 @@ import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../actions/snackbarActions';
-import Fundraiser from '../components/Fundraiser';
+import FundraiserCard from '../components/Fundraiser/FundraiserCard';
 import SkeletonCard from '../components/skeletons/SkeletonCard';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
@@ -26,7 +26,7 @@ const Children = ({ loading, error, fundraisers }) => {
   if (!error) {
     return fundraisers.map((fundraiser) => (
       <Col key={fundraiser._id} className="my-3" sm={12} md={4} lg={3}>
-        <Fundraiser fundraiser={fundraiser} isCard />
+        <FundraiserCard fundraiser={fundraiser} />
       </Col>
     ));
   }

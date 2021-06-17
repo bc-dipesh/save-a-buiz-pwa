@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Card, ProgressBar, Row, Col, ListGroup, Image, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { calculateProgress, numFormatter } from '../utils/commonFunctions';
+import { calculateProgress, numFormatter } from '../../utils/commonFunctions';
 
 const Fundraiser = ({ fundraiser, isCard }) => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';

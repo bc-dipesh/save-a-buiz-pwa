@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { listFundraiserDetails } from '../actions/fundraiserActions';
-import Fundraiser from '../components/Fundraiser';
+import FundraiserDetail from '../components/Fundraiser/FundraiserDetail';
 import Message from '../components/Message';
 
 const Children = ({ loading, error, fundraiser }) => {
@@ -116,7 +116,7 @@ const Children = ({ loading, error, fundraiser }) => {
     );
   }
   if (!error) {
-    return <Fundraiser fundraiser={fundraiser} isCard={false} />;
+    return <FundraiserDetail fundraiser={fundraiser} />;
   }
   return (
     <Container className="my-5">
