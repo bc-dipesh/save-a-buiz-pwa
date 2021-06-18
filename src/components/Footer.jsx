@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button as SnackbarButton } from '@material-ui/core';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Button, Col, Container, Form, Image, Row, Spinner } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -148,7 +148,7 @@ const Footer = () => (
     <Container className="py-5">
       <Row>
         <Col xs={12} sm={6}>
-          <Image src="/images/logo.png" alt="logo" />
+          <h3 className="fw-bold">SaveABuiz</h3>
         </Col>
 
         <Col xs={12} sm={6}>

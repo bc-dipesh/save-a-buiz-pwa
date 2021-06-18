@@ -55,14 +55,12 @@ const createFundraiser =
   };
 
 const listFundraisers =
-  (keyword = '') =>
+  (keyword = '', pageNumber = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: FUNDRAISER_LIST_REQUEST });
 
-      const {
-        data: { data },
-      } = await axios.get(`${BASE_URL}/?keyword=${keyword}`);
+      const { data } = await axios.get(`${BASE_URL}/?keyword=${keyword}&pageNumber=${pageNumber}`);
       dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
     } catch (error) {
       const errorMessage =

@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Card, Col, Container, Image, ListGroup, ProgressBar, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { calculateProgress, numFormatter } from '../../../utils/commonFunctions';
-import Comment from './Comment';
+import Donation from './Donation';
 import DonationForm from './DonationForm';
 
 const FundraiserDetail = ({ fundraiser }) => {
@@ -18,6 +18,7 @@ const FundraiserDetail = ({ fundraiser }) => {
     donors = 0,
     youTubeVideoLink = '',
     organizer = '',
+    donations = [],
   } = fundraiser || {};
 
   const { name } = organizer || {};
@@ -145,7 +146,7 @@ const FundraiserDetail = ({ fundraiser }) => {
           </Col>
         </Row>
       </Container>
-      <Comment />
+      <Donation donations={donations} />
     </>
   );
 };
@@ -164,6 +165,7 @@ FundraiserDetail.propTypes = {
     organizer: PropTypes.shape({
       name: PropTypes.string,
     }),
+    donations: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };
 

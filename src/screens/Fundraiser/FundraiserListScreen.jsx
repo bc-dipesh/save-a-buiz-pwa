@@ -3,10 +3,11 @@ import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
+import Paginate from '../../components/Paginate';
 import SkeletonCard from '../../components/skeletons/SkeletonCard';
 import useFundraiserList from '../../hooks/useFundraiserList';
 
-const Children = ({ loading, error, fundraisers }) => {
+const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
   if (loading) {
     return [1, 2, 3].map((item) => (
       <Col key={item} className="my-3" sm={12} md={4} lg={3}>
@@ -15,11 +16,16 @@ const Children = ({ loading, error, fundraisers }) => {
     ));
   }
   if (!error) {
-    return fundraisers.map((fundraiser) => (
-      <Col key={fundraiser._id} className="py-3" sm={12} md={4} lg={3}>
-        <FundraiserCard fundraiser={fundraiser} />
-      </Col>
-    ));
+    return (
+      <>
+        {fundraisers.map((fundraiser) => (
+          <Col key={fundraiser._id} className="py-3" sm={12} md={4} lg={3}>
+            <FundraiserCard fundraiser={fundraiser} />
+          </Col>
+        ))}
+        <Paginate keyword={keyword} pages={pages} page={page} />
+      </>
+    );
   }
   return (
     <Container className="my-5">
@@ -34,8 +40,8 @@ const Children = ({ loading, error, fundraisers }) => {
 const FundraiserListScreen = ({ match }) => {
   // extract the search keyword if present
   // and send it to the custom hook
-  const { keyword } = match.params;
-  const { loading, error, fundraisers } = useFundraiserList(keyword);
+  const { keyword, pageNumber } = match.params;
+  const { loading, error, fundraisers, pages, page } = useFundraiserList(keyword, pageNumber);
 
   return (
     <>
@@ -47,7 +53,14 @@ const FundraiserListScreen = ({ match }) => {
               Starting a fundraiser for your favorite local restaurant, bar, coffee shop, or
               boutique.
             </p>
-            <Children loading={loading} error={error} fundraisers={fundraisers} />
+            <Children
+              loading={loading}
+              error={error}
+              fundraisers={fundraisers}
+              keyword={keyword}
+              pages={pages}
+              page={page}
+            />
           </Row>
         </Container>
       </Container>
@@ -59,12 +72,16 @@ Children.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   fundraisers: PropTypes.arrayOf(PropTypes.object),
+  keyword: PropTypes.string,
+  pages: PropTypes.number,
+  page: PropTypes.number,
 };
 
 FundraiserListScreen.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       keyword: PropTypes.string,
+      pageNumber: PropTypes.string,
     }),
   }),
 };

@@ -9,10 +9,10 @@ import {
 } from '../actions/snackbarActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
-const useFundraiserList = (keyword = '') => {
+const useFundraiserList = (keyword = '', pageNumber) => {
   const dispatch = useDispatch();
   const fundraiserList = useSelector((state) => state.fundraiserList);
-  const { loading, error, fundraisers } = fundraiserList;
+  const { loading, error, fundraisers, pages, page } = fundraiserList;
 
   const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
   const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
@@ -34,13 +34,13 @@ const useFundraiserList = (keyword = '') => {
 
   useEffect(async () => {
     if (await checkIsInternetConnected()) {
-      dispatch(listFundraisers(keyword));
+      dispatch(listFundraisers(keyword, pageNumber));
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
-  }, [dispatch]);
+  }, [dispatch, keyword, pageNumber]);
 
-  return { loading, error, fundraisers };
+  return { loading, error, fundraisers, pages, page };
 };
 
 export default useFundraiserList;

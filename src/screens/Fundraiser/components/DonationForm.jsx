@@ -22,7 +22,7 @@ const DonationForm = ({ fundraiserId }) => {
 
       <Collapse in={displayForm}>
         <Form noValidate onSubmit={handleSubmit(donate)} id="donate-form">
-          <Form.Group controlId="donationAmount">
+          <Form.Group className="my-3" controlId="donationAmount">
             <Form.Label>Enter the amount you want to donate</Form.Label>
             <Form.Control
               type="number"
@@ -34,8 +34,20 @@ const DonationForm = ({ fundraiserId }) => {
               Please enter a valid donation amount to donate.
             </Form.Control.Feedback>
           </Form.Group>
+          <Form.Group className="my-3" controlId="comment">
+            <Form.Label>What would you like to say with the donation?</Form.Label>
+            <Form.Control
+              typ="text"
+              placeholder="Enter any message you would like to send with your donation"
+              {...register('comment')}
+              isInvalid={!!errors.comment?.message}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid message.
+            </Form.Control.Feedback>
+          </Form.Group>
           <Row className="justify-content-start mt-3">
-            <Col xs={4}>
+            <Col xs={4} sm={6} lg={4}>
               <Button variant="secondary" type="submit">
                 {isLoading && (
                   <Spinner
@@ -49,7 +61,7 @@ const DonationForm = ({ fundraiserId }) => {
                 Donate
               </Button>
             </Col>
-            <Col xs={4}>
+            <Col xs={4} sm={6} lg={4}>
               <Button onClick={showHideForm} className="outline-danger" type="button">
                 Cancel
               </Button>

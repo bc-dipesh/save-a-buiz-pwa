@@ -240,7 +240,7 @@ const UserProfileScreen = ({ history }) => {
           <Form
             noValidate
             onSubmit={handleSubmitUserPasswordUpdate(submitUpdateUserPasswordForm)}
-            className="py-3"
+            className="my-3"
           >
             <Form.Group controlId="currentPassword">
               <Form.Label>Current Password</Form.Label>

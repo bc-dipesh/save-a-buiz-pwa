@@ -158,6 +158,7 @@ Children.propTypes = {
     organizer: PropTypes.shape({
       name: PropTypes.string,
     }),
+    donations: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };
 

@@ -1,23 +1,14 @@
-import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import { Button as SnackbarButton } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import {
-  Button,
-  Container,
-  Form,
-  FormControl,
-  Image,
-  Nav,
-  Navbar,
-  NavDropdown,
-} from 'react-bootstrap';
+import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import {
-  enqueueSnackbar as enqueueSnackbarAction,
   closeSnackbar as closeSnackbarAction,
+  enqueueSnackbar as enqueueSnackbarAction,
 } from '../actions/snackbarActions';
 import { logout } from '../actions/userActions';
 
@@ -132,7 +123,7 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <Image src="/images/logo.png" alt="logo" />
+              <h1 className="fw-bold h3">SaveABuiz</h1>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="navbarScroll" />

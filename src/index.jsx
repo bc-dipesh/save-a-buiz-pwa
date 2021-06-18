@@ -8,8 +8,8 @@ import './index.css';
 import store from './store';
 
 ReactDOM.render(
-	<Provider store={store}>
-		<CustomSnackbarProvider AppComponent={App} />
-	</Provider>,
-	document.getElementById('root')
+  <Provider store={store}>
+    <CustomSnackbarProvider AppComponent={App} />
+  </Provider>,
+  document.getElementById('root')
 );
