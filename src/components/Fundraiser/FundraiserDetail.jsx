@@ -78,7 +78,7 @@ const DonationForm = ({ fundraiserId }) => {
     const scd = 'EPAYTEST';
     const su = 'http://localhost:3000/user/donations';
     const fu = 'http://localhost:3000/user/donations';
-    const url = 'https://cors-anywhere.herokuapp.com/https://uat.esewa.com.np/epay/main';
+    const url = 'https://uat.esewa.com.np/epay/main';
 
     try {
       // submit donation amount to eSewa
@@ -171,7 +171,7 @@ const DonationForm = ({ fundraiserId }) => {
   );
 };
 
-const FundraiserDetail = ({ fundraiser = {} }) => {
+const FundraiserDetail = ({ fundraiser }) => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';
   const {
     _id = '',
@@ -183,7 +183,7 @@ const FundraiserDetail = ({ fundraiser = {} }) => {
     donors = 0,
     youTubeVideoLink = '',
     organizer = '',
-  } = fundraiser;
+  } = fundraiser || {};
 
   const { name } = organizer || {};
 
@@ -343,7 +343,7 @@ const FundraiserDetail = ({ fundraiser = {} }) => {
 };
 
 DonationForm.propTypes = {
-  fundraiserId: PropTypes.string,
+  fundraiserId: PropTypes.string.isRequired,
 };
 
 FundraiserDetail.propTypes = {
@@ -360,7 +360,7 @@ FundraiserDetail.propTypes = {
     organizer: PropTypes.shape({
       name: PropTypes.string,
     }),
-  }),
+  }).isRequired,
 };
 
 export default FundraiserDetail;

@@ -4,7 +4,7 @@ import { Card, ProgressBar, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { calculateProgress } from '../../utils/commonFunctions';
 
-const FundraiserCard = ({ fundraiser = {} }) => {
+const FundraiserCard = ({ fundraiser }) => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';
   const {
     _id = '',
@@ -13,7 +13,7 @@ const FundraiserCard = ({ fundraiser = {} }) => {
     shortDescription = '',
     goal = 0,
     collected = 0,
-  } = fundraiser;
+  } = fundraiser || {};
 
   return (
     <Card>
@@ -56,7 +56,7 @@ FundraiserCard.propTypes = {
     organizer: PropTypes.shape({
       name: PropTypes.string,
     }),
-  }),
+  }).isRequired,
 };
 
 export default FundraiserCard;
