@@ -1,14 +1,13 @@
 import { Typography } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import { getUserFundraiserList } from '../../actions/userActions';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
+import useUserFundraiserList from '../../hooks/useUserFundraiserList';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {
@@ -52,21 +51,7 @@ const Children = ({ loading, error, fundraisers }) => {
 };
 
 const UserFundraiserScreen = ({ history }) => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const userFundraiser = useSelector((state) => state.userFundraiser);
-  const { loading, error, fundraisers } = userFundraiser;
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!(!!userInfo?.token && !!userInfo?.user)) {
-      history.push('/sign-in');
-    } else {
-      dispatch(getUserFundraiserList());
-    }
-  }, [userInfo, dispatch]);
+  const { loading, error, fundraisers } = useUserFundraiserList(history);
 
   return (
     <Container className="mt-5">

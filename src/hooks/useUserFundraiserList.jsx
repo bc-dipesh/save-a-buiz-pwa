@@ -2,17 +2,20 @@ import { Button as SnackbarButton } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { listFundraisers } from '../actions/fundraiserActions';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../actions/snackbarActions';
+import { getUserFundraiserList } from '../actions/userActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
-const useFundraiserList = (keyword = '') => {
+const useUserFundraiserList = (history) => {
   const dispatch = useDispatch();
-  const fundraiserList = useSelector((state) => state.fundraiserList);
-  const { loading, error, fundraisers } = fundraiserList;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userFundraiser = useSelector((state) => state.userFundraiser);
+  const { loading, error, fundraisers } = userFundraiser;
 
   const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
   const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
@@ -34,13 +37,17 @@ const useFundraiserList = (keyword = '') => {
 
   useEffect(async () => {
     if (await checkIsInternetConnected()) {
-      dispatch(listFundraisers(keyword));
+      if (!(!!userInfo?.token && !!userInfo?.user)) {
+        history.push('/sign-in');
+      } else {
+        dispatch(getUserFundraiserList());
+      }
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
-  }, [dispatch]);
+  }, [userInfo, dispatch]);
 
   return { loading, error, fundraisers };
 };
 
-export default useFundraiserList;
+export default useUserFundraiserList;

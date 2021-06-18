@@ -1,13 +1,12 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import { PropTypes } from 'prop-types';
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { listFundraiserDetails } from '../../actions/fundraiserActions';
-import FundraiserDetail from './components/FundraiserDetail';
 import Message from '../../components/Message';
+import FundraiserDetail from './components/FundraiserDetail';
+import useFundraiserDetail from './hooks/useFundraiserDetail';
 
 const Children = ({ loading, error, fundraiser }) => {
   if (loading) {
@@ -129,14 +128,7 @@ const Children = ({ loading, error, fundraiser }) => {
 };
 
 const FundraiserScreen = ({ match }) => {
-  const dispatch = useDispatch();
-
-  const fundraiserDetails = useSelector((state) => state.fundraiserDetails);
-  const { loading, error, fundraiser } = fundraiserDetails;
-
-  useEffect(() => {
-    dispatch(listFundraiserDetails(match.params.id));
-  }, [dispatch, match]);
+  const { loading, error, fundraiser } = useFundraiserDetail(match.params.id);
 
   return (
     <>
