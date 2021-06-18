@@ -12,10 +12,10 @@ import * as yup from 'yup';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import { login } from '../actions/userActions';
-import FormContainer from '../components/FormContainer';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
+} from '../../actions/snackbarActions';
+import { login } from '../../actions/userActions';
+import FormContainer from '../../components/FormContainer';
+import { checkIsInternetConnected } from '../../utils/commonFunctions';
 
 const userLoginSchema = yup.object().shape({
   email: yup.string().email().required(),

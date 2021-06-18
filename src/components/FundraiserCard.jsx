@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Card, ProgressBar, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { calculateProgress } from '../../utils/commonFunctions';
+import { calculateProgress } from '../utils/commonFunctions';
 
 const FundraiserCard = ({ fundraiser }) => {
   const BASE_URL = 'https://save-a-buiz-api.herokuapp.com';
@@ -14,6 +14,7 @@ const FundraiserCard = ({ fundraiser }) => {
     goal = 0,
     collected = 0,
   } = fundraiser || {};
+  const progress = calculateProgress(collected, goal);
 
   return (
     <Card>
@@ -28,7 +29,7 @@ const FundraiserCard = ({ fundraiser }) => {
       </Card.Body>
       <Card.Footer>
         <Row className="py-2">
-          <ProgressBar now={calculateProgress(collected, goal)} />
+          <ProgressBar now={progress} />
         </Row>
         <Row className="py-2">
           <small>

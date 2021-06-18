@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Button as SnackbarButton } from '@material-ui/core';
-import { deleteUserById, getUserList } from '../actions/userActions';
-import Message from '../components/Message';
-import SkeletonUserListTable from '../components/skeletons/SkeletonUserListTable';
+import { deleteUserById, getUserList } from '../../actions/userActions';
+import Message from '../../components/Message';
+import SkeletonUserListTable from '../../components/skeletons/SkeletonUserListTable';
 import {
   enqueueSnackbar as enqueueSnackbarAction,
   closeSnackbar as closeSnackbarAction,
-} from '../actions/snackbarActions';
+} from '../../actions/snackbarActions';
 
 const Children = ({ loading, error, users }) => {
   const dispatch = useDispatch();

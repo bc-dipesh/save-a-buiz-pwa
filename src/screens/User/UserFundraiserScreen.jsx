@@ -6,9 +6,9 @@ import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import { getUserFundraiserList } from '../actions/userActions';
-import FundraiserCard from '../components/Fundraiser/FundraiserCard';
-import Message from '../components/Message';
+import { getUserFundraiserList } from '../../actions/userActions';
+import FundraiserCard from '../../components/FundraiserCard';
+import Message from '../../components/Message';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {

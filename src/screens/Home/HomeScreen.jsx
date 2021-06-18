@@ -5,15 +5,15 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import { listFundraisers } from '../actions/fundraiserActions';
-import Message from '../components/Message';
+import { listFundraisers } from '../../actions/fundraiserActions';
+import Message from '../../components/Message';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import FundraiserCard from '../components/Fundraiser/FundraiserCard';
-import SkeletonCard from '../components/skeletons/SkeletonCard';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
+} from '../../actions/snackbarActions';
+import FundraiserCard from '../../components/FundraiserCard';
+import SkeletonCard from '../../components/skeletons/SkeletonCard';
+import { checkIsInternetConnected } from '../../utils/commonFunctions';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {

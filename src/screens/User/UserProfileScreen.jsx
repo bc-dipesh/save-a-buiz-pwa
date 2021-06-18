@@ -13,10 +13,10 @@ import * as yup from 'yup';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import { getUserProfile, updateUserPassword, updateUserProfile } from '../actions/userActions';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
-import { mobilePhoneNumberRegEx } from '../utils/regex';
+} from '../../actions/snackbarActions';
+import { getUserProfile, updateUserPassword, updateUserProfile } from '../../actions/userActions';
+import { checkIsInternetConnected } from '../../utils/commonFunctions';
+import { mobilePhoneNumberRegEx } from '../../utils/regex';
 
 const userProfileSchema = yup.object().shape({
   name: yup.string().required('Please enter a valid name.'),

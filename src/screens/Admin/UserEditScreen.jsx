@@ -13,11 +13,11 @@ import * as yup from 'yup';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import { getUserProfile, updateUser } from '../actions/userActions';
-import FormContainer from '../components/FormContainer';
-import { USER_UPDATE_RESET } from '../constants/userConstants';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
+} from '../../actions/snackbarActions';
+import { getUserProfile, updateUser } from '../../actions/userActions';
+import FormContainer from '../../components/FormContainer';
+import { USER_UPDATE_RESET } from '../../constants/userConstants';
+import { checkIsInternetConnected } from '../../utils/commonFunctions';
 
 const userEditSchema = yup.object().shape({
   name: yup.string().required('Please enter a valid name.'),

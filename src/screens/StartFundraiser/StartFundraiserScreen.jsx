@@ -10,14 +10,14 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button as SnackbarButton } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
-import { FUNDRAISER_CREATE_RESET } from '../constants/fundraiserConstants';
-import { createFundraiser } from '../actions/fundraiserActions';
+import { checkIsInternetConnected } from '../../utils/commonFunctions';
+import { FUNDRAISER_CREATE_RESET } from '../../constants/fundraiserConstants';
+import { createFundraiser } from '../../actions/fundraiserActions';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import { urlRegEx } from '../utils/regex';
+} from '../../actions/snackbarActions';
+import { urlRegEx } from '../../utils/regex';
 
 const fundraiserSchema = yup.object().shape({
   title: yup.string().required('Please enter your fundraiser title'),
