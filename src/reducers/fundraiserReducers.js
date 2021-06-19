@@ -6,6 +6,9 @@ import {
   FUNDRAISER_LIST_REQUEST,
   FUNDRAISER_LIST_SUCCESS,
   FUNDRAISER_LIST_FAIL,
+  TOP_THREE_FUNDRAISER_REQUEST,
+  TOP_THREE_FUNDRAISER_SUCCESS,
+  TOP_THREE_FUNDRAISER_FAIL,
   FUNDRAISER_DETAILS_REQUEST,
   FUNDRAISER_DETAILS_SUCCESS,
   FUNDRAISER_DETAILS_FAIL,
@@ -44,6 +47,29 @@ const fundraiserListReducer = (state = { fundraisers: [] }, action) => {
   }
 };
 
+/**
+ * Reducer for top 3 fundraiser request.
+ *
+ * @param {*} state   The current state.
+ * @param {*} action  The action that has been performed.
+ * @returns
+ */
+const topThreeFundraiserReducer = (state = { fundraisers: [] }, action) => {
+  switch (action.type) {
+    case TOP_THREE_FUNDRAISER_REQUEST:
+      return { loading: true, fundraisers: [] };
+    case TOP_THREE_FUNDRAISER_SUCCESS:
+      return {
+        loading: false,
+        fundraisers: action.payload.data,
+      };
+    case TOP_THREE_FUNDRAISER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 const fundraiserDetailsReducer = (state = { fundraiser: { donations: [] } }, action) => {
   switch (action.type) {
     case FUNDRAISER_DETAILS_REQUEST:
@@ -57,4 +83,9 @@ const fundraiserDetailsReducer = (state = { fundraiser: { donations: [] } }, act
   }
 };
 
-export { fundraiserCreateReducer, fundraiserListReducer, fundraiserDetailsReducer };
+export {
+  fundraiserCreateReducer,
+  fundraiserListReducer,
+  topThreeFundraiserReducer,
+  fundraiserDetailsReducer,
+};

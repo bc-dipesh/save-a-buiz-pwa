@@ -16,13 +16,18 @@ import {
   enqueueSnackbar as enqueueSnackbarAction,
   closeSnackbar as closeSnackbarAction,
 } from '../../actions/snackbarActions';
-import { mobilePhoneNumberRegEx } from '../../utils/regex';
+import { mobilePhoneNumberRegEx, passwordRegex } from '../../utils/regex';
 
 const userRegisterSchema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
   mobilePhoneNumber: yup.string().matches(mobilePhoneNumberRegEx),
-  password: yup.string().required(),
+  password: yup
+    .string()
+    .matches(
+      passwordRegex,
+      'Password must contain a minimum of 8 characters, one uppercase, one lowercase, one number and one special case character'
+    ),
   confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
 });
 

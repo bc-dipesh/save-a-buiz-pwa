@@ -6,7 +6,7 @@ const HowItWorksScreen = () => (
   <>
     <Container className="mt-5">
       <Row>
-        <h1 className="pb-3">How SaveABuizWorks</h1>
+        <h1 className="pb-3">How SaveABuiz Works</h1>
         <p>
           SaveABuiz is the best place to create fundraiser and raise funds, whether you are an
           individual, group, or organization.
