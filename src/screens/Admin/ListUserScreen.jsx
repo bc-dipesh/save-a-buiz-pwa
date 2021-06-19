@@ -21,7 +21,7 @@ const Children = ({ loading, error, users }) => {
   };
 
   if (loading) {
-    return <SkeletonUserListTable />;
+    return <SkeletonUserListTable columns={4} />;
   }
   if (!error) {
     return (
@@ -130,7 +130,7 @@ const Children = ({ loading, error, users }) => {
   );
 };
 
-const UserListScreen = ({ history }) => {
+const ListUserScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
@@ -197,10 +197,10 @@ Children.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object),
 };
 
-UserListScreen.propTypes = {
+ListUserScreen.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
 };
 
-export default UserListScreen;
+export default ListUserScreen;

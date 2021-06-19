@@ -101,10 +101,10 @@ const LoggedOutUserLinks = () => (
 
 const AdminUserLinks = () => (
   <NavDropdown title="Admin Panel" id="adminMenu">
-    <LinkContainer to="/admin/user-list">
+    <LinkContainer to="/admin/list-user">
       <NavDropdown.Item>Users</NavDropdown.Item>
     </LinkContainer>
-    <LinkContainer to="/admin/fundraiserList">
+    <LinkContainer to="/admin/list-fundraiser">
       <NavDropdown.Item>Fundraisers</NavDropdown.Item>
     </LinkContainer>
   </NavDropdown>

@@ -12,6 +12,14 @@ import {
   FUNDRAISER_DETAILS_REQUEST,
   FUNDRAISER_DETAILS_SUCCESS,
   FUNDRAISER_DETAILS_FAIL,
+  FUNDRAISER_DELETE_REQUEST,
+  FUNDRAISER_DELETE_SUCCESS,
+  FUNDRAISER_DELETE_FAIL,
+  FUNDRAISER_DELETE_RESET,
+  FUNDRAISER_UPDATE_REQUEST,
+  FUNDRAISER_UPDATE_SUCCESS,
+  FUNDRAISER_UPDATE_FAIL,
+  FUNDRAISER_UPDATE_RESET,
 } from '../constants/fundraiserConstants';
 
 const fundraiserCreateReducer = (state = {}, action) => {
@@ -83,9 +91,41 @@ const fundraiserDetailsReducer = (state = { fundraiser: { donations: [] } }, act
   }
 };
 
+const fundraiserUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FUNDRAISER_UPDATE_REQUEST:
+      return { loading: true };
+    case FUNDRAISER_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case FUNDRAISER_UPDATE_RESET:
+      return {};
+    case FUNDRAISER_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const fundraiserDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FUNDRAISER_DELETE_REQUEST:
+      return { loading: true };
+    case FUNDRAISER_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case FUNDRAISER_DELETE_RESET:
+      return {};
+    case FUNDRAISER_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export {
   fundraiserCreateReducer,
   fundraiserListReducer,
   topThreeFundraiserReducer,
   fundraiserDetailsReducer,
+  fundraiserUpdateReducer,
+  fundraiserDeleteReducer,
 };

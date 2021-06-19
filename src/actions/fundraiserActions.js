@@ -9,6 +9,14 @@ import {
   FUNDRAISER_LIST_FAIL,
   FUNDRAISER_LIST_REQUEST,
   FUNDRAISER_LIST_SUCCESS,
+  FUNDRAISER_DELETE_REQUEST,
+  FUNDRAISER_DELETE_SUCCESS,
+  FUNDRAISER_DELETE_FAIL,
+  FUNDRAISER_DELETE_RESET,
+  FUNDRAISER_UPDATE_REQUEST,
+  FUNDRAISER_UPDATE_SUCCESS,
+  FUNDRAISER_UPDATE_FAIL,
+  FUNDRAISER_UPDATE_RESET,
   TOP_THREE_FUNDRAISER_REQUEST,
   TOP_THREE_FUNDRAISER_SUCCESS,
   TOP_THREE_FUNDRAISER_FAIL,
@@ -91,6 +99,12 @@ const listTopThreeFundraisers = () => async (dispatch) => {
   }
 };
 
+/**
+ * Get fundraiser details from the id.
+ *
+ * @param {String} id The id of the fundraiser
+ * @returns
+ */
 const listFundraiserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_DETAILS_REQUEST });
@@ -109,4 +123,78 @@ const listFundraiserDetails = (id) => async (dispatch) => {
   }
 };
 
-export { createFundraiser, listFundraisers, listTopThreeFundraisers, listFundraiserDetails };
+/**
+ * Update fundraiser action.
+ *
+ * @param  {*} fundraiser  The fundraiser to be updated.
+ */
+const updateFundraiser = (fundraiser) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FUNDRAISER_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    await axios.put(`${BASE_URL}/${fundraiser._id}`, fundraiser, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    dispatch({ type: FUNDRAISER_UPDATE_SUCCESS });
+    dispatch({ type: FUNDRAISER_UPDATE_RESET });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: FUNDRAISER_UPDATE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
+/**
+ * Delete a fundraiser given its id.
+ *
+ * @param {String} id The id of the fundraiser to be delete.
+ */
+const deleteFundraiser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FUNDRAISER_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    await axios.delete(`${BASE_URL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    dispatch({ type: FUNDRAISER_DELETE_SUCCESS });
+    dispatch({ type: FUNDRAISER_DELETE_RESET });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: FUNDRAISER_DELETE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
+export {
+  createFundraiser,
+  listFundraisers,
+  listTopThreeFundraisers,
+  listFundraiserDetails,
+  updateFundraiser,
+  deleteFundraiser,
+};

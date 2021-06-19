@@ -39,7 +39,7 @@ const HomeScreen = () => {
     <>
       <Container className="mt-5">
         <Row className="justify-content-center">
-          <h1 className="pb-3 h2">
+          <h1 className="mb-3 h2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="48"

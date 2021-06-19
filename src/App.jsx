@@ -21,14 +21,16 @@ import LegalContactInfoScreen from './screens/LegalContactInfo/LegalContactInfoS
 import PageNotFoundScreen from './screens/PageNotFound/PageNotFoundScreen';
 import StartFundraiserScreen from './screens/StartFundraiser/StartFundraiserScreen';
 import SupportedProvinceScreen from './screens/SupportedProvince/SupportedProvinceScreen';
-import UserEditScreen from './screens/Admin/UserEditScreen';
+import EditUserScreen from './screens/Admin/EditUserScreen';
 import UserFundraiserScreen from './screens/User/UserFundraiserScreen';
-import UserListScreen from './screens/Admin/UserListScreen';
+import ListUserScreen from './screens/Admin/ListUserScreen';
 import UserProfileScreen from './screens/User/UserProfileScreen';
 import UserRegisterScreen from './screens/User/UserRegisterScreen';
 import UserSignInScreen from './screens/User/UserSignInScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding/WhatIsCrowdfundingScreen';
+import ListFundraiserScreen from './screens/Admin/ListFundraiser';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -113,8 +115,10 @@ function App() {
             <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
             <Route path="/legal" component={LegalContactInfoScreen} exact />
             <Route path="/common-questions" component={CommonQuestionScreen} exact />
-            <Route path="/admin/user-list" component={UserListScreen} exact />
-            <Route path="/admin/user/:id/edit" component={UserEditScreen} exact />
+            <Route path="/admin/list-user" component={ListUserScreen} exact />
+            <Route path="/admin/user/:id/edit" component={EditUserScreen} exact />
+            <Route path="/admin/list-fundraiser" component={ListFundraiserScreen} exact />
+            <Route path="/admin/fundraiser/:id/edit" component={EditFundraiserScreen} exact />
             <Route component={PageNotFoundScreen} />
           </Switch>
         </main>

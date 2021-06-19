@@ -24,7 +24,7 @@ const userEditSchema = yup.object().shape({
   email: yup.string().email().required('Please enter a valid email address.'),
 });
 
-const UserEditScreen = ({ match, history }) => {
+const EditUserScreen = ({ match, history }) => {
   const {
     register,
     handleSubmit,
@@ -65,7 +65,7 @@ const UserEditScreen = ({ match, history }) => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       displaySnackbar('User profile successfully updated.');
-      history.push('/admin/user-list');
+      history.push('/admin/list-user');
     } else if (user?._id === userId) {
       setValue('name', user.name);
       setValue('email', user.email);
@@ -95,7 +95,7 @@ const UserEditScreen = ({ match, history }) => {
 
   return (
     <Container>
-      <Link to="/admin/user-list" className="btn btn-outline-primary mt-5">
+      <Link to="/admin/list-user" className="btn btn-outline-primary mt-5">
         Go Back
       </Link>
       <FormContainer>
@@ -164,7 +164,7 @@ const UserEditScreen = ({ match, history }) => {
   );
 };
 
-UserEditScreen.propTypes = {
+EditUserScreen.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -175,4 +175,4 @@ UserEditScreen.propTypes = {
   }),
 };
 
-export default UserEditScreen;
+export default EditUserScreen;
