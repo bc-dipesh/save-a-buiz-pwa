@@ -14,7 +14,7 @@ import {
   TOP_THREE_FUNDRAISER_FAIL,
 } from '../constants/fundraiserConstants';
 
-const BASE_URL = 'http://localhost:5000/api/v1/fundraisers';
+const BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
 
 const createFundraiser =
   ({ location, title, goal, description, image, youTubeVideoLink }) =>

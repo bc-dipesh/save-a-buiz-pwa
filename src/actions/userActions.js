@@ -42,6 +42,7 @@ const axiosConfig = {
     'Content-Type': 'application/json',
   },
 };
+
 /**
  * Create a user for the app.
  *
@@ -76,6 +77,7 @@ const register =
       });
     }
   };
+
 /**
  * Login user to the app.
  *
@@ -106,6 +108,7 @@ const login = (email, password) => async (dispatch) => {
     });
   }
 };
+
 /**
  * Get user profile for the currently signed in user
  * or for the user with the matching id provided.
