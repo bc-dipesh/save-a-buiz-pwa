@@ -52,7 +52,6 @@ FundraiserCard.propTypes = {
     description: PropTypes.string,
     collected: PropTypes.number,
     goal: PropTypes.number,
-    donors: PropTypes.number,
     youTubeVideoLink: PropTypes.string,
     organizer: PropTypes.shape({
       name: PropTypes.string,

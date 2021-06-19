@@ -15,15 +15,14 @@ const FundraiserDetail = ({ fundraiser }) => {
     description = '',
     collected = 0,
     goal = 0,
-    donors = 0,
     youTubeVideoLink = '',
     organizer = '',
     donations = [],
   } = fundraiser || {};
 
-  const { name } = organizer || {};
+  const { name, email } = organizer || {};
 
-  const formattedDonors = numFormatter(donors);
+  const formattedDonors = numFormatter(donations.length);
   const currentProgress = calculateProgress(collected, goal);
   const collectedLocaleString = collected.toLocaleString('en-US');
   const goalLocaleString = goal.toLocaleString('en-US');
@@ -138,7 +137,9 @@ const FundraiserDetail = ({ fundraiser }) => {
                     </p>
                   </Col>
                   <Col>
-                    <Button variant="outline-primary">Contact</Button>
+                    <a href={`mailto:${email}`}>
+                      <Button variant="outline-primary">Contact</Button>
+                    </a>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -160,7 +161,6 @@ FundraiserDetail.propTypes = {
     description: PropTypes.string,
     collected: PropTypes.number,
     goal: PropTypes.number,
-    donors: PropTypes.number,
     youTubeVideoLink: PropTypes.string,
     organizer: PropTypes.shape({
       name: PropTypes.string,
