@@ -39,7 +39,6 @@ const resetPassword = (email) => async (dispatch) => {
       },
     } = await axios.post(`${AUTH_ROUTE_BASE_URL}/forgot-password`, email, axiosConfig);
 
-    console.log(message);
     dispatch({ type: RESET_PASSWORD_SUCCESS, success: true, payload: message });
   } catch (error) {
     const errorMessage =

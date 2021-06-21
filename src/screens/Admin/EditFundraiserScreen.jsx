@@ -65,7 +65,6 @@ const EditFundraiserScreen = ({ match, history }) => {
       displaySnackbar('Fundraiser successfully updated.');
       history.push('/admin/list-fundraiser');
     } else if (fundraiser?._id === fundraiserId) {
-      console.log(fundraiser._id);
       setValue('location', fundraiser.location);
       setValue('title', fundraiser.title);
       setValue('goal', fundraiser.goal);
