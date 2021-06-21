@@ -78,7 +78,7 @@ const LoggedInUserLinks = ({ history, name, email }) => {
 
   return (
     <NavDropdown title={name} id={email}>
-      <LinkContainer to="/user/fundraisers">
+      <LinkContainer to="/user/fundraisers/1">
         <NavDropdown.Item>Your fundraisers</NavDropdown.Item>
       </LinkContainer>
       <NavDropdown.Item>Donations you&apos;ve made</NavDropdown.Item>

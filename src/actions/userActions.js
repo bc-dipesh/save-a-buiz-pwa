@@ -34,8 +34,17 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
 
-const AUTH_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
-const USERS_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+let AUTH_ROUTE_BASE_URL;
+let USERS_ROUTE_BASE_URL;
+
+// set a base url of the api based on the current environment
+if (process.env.NODE_ENV === 'production') {
+  AUTH_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
+  USERS_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+} else {
+  AUTH_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/auth';
+  USERS_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/users';
+}
 
 const axiosConfig = {
   headers: {
@@ -366,37 +375,40 @@ const deleteUserById = (id) => async (dispatch, getState) => {
  * the currently signed in user.
  *
  */
-const getUserFundraiserList = () => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: USER_FUNDRAISER_REQUEST,
-    });
+const getUserFundraiserList =
+  (pageNumber = '') =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: USER_FUNDRAISER_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const {
-      data: { data },
-    } = await axios.get(`${USERS_ROUTE_BASE_URL}/${userInfo.user._id}/fundraisers`, {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    });
+      const { data } = await axios.get(
+        `${USERS_ROUTE_BASE_URL}/${userInfo.user._id}/fundraisers?pageNumber=${pageNumber}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
 
-    dispatch({
-      type: USER_FUNDRAISER_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response && error.response.data.data ? error.response.data.data : error.response;
-    dispatch({
-      type: USER_FUNDRAISER_FAIL,
-      payload: errorMessage || 'Something went wrong',
-    });
-  }
-};
+      dispatch({
+        type: USER_FUNDRAISER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response && error.response.data.data ? error.response.data.data : error.response;
+      dispatch({
+        type: USER_FUNDRAISER_FAIL,
+        payload: errorMessage || 'Something went wrong',
+      });
+    }
+  };
 
 /**
  * Removes userInfo from local storage

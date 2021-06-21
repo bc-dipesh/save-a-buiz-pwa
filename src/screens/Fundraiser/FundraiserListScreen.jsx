@@ -23,7 +23,7 @@ const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
             <FundraiserCard fundraiser={fundraiser} />
           </Col>
         ))}
-        <Paginate keyword={keyword} pages={pages} page={page} />
+        <Paginate keyword={keyword} pages={pages} page={page} url="/page" />
       </>
     );
   }

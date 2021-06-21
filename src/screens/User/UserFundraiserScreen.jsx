@@ -7,9 +7,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
+import Paginate from '../../components/Paginate';
 import useUserFundraiserList from '../../hooks/useUserFundraiserList';
 
-const Children = ({ loading, error, fundraisers }) => {
+const Children = ({ loading, error, fundraisers, pages, page }) => {
   if (loading) {
     return (
       <Row>
@@ -34,11 +35,16 @@ const Children = ({ loading, error, fundraisers }) => {
     );
   }
   if (!error) {
-    return fundraisers.map((fundraiser) => (
-      <Col key={fundraiser._id} className="my-3" sm={12} md={4} lg={3}>
-        <FundraiserCard fundraiser={fundraiser} />
-      </Col>
-    ));
+    return (
+      <>
+        {fundraisers.map((fundraiser) => (
+          <Col key={fundraiser._id} className="my-3" sm={12} md={4} lg={3}>
+            <FundraiserCard fundraiser={fundraiser} />
+          </Col>
+        ))}
+        <Paginate pages={pages} page={page} url="/user/fundraisers" />
+      </>
+    );
   }
   return (
     <Container className="my-5">
@@ -50,8 +56,9 @@ const Children = ({ loading, error, fundraisers }) => {
   );
 };
 
-const UserFundraiserScreen = ({ history }) => {
-  const { loading, error, fundraisers } = useUserFundraiserList(history);
+const UserFundraiserScreen = ({ history, match }) => {
+  const { pageNumber } = match.params;
+  const { loading, error, fundraisers, pages, page } = useUserFundraiserList(history, pageNumber);
 
   return (
     <Container className="mt-5">
@@ -82,7 +89,13 @@ const UserFundraiserScreen = ({ history }) => {
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Children loading={loading} error={error} fundraisers={fundraisers} />
+        <Children
+          loading={loading}
+          error={error}
+          fundraisers={fundraisers}
+          pages={pages}
+          page={page}
+        />
       </Row>
     </Container>
   );
@@ -92,11 +105,18 @@ Children.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   fundraisers: PropTypes.arrayOf(PropTypes.object),
+  pages: PropTypes.number,
+  page: PropTypes.number,
 };
 
 UserFundraiserScreen.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      pageNumber: PropTypes.string,
+    }),
   }),
 };
 

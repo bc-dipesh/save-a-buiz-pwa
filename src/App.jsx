@@ -110,7 +110,7 @@ function App() {
             <Route path="/register" component={UserRegisterScreen} exact />
             <Route path="/about" component={AboutScreen} exact />
             <Route path="/user/profile" component={UserProfileScreen} exact />
-            <Route path="/user/fundraisers" component={UserFundraiserScreen} exact />
+            <Route path="/user/fundraisers/:pageNumber" component={UserFundraiserScreen} />
             <Route path="/how-it-works" component={HowItWorksScreen} exact />
             <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
             <Route path="/legal" component={LegalContactInfoScreen} exact />

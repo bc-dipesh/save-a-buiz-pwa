@@ -9,13 +9,13 @@ import {
 import { getUserFundraiserList } from '../actions/userActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
-const useUserFundraiserList = (history) => {
+const useUserFundraiserList = (history, pageNumber) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const userFundraiser = useSelector((state) => state.userFundraiser);
-  const { loading, error, fundraisers } = userFundraiser;
+  const { loading, error, fundraisers, pages, page } = userFundraiser;
 
   const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
   const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
@@ -40,14 +40,14 @@ const useUserFundraiserList = (history) => {
       if (!(!!userInfo?.token && !!userInfo?.user)) {
         history.push('/sign-in');
       } else {
-        dispatch(getUserFundraiserList());
+        dispatch(getUserFundraiserList(pageNumber));
       }
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
-  }, [userInfo, dispatch]);
+  }, [userInfo, dispatch, pageNumber]);
 
-  return { loading, error, fundraisers };
+  return { loading, error, fundraisers, pages, page };
 };
 
 export default useUserFundraiserList;
