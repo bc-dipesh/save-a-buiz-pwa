@@ -165,9 +165,6 @@ const Footer = () => (
                   <Link to="/common-questions">Common questions</Link>
                 </li>
                 <li>
-                  <a href="https://facebook.com">Success stories</a>
-                </li>
-                <li>
                   <Link to="/supported-provinces">Supported provinces</Link>
                 </li>
               </ul>
@@ -177,9 +174,6 @@ const Footer = () => (
                 <strong>Resources</strong>
               </h4>
               <ul className="list-unstyled">
-                <li>
-                  <a href="https://facebook.com">Help Center</a>
-                </li>
                 <li>
                   <Link to="/about">About</Link>
                 </li>

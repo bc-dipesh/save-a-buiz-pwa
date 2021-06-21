@@ -27,6 +27,7 @@ import ListUserScreen from './screens/Admin/ListUserScreen';
 import UserProfileScreen from './screens/User/UserProfileScreen';
 import UserRegisterScreen from './screens/User/UserRegisterScreen';
 import UserSignInScreen from './screens/User/UserSignInScreen';
+import UserPasswordResetScreen from './screens/User/UserPasswordResetScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding/WhatIsCrowdfundingScreen';
 import ListFundraiserScreen from './screens/Admin/ListFundraiser';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -106,6 +107,7 @@ function App() {
             <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
             <Route path="/start-fundraiser" component={StartFundraiserScreen} exact />
             <Route path="/sign-in" component={UserSignInScreen} exact />
+            <Route path="/forgot-password" component={UserPasswordResetScreen} exact />
             <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
             <Route path="/register" component={UserRegisterScreen} exact />
             <Route path="/about" component={AboutScreen} exact />

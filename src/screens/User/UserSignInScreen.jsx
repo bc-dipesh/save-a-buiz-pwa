@@ -57,7 +57,7 @@ const UserSignInScreen = ({ location, history }) => {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if (!!userInfo?.token && !!userInfo?.user) {
+    if (!!userInfo?.token && !!userInfo.user?.name) {
       displaySnackbar('You have successfully signed in to the app.');
       history.push(redirect);
     }
@@ -115,6 +115,7 @@ const UserSignInScreen = ({ location, history }) => {
           New User?{' '}
           <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
         </Col>
+        <Link to="/forgot-password">Forgot your password?</Link>
       </Row>
     </FormContainer>
   );

@@ -20,6 +20,7 @@ import {
   userUpdateProfileReducer,
   userUpdateReducer,
 } from './reducers/userReducers';
+import { resetPasswordReducer } from './reducers/authReducers';
 
 const reducer = combineReducers({
   fundraiserCreate: fundraiserCreateReducer,
@@ -37,6 +38,7 @@ const reducer = combineReducers({
   userDelete: userDeleteReducer,
   fundraiserUpdate: fundraiserUpdateReducer,
   fundraiserDelete: fundraiserDetailsReducer,
+  resetPassword: resetPasswordReducer,
   snackbar: snackbarReducer,
 });
 

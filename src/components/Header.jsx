@@ -133,7 +133,6 @@ const Header = () => {
                 <LinkContainer to="/fundraisers">
                   <NavDropdown.Item>Fundraisers</NavDropdown.Item>
                 </LinkContainer>
-                <NavDropdown.Item href="#action4">Success Stories</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="How it works" id="navbarScrollingDropdown">
                 <LinkContainer to="/how-it-works">
