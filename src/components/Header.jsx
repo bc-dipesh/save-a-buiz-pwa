@@ -11,6 +11,7 @@ import {
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../actions/snackbarActions';
 import { logout } from '../actions/userActions';
+import { isUserLoggedIn, isUserAdmin } from '../utils/commonFunctions';
 
 const SearchBox = ({ history }) => {
   const [keyword, setKeyword] = useState('');
@@ -62,9 +63,7 @@ const LoggedInUserLinks = ({ history, name, email }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -114,9 +113,6 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const isUserLoggedIn = () => !!userInfo?.token && !!userInfo?.user;
-  const isUserAdmin = () => !!userInfo?.user.isAdmin;
-
   return (
     <header>
       <Navbar variant="light" expand="lg">
@@ -142,7 +138,7 @@ const Header = () => {
                   <NavDropdown.Item>What is crowdfunding ?</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              {isUserLoggedIn() ? (
+              {isUserLoggedIn(userInfo) ? (
                 <Route
                   render={({ history }) => (
                     <LoggedInUserLinks
@@ -155,7 +151,7 @@ const Header = () => {
               ) : (
                 <LoggedOutUserLinks />
               )}
-              {isUserLoggedIn() && isUserAdmin() && <AdminUserLinks />}
+              {isUserLoggedIn(userInfo) && isUserAdmin(userInfo) && <AdminUserLinks />}
             </Nav>
             <Route render={({ history }) => <SearchBox history={history} />} />
           </Navbar.Collapse>

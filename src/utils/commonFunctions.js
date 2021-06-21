@@ -1,6 +1,24 @@
 import isOnline from 'is-online';
 
 /**
+ * Check if the user is logged in or not.
+ *
+ * @param {*} userInfo  The object that contains user information.
+ * @returns {Boolean}   true if the user is loggedIn.
+ */
+const isUserLoggedIn = (userInfo) =>
+  !!userInfo?.user && !!userInfo?.user?.name && !!userInfo?.token;
+
+/**
+ *  Check if user is admin or not.
+ *
+ * @param {*} userInfo  The object that contains user information.
+ * @returns {Boolean}   true if the user is admin.
+ */
+const isUserAdmin = (userInfo) =>
+  !!userInfo?.user && !!userInfo?.user?.isAdmin && !!userInfo?.token;
+
+/**
  * Check if app is connected to the internet.
  *
  */
@@ -44,4 +62,11 @@ const differenceFromCurrentDate = (dateToSubtract) => {
   return currentDate.getDate() - new Date(dateToSubtract).getDate();
 };
 
-export { checkIsInternetConnected, calculateProgress, numFormatter, differenceFromCurrentDate };
+export {
+  isUserLoggedIn,
+  isUserAdmin,
+  checkIsInternetConnected,
+  calculateProgress,
+  numFormatter,
+  differenceFromCurrentDate,
+};

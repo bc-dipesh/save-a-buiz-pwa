@@ -15,7 +15,7 @@ import {
 } from '../../actions/snackbarActions';
 import { login } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
-import { checkIsInternetConnected } from '../../utils/commonFunctions';
+import { checkIsInternetConnected, isUserLoggedIn } from '../../utils/commonFunctions';
 
 const userLoginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -45,9 +45,7 @@ const UserSignInScreen = ({ location, history }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -57,7 +55,7 @@ const UserSignInScreen = ({ location, history }) => {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if (!!userInfo?.token && !!userInfo.user?.name) {
+    if (isUserLoggedIn(userInfo)) {
       displaySnackbar('You have successfully signed in to the app.');
       history.push(redirect);
     }

@@ -9,10 +9,8 @@ import {
 import { getUserFundraiserList } from '../actions/userActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
-const useUserFundraiserList = (history, pageNumber) => {
+const useUserFundraiserList = (pageNumber) => {
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const userFundraiser = useSelector((state) => state.userFundraiser);
   const { loading, error, fundraisers, pages, page } = userFundraiser;
@@ -27,9 +25,7 @@ const useUserFundraiserList = (history, pageNumber) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -37,15 +33,11 @@ const useUserFundraiserList = (history, pageNumber) => {
 
   useEffect(async () => {
     if (await checkIsInternetConnected()) {
-      if (!(!!userInfo?.token && !!userInfo?.user)) {
-        history.push('/sign-in');
-      } else {
-        dispatch(getUserFundraiserList(pageNumber));
-      }
+      dispatch(getUserFundraiserList(pageNumber));
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
-  }, [userInfo, dispatch, pageNumber]);
+  }, [dispatch, pageNumber]);
 
   return { loading, error, fundraisers, pages, page };
 };

@@ -23,6 +23,10 @@
   height: 100px;
 }
 
+.MuiButtonBase-root.MuiButton-root.MuiButton-text {
+  color: cyan;
+}
+
 .green-circle {
   border: 1px solid cyan;
   border-radius: 3.125rem;

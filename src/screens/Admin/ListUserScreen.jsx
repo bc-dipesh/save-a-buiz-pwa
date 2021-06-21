@@ -143,9 +143,7 @@ const ListUserScreen = ({ history }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -153,23 +151,15 @@ const ListUserScreen = ({ history }) => {
 
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
-
-  const checkIsUserAdmin = () => !!userInfo?.user && !!userInfo?.token && !!userInfo?.user.isAdmin;
 
   useEffect(() => {
     if (successDelete) {
       displaySnackbar('User successfully deleted.');
     }
-    if (checkIsUserAdmin()) {
-      dispatch(getUserList());
-    } else {
-      history.push('/sign-in');
-    }
-  }, [dispatch, userInfo, history, successDelete]);
+    dispatch(getUserList());
+  }, [dispatch, history, successDelete]);
 
   return (
     <Container className="mt-5">

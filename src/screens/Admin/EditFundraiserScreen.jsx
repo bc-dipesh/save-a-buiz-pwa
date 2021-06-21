@@ -54,9 +54,7 @@ const EditFundraiserScreen = ({ match, history }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -75,8 +73,8 @@ const EditFundraiserScreen = ({ match, history }) => {
     } else {
       dispatch(listFundraiserDetails(fundraiserId));
     }
-    if (errorUpdate) {
-      displaySnackbar(errorUpdate, 'error');
+    if (error || errorUpdate) {
+      displaySnackbar(error || errorUpdate, 'error');
     }
   }, [dispatch, fundraiser, fundraiserId, error, successUpdate, errorUpdate]);
 

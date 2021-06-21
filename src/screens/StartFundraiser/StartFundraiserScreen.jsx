@@ -56,9 +56,7 @@ const StartFundraiserScreen = ({ history }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -91,13 +89,8 @@ const StartFundraiserScreen = ({ history }) => {
   };
 
   const { loading, error, fundraiser } = useSelector((state) => state.fundraiserCreate);
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push('/sign-in');
-    }
     if (fundraiser) {
       dispatch({ type: FUNDRAISER_CREATE_RESET });
       displaySnackbar('Your fundraiser has been successfully created.');
@@ -106,7 +99,7 @@ const StartFundraiserScreen = ({ history }) => {
     if (error) {
       displaySnackbar(error, 'error');
     }
-  }, [userInfo, fundraiser, error, dispatch]);
+  }, [fundraiser, error, dispatch]);
 
   const submitCreateFundraiserForm = async (data) => {
     if (await checkIsInternetConnected()) {

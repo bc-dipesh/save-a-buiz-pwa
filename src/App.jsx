@@ -10,8 +10,13 @@ import {
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Notifier from './components/Notifier';
+import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 import AboutScreen from './screens/About/AboutScreen';
+import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
+import EditUserScreen from './screens/Admin/EditUserScreen';
+import ListFundraiserScreen from './screens/Admin/ListFundraiser';
+import ListUserScreen from './screens/Admin/ListUserScreen';
 import CommonQuestionScreen from './screens/CommonQuestion/CommonQuestionScreen';
 import FundraiserListScreen from './screens/Fundraiser/FundraiserListScreen';
 import FundraiserScreen from './screens/Fundraiser/FundraiserScreen';
@@ -21,17 +26,14 @@ import LegalContactInfoScreen from './screens/LegalContactInfo/LegalContactInfoS
 import PageNotFoundScreen from './screens/PageNotFound/PageNotFoundScreen';
 import StartFundraiserScreen from './screens/StartFundraiser/StartFundraiserScreen';
 import SupportedProvinceScreen from './screens/SupportedProvince/SupportedProvinceScreen';
-import EditUserScreen from './screens/Admin/EditUserScreen';
 import UserFundraiserScreen from './screens/User/UserFundraiserScreen';
-import ListUserScreen from './screens/Admin/ListUserScreen';
+import UserPasswordResetScreen from './screens/User/UserPasswordResetScreen';
 import UserProfileScreen from './screens/User/UserProfileScreen';
 import UserRegisterScreen from './screens/User/UserRegisterScreen';
 import UserSignInScreen from './screens/User/UserSignInScreen';
-import UserPasswordResetScreen from './screens/User/UserPasswordResetScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding/WhatIsCrowdfundingScreen';
-import ListFundraiserScreen from './screens/Admin/ListFundraiser';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
+import { isUserAdmin, isUserLoggedIn } from './utils/commonFunctions';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -58,7 +60,6 @@ function App() {
         variant,
         action: (key) => (
           <Button
-            style={{ color: 'cyan' }}
             onClick={() => {
               updateServiceWorker();
               closeSnackbar(key);
@@ -88,45 +89,73 @@ function App() {
   }
 
   return (
-    <>
-      <Router>
-        <ScrollToTop />
-        <Header />
-        <main>
-          <Notifier />
-          <Switch>
-            <Route path="/" component={HomeScreen} exact />
-            <Route path="/search/:keyword" component={FundraiserListScreen} exact />
-            <Route
-              path="/search/:keyword/page/:pageNumber"
-              component={FundraiserListScreen}
-              exact
-            />
-            <Route path="/fundraisers" component={FundraiserListScreen} exact />
-            <Route path="/page/:pageNumber" component={FundraiserListScreen} exact />
-            <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
-            <Route path="/start-fundraiser" component={StartFundraiserScreen} exact />
-            <Route path="/sign-in" component={UserSignInScreen} exact />
-            <Route path="/forgot-password" component={UserPasswordResetScreen} exact />
-            <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
-            <Route path="/register" component={UserRegisterScreen} exact />
-            <Route path="/about" component={AboutScreen} exact />
-            <Route path="/user/profile" component={UserProfileScreen} exact />
-            <Route path="/user/fundraisers/:pageNumber" component={UserFundraiserScreen} />
-            <Route path="/how-it-works" component={HowItWorksScreen} exact />
-            <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
-            <Route path="/legal" component={LegalContactInfoScreen} exact />
-            <Route path="/common-questions" component={CommonQuestionScreen} exact />
-            <Route path="/admin/list-user" component={ListUserScreen} exact />
-            <Route path="/admin/user/:id/edit" component={EditUserScreen} exact />
-            <Route path="/admin/list-fundraiser" component={ListFundraiserScreen} exact />
-            <Route path="/admin/fundraiser/:id/edit" component={EditFundraiserScreen} exact />
-            <Route component={PageNotFoundScreen} />
-          </Switch>
-        </main>
-        <Footer />
-      </Router>
-    </>
+    <Router>
+      <ScrollToTop />
+      <Header />
+      <main>
+        <Notifier />
+        <Switch>
+          <Route path="/" component={HomeScreen} exact />
+          <Route path="/search/:keyword" component={FundraiserListScreen} exact />
+          <Route path="/search/:keyword/page/:pageNumber" component={FundraiserListScreen} exact />
+          <Route path="/fundraisers" component={FundraiserListScreen} exact />
+          <Route path="/page/:pageNumber" component={FundraiserListScreen} exact />
+          <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
+          <Route path="/sign-in" component={UserSignInScreen} exact />
+          <Route path="/forgot-password" component={UserPasswordResetScreen} exact />
+          <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
+          <Route path="/register" component={UserRegisterScreen} exact />
+          <Route path="/about" component={AboutScreen} exact />
+          <Route path="/how-it-works" component={HowItWorksScreen} exact />
+          <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
+          <Route path="/legal" component={LegalContactInfoScreen} exact />
+          <Route path="/common-questions" component={CommonQuestionScreen} exact />
+          <ProtectedRoute
+            authenticate={isUserLoggedIn}
+            path="/start-fundraiser"
+            component={StartFundraiserScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserLoggedIn}
+            path="/user/profile"
+            component={UserProfileScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserLoggedIn}
+            path="/user/fundraisers/:pageNumber"
+            component={UserFundraiserScreen}
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/list-user"
+            component={ListUserScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/user/:id/edit"
+            component={EditUserScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/list-fundraiser"
+            component={ListFundraiserScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/fundraiser/:id/edit"
+            component={EditFundraiserScreen}
+            exact
+          />
+          <Route component={PageNotFoundScreen} />
+        </Switch>
+      </main>
+      <Footer />
+    </Router>
   );
 }
 

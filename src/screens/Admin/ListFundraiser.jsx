@@ -1,21 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Container, Table } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { v4 as uuidv4 } from 'uuid';
-import { Button as SnackbarButton } from '@material-ui/core';
 import Message from '../../components/Message';
 import SkeletonUserListTable from '../../components/skeletons/SkeletonUserListTable';
-import {
-  enqueueSnackbar as enqueueSnackbarAction,
-  closeSnackbar as closeSnackbarAction,
-} from '../../actions/snackbarActions';
 import useFundraiserList from '../../hooks/useFundraiserList';
 
 const Children = ({ loading, error, fundraisers }) => {
-  //   const dispatch = useDispatch();
-
   const deleteFundraiser = (id) => {
     console.log(`delete this ${id}`);
   };
@@ -100,39 +91,8 @@ const Children = ({ loading, error, fundraisers }) => {
   );
 };
 
-const ListFundraiserScreen = ({ history }) => {
-  const dispatch = useDispatch();
-
-  const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
-  const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
-
-  // eslint-disable-next-line no-unused-vars
-  const displaySnackbar = (message, variant = 'success') => {
-    enqueueSnackbar({
-      message,
-      options: {
-        key: uuidv4(),
-        variant,
-        action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
-        ),
-      },
-    });
-  };
-
+const ListFundraiserScreen = () => {
   const { loading, error, fundraisers } = useFundraiserList();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const checkIsUserAdmin = () => !!userInfo?.user && !!userInfo?.token && !!userInfo?.user.isAdmin;
-
-  useEffect(() => {
-    if (!checkIsUserAdmin()) {
-      history.push('/sign-in');
-    }
-  }, [dispatch, userInfo, history]);
 
   return (
     <Container className="mt-5">

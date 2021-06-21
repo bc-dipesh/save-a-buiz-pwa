@@ -60,9 +60,7 @@ const UserProfileScreen = ({ history }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton style={{ color: 'cyan' }} onClick={() => closeSnackbar(key)}>
-            dismiss
-          </SnackbarButton>
+          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
         ),
       },
     });
@@ -89,10 +87,7 @@ const UserProfileScreen = ({ history }) => {
   } = userUpdatePassword;
 
   useEffect(() => {
-    if (!(!!userInfo?.token && !!userInfo?.user)) {
-      displaySnackbar('You are not signed in. Please sign in to access user profile page.', 'info');
-      history.push('/sign-in');
-    } else if (userInfo.user.name && userInfo.user.email && userInfo.user.mobilePhoneNumber) {
+    if (userInfo.user.name && userInfo.user.email && userInfo.user.mobilePhoneNumber) {
       setUpdateUserProfileFormValue('name', userInfo.user.name);
       setUpdateUserProfileFormValue('email', userInfo.user.email);
       setUpdateUserProfileFormValue('mobilePhoneNumber', userInfo.user.mobilePhoneNumber);
