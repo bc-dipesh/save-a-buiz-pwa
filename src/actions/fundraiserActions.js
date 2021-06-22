@@ -199,6 +199,7 @@ const deleteFundraiser = (id) => async (dispatch, getState) => {
       type: FUNDRAISER_DELETE_FAIL,
       payload: errorMessage || 'Something went wrong',
     });
+    dispatch({ type: FUNDRAISER_DELETE_RESET });
   }
 };
 

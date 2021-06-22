@@ -7,6 +7,7 @@ import {
   fundraiserListReducer,
   fundraiserUpdateReducer,
   topThreeFundraiserReducer,
+  fundraiserDeleteReducer,
 } from './reducers/fundraiserReducers';
 import snackbarReducer from './reducers/snackbarReducers';
 import {
@@ -37,7 +38,7 @@ const reducer = combineReducers({
   userUpdatePassword: userUpdatePasswordReducer,
   userDelete: userDeleteReducer,
   fundraiserUpdate: fundraiserUpdateReducer,
-  fundraiserDelete: fundraiserDetailsReducer,
+  fundraiserDelete: fundraiserDeleteReducer,
   resetPassword: resetPasswordReducer,
   snackbar: snackbarReducer,
 });

@@ -4,7 +4,7 @@ import { Button as SnackbarButton } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { InputGroup, Button, Container, Form, Spinner } from 'react-bootstrap';
+import { Button, Container, Form, InputGroup, Spinner } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,6 +15,7 @@ import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
+import useFundraiserDelete from '../../hooks/useFundraiserDelete';
 import { checkIsInternetConnected } from '../../utils/commonFunctions';
 import { urlRegEx } from '../../utils/regex';
 
@@ -45,6 +46,7 @@ const EditFundraiserScreen = ({ match, history }) => {
   const { loading, error, fundraiser } = fundraiserDetails;
   const fundraiserUpdate = useSelector((state) => state.fundraiserUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = fundraiserUpdate;
+  const { success: successDelete, handleDelete } = useFundraiserDelete();
 
   const dispatch = useDispatch();
 
@@ -81,7 +83,10 @@ const EditFundraiserScreen = ({ match, history }) => {
     if (error || errorUpdate) {
       displaySnackbar(error || errorUpdate, 'error');
     }
-  }, [dispatch, fundraiser, fundraiserId, error, successUpdate, errorUpdate]);
+    if (successDelete) {
+      history.push('/admin/list-fundraiser');
+    }
+  }, [dispatch, fundraiser, fundraiserId, error, successUpdate, errorUpdate, successDelete]);
 
   const submitFundraiserUpdateForm = async (data) => {
     if (await checkIsInternetConnected()) {
@@ -89,6 +94,10 @@ const EditFundraiserScreen = ({ match, history }) => {
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
+  };
+
+  const deleteFundraiser = () => {
+    handleDelete(fundraiserId);
   };
 
   return (
@@ -221,6 +230,9 @@ const EditFundraiserScreen = ({ match, history }) => {
           Update Fundraiser
         </Button>
       </Form>
+      <Button onClick={deleteFundraiser} className="mt-3" variant="outline-danger">
+        Delete Fundraiser
+      </Button>
     </Container>
   );
 };
