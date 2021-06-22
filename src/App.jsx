@@ -15,7 +15,7 @@ import ScrollToTop from './components/ScrollToTop';
 import AboutScreen from './screens/About/AboutScreen';
 import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
 import EditUserScreen from './screens/Admin/EditUserScreen';
-import ListFundraiserScreen from './screens/Admin/ListFundraiser';
+import ListFundraiserScreen from './screens/Admin/ListFundraiserScreen';
 import ListUserScreen from './screens/Admin/ListUserScreen';
 import CommonQuestionScreen from './screens/CommonQuestion/CommonQuestionScreen';
 import FundraiserListScreen from './screens/Fundraiser/FundraiserListScreen';

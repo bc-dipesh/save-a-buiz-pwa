@@ -1,61 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Container, Table } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Button, Container } from 'react-bootstrap';
+import useFundraiserListNoPaginate from './hooks/useFundraiserListNoPaginate';
 import Message from '../../components/Message';
 import SkeletonUserListTable from '../../components/skeletons/SkeletonUserListTable';
-import useFundraiserList from '../../hooks/useFundraiserList';
+import ListFundraiserTable from './ListFundraiserTable';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {
     return <SkeletonUserListTable columns={6} />;
   }
   if (!error) {
-    return (
-      <Table striped bordered hover responsive className="table-sm">
-        <thead>
-          <tr>
-            <th>Organizer</th>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Goal</th>
-            <th>Collected</th>
-            <th>Edit/Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fundraisers.map((fundraiser) => (
-            <tr key={fundraiser._id}>
-              <td>{fundraiser.organizer.name}</td>
-              <td>{fundraiser.title}</td>
-              <td>{fundraiser.location}</td>
-              <td>{fundraiser.goal}</td>
-              <td>{fundraiser.collected}</td>
-              <td>
-                <LinkContainer to={`/admin/fundraiser/${fundraiser._id}/edit`}>
-                  <Button variant="light" className="btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-arrow-right"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                      />
-                    </svg>
-                  </Button>
-                </LinkContainer>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+    return <ListFundraiserTable fundraisers={fundraisers} />;
   }
   return (
     <Container className="my-5">
@@ -68,7 +25,7 @@ const Children = ({ loading, error, fundraisers }) => {
 };
 
 const ListFundraiserScreen = () => {
-  const { loading, error, fundraisers } = useFundraiserList();
+  const { loading, error, fundraisers } = useFundraiserListNoPaginate();
 
   const childrenProps = {
     loading,
@@ -104,12 +61,6 @@ Children.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   fundraisers: PropTypes.arrayOf(PropTypes.object),
-};
-
-ListFundraiserScreen.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
 };
 
 export default ListFundraiserScreen;

@@ -40,8 +40,7 @@ const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
 const FundraiserListScreen = ({ match }) => {
   // extract the search keyword if present
   // and send it to the custom hook
-  const { keyword, pageNumber } = match.params;
-  const { loading, error, fundraisers, pages, page } = useFundraiserList(keyword, pageNumber);
+  const { loading, error, fundraisers, pages, page } = useFundraiserList(match.params);
 
   return (
     <>
@@ -57,7 +56,7 @@ const FundraiserListScreen = ({ match }) => {
               loading={loading}
               error={error}
               fundraisers={fundraisers}
-              keyword={keyword}
+              keyword={match.params.keyword}
               pages={pages}
               page={page}
             />

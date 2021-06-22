@@ -15,9 +15,9 @@ import {
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
 import { getUserProfile, updateUser } from '../../actions/userActions';
-import FormContainer from '../../components/FormContainer';
 import { USER_UPDATE_RESET } from '../../constants/userConstants';
 import { checkIsInternetConnected } from '../../utils/commonFunctions';
+import useUserDelete from './hooks/useUserDelete';
 
 const userEditSchema = yup.object().shape({
   name: yup.string().required('Please enter a valid name.'),
@@ -40,6 +40,8 @@ const EditUserScreen = ({ match, history }) => {
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate;
+
+  const { success: successDelete, handleDelete } = useUserDelete();
 
   const dispatch = useDispatch();
 
@@ -74,7 +76,10 @@ const EditUserScreen = ({ match, history }) => {
     if (error || errorUpdate) {
       displaySnackbar(error || errorUpdate, 'error');
     }
-  }, [dispatch, user, userId, successUpdate, error, errorUpdate]);
+    if (successDelete) {
+      history.push('/admin/list-user');
+    }
+  }, [dispatch, user, userId, successUpdate, error, errorUpdate, successDelete]);
 
   const submitUserProfileUpdateForm = async (data) => {
     if (await checkIsInternetConnected()) {
@@ -91,73 +96,78 @@ const EditUserScreen = ({ match, history }) => {
     }
   };
 
+  const deleteUser = () => {
+    handleDelete(userId);
+  };
+
   return (
     <Container>
       <Link to="/admin/list-user" className="btn btn-outline-primary mt-5">
         Go Back
       </Link>
-      <FormContainer>
-        <h1 className="mb-3">Edit User</h1>
-        <Form noValidate onSubmit={handleSubmit(submitUserProfileUpdateForm)} className="my-3">
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            {loading || loadingUpdate ? (
-              <Skeleton type="text" />
-            ) : (
-              <Form.Control
-                type="text"
-                name="name"
-                placeholder="Enter name"
-                {...register('name')}
-                isInvalid={!!errors.name?.message}
-              />
-            )}
-            <Form.Control.Feedback type="invalid">{errors.name?.message}</Form.Control.Feedback>
-          </Form.Group>
+      <h1 className="my-3">Edit User</h1>
+      <Form noValidate onSubmit={handleSubmit(submitUserProfileUpdateForm)} className="my-3">
+        <Form.Group controlId="name">
+          <Form.Label>Name</Form.Label>
+          {loading || loadingUpdate ? (
+            <Skeleton type="text" />
+          ) : (
+            <Form.Control
+              type="text"
+              name="name"
+              placeholder="Enter name"
+              {...register('name')}
+              isInvalid={!!errors.name?.message}
+            />
+          )}
+          <Form.Control.Feedback type="invalid">{errors.name?.message}</Form.Control.Feedback>
+        </Form.Group>
 
-          <Form.Group controlId="email" className="my-3">
-            <Form.Label>Email Address</Form.Label>
-            {loading || loadingUpdate ? (
-              <Skeleton type="text" />
-            ) : (
-              <Form.Control
-                type="email"
-                name="email"
-                placeholder="Enter email"
-                {...register('email')}
-                isInvalid={!!errors.email?.message}
-              />
-            )}
-            <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
-          </Form.Group>
+        <Form.Group controlId="email" className="my-3">
+          <Form.Label>Email Address</Form.Label>
+          {loading || loadingUpdate ? (
+            <Skeleton type="text" />
+          ) : (
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Enter email"
+              {...register('email')}
+              isInvalid={!!errors.email?.message}
+            />
+          )}
+          <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+        </Form.Group>
 
-          <Form.Group controlId="isAdmin">
-            <Row>
-              <Col>
-                <Form.Label>Is Admin</Form.Label>
-              </Col>
-              <Col xs={8} sm={8}>
-                {loading || loadingUpdate ? (
-                  <Skeleton type="rect" width={20} height={20} />
-                ) : (
-                  <Form.Check
-                    type="checkbox"
-                    checked={isAdmin}
-                    onChange={(e) => setIsAdmin(e.target.checked)}
-                  />
-                )}
-              </Col>
-            </Row>
-          </Form.Group>
+        <Form.Group controlId="isAdmin">
+          <Row>
+            <Col>
+              <Form.Label>Is Admin</Form.Label>
+            </Col>
+            <Col xs={8} sm={8}>
+              {loading || loadingUpdate ? (
+                <Skeleton type="rect" width={20} height={20} />
+              ) : (
+                <Form.Check
+                  type="checkbox"
+                  checked={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                />
+              )}
+            </Col>
+          </Row>
+        </Form.Group>
 
-          <Button type="submit" variant="outline-primary">
-            {loadingUpdate && (
-              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-            )}{' '}
-            Update Profile
-          </Button>
-        </Form>
-      </FormContainer>
+        <Button type="submit" variant="outline-primary">
+          {loadingUpdate && (
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          )}{' '}
+          Update Profile
+        </Button>
+      </Form>
+      <Button onClick={deleteUser} variant="outline-danger">
+        Delete user
+      </Button>
     </Container>
   );
 };

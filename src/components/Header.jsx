@@ -123,7 +123,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar variant="light" expand="lg">
+      <Navbar expand="lg">
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>

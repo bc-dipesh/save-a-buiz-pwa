@@ -2,17 +2,17 @@ import { Button as SnackbarButton } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { listFundraisers } from '../actions/fundraiserActions';
+import { deleteUserById } from '../../../actions/userActions';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
+} from '../../../actions/snackbarActions';
+import { checkIsInternetConnected } from '../../../utils/commonFunctions';
 
-const useFundraiserList = ({ keyword = '', pageNumber }) => {
+const useUserDelete = () => {
   const dispatch = useDispatch();
-  const fundraiserList = useSelector((state) => state.fundraiserList);
-  const { loading, error, fundraisers, pages, page } = fundraiserList;
+  const userDelete = useSelector((state) => state.userDelete);
+  const { loading, success, error } = userDelete;
 
   const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
   const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
@@ -30,15 +30,25 @@ const useFundraiserList = ({ keyword = '', pageNumber }) => {
     });
   };
 
-  useEffect(async () => {
+  const handleDelete = async (userId) => {
     if (await checkIsInternetConnected()) {
-      dispatch(listFundraisers(keyword, pageNumber));
+      dispatch(deleteUserById(userId));
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
-  }, [dispatch, keyword, pageNumber]);
+  };
 
-  return { loading, error, fundraisers, pages, page };
+  useEffect(async () => {
+    if (success) {
+      displaySnackbar('User successfully deleted.');
+    } else if (error) {
+      displaySnackbar(error, 'error');
+    } else if (loading) {
+      displaySnackbar('Deleting user please wait...', 'info');
+    }
+  }, [dispatch, loading, error, success]);
+
+  return { loading, success, handleDelete };
 };
 
-export default useFundraiserList;
+export default useUserDelete;

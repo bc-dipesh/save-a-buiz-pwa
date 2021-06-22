@@ -321,11 +321,11 @@ const getUserList = () => async (dispatch, getState) => {
       },
     });
 
-    const filteredUsers = data.filter((user) => user.isAdmin !== userInfo.user.isAdmin);
+    // const filteredUsers = data.filter((user) => user.isAdmin !== userInfo.user.isAdmin);
 
     dispatch({
       type: USER_LIST_SUCCESS,
-      payload: filteredUsers,
+      payload: data,
     });
   } catch (error) {
     const errorMessage =

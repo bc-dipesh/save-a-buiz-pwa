@@ -90,6 +90,22 @@ const listFundraisers =
     }
   };
 
+const listFundraisersNoPaginate = () => async (dispatch) => {
+  try {
+    dispatch({ type: FUNDRAISER_LIST_REQUEST });
+
+    const { data } = await axios.get(`${BASE_URL}`);
+    dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: FUNDRAISER_LIST_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
 const listTopThreeFundraisers = () => async (dispatch) => {
   try {
     dispatch({ type: TOP_THREE_FUNDRAISER_REQUEST });
@@ -206,6 +222,7 @@ const deleteFundraiser = (id) => async (dispatch, getState) => {
 export {
   createFundraiser,
   listFundraisers,
+  listFundraisersNoPaginate,
   listTopThreeFundraisers,
   listFundraiserDetails,
   updateFundraiser,
