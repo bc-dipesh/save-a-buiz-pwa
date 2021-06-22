@@ -109,6 +109,14 @@ const AdminUserLinks = () => (
   </NavDropdown>
 );
 
+const HamburgerMenu = () => (
+  <>
+    <span className="navbar-toggler-icon" />
+    <span className="navbar-toggler-icon" />
+    <span className="navbar-toggler-icon" />
+  </>
+);
+
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -122,7 +130,9 @@ const Header = () => {
               <h1 className="fw-bold h3">SaveABuiz</h1>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Toggle aria-controls="navbarScroll">
+            <HamburgerMenu />
+          </Navbar.Toggle>
           <Navbar.Collapse id="navbarScroll">
             <Nav className="mr-auto my-2 my-lg-0" navbarScroll>
               <NavDropdown title="Discover" id="navbarScrollingDropdown">
