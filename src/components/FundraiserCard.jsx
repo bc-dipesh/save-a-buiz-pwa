@@ -15,10 +15,12 @@ const FundraiserCard = ({ fundraiser }) => {
     collected = 0,
   } = fundraiser || {};
   const progress = calculateProgress(collected, goal);
+  const goalLocaleString = goal.toLocaleString('en-US');
+  const collectedLocaleString = collected.toLocaleString('en-US');
 
   return (
     <Card>
-      <Link to={`/fundraisers/${_id}`}>
+      <Link to={`/fundraiser/${_id}`}>
         {image && <Card.Img variant="top" src={`${BASE_URL}/${image}`} alt={title} />}
       </Link>
       <Card.Body>
@@ -34,8 +36,8 @@ const FundraiserCard = ({ fundraiser }) => {
         <Row className="py-2">
           <small>
             NRS.
-            {collected} raised of NRS.
-            {goal}.
+            {collectedLocaleString} raised of NRS.
+            {goalLocaleString}.
           </small>
         </Row>
       </Card.Footer>

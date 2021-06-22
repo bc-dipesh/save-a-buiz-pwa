@@ -46,8 +46,6 @@ const Children = ({ loading, error, fundraisers, pages, page }) => {
 const UserFundraiserScreen = ({ match }) => {
   const { loading, error, fundraisers, pages, page } = useUserFundraiserList(match.params);
 
-  console.log(pages);
-
   return (
     <Container className="mt-5">
       <Row className="mb-4 justify-content-between">

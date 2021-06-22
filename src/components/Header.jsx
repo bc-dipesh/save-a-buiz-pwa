@@ -63,7 +63,9 @@ const LoggedInUserLinks = ({ history, name, email }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+          <SnackbarButton className="snackbar-btn" onClick={() => closeSnackbar(key)}>
+            dismiss
+          </SnackbarButton>
         ),
       },
     });
@@ -100,6 +102,9 @@ const LoggedOutUserLinks = () => (
 
 const AdminUserLinks = () => (
   <NavDropdown title="Admin Panel" id="adminMenu">
+    <LinkContainer to="/admin/analytics">
+      <NavDropdown.Item>App Analytics</NavDropdown.Item>
+    </LinkContainer>
     <LinkContainer to="/admin/list-user">
       <NavDropdown.Item>Users</NavDropdown.Item>
     </LinkContainer>

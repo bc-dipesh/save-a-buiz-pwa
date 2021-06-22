@@ -2,17 +2,17 @@ import { Button as SnackbarButton } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { listTopThreeFundraisers } from '../actions/fundraiserActions';
+import { getAnalytics } from '../../../actions/analyticsActions';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
-} from '../actions/snackbarActions';
-import { checkIsInternetConnected } from '../utils/commonFunctions';
+} from '../../../actions/snackbarActions';
+import { checkIsInternetConnected } from '../../../utils/commonFunctions';
 
-const useTopThreeFundraiser = () => {
+const useAnalytics = () => {
   const dispatch = useDispatch();
-  const topThreeFundraiser = useSelector((state) => state.topThreeFundraiser);
-  const { loading, error, fundraisers } = topThreeFundraiser;
+  const analytics = useSelector((state) => state.analytics);
+  const { loading, error, data } = analytics;
 
   const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
   const closeSnackbar = (...args) => dispatch(closeSnackbarAction(...args));
@@ -34,13 +34,13 @@ const useTopThreeFundraiser = () => {
 
   useEffect(async () => {
     if (await checkIsInternetConnected()) {
-      dispatch(listTopThreeFundraisers());
+      dispatch(getAnalytics());
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
   }, [dispatch]);
 
-  return { loading, error, fundraisers };
+  return { dispatch, loading, error, data };
 };
 
-export default useTopThreeFundraiser;
+export default useAnalytics;

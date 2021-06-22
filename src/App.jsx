@@ -13,6 +13,7 @@ import Notifier from './components/Notifier';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 import AboutScreen from './screens/About/AboutScreen';
+import AnalyticsScreen from './screens/Admin/AnalyticsScreen';
 import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
 import EditUserScreen from './screens/Admin/EditUserScreen';
 import ListFundraiserScreen from './screens/Admin/ListFundraiserScreen';
@@ -60,6 +61,7 @@ function App() {
         variant,
         action: (key) => (
           <Button
+            className="snackbar-btn"
             onClick={() => {
               updateServiceWorker();
               closeSnackbar(key);
@@ -103,7 +105,7 @@ function App() {
             exact
           />
           <Route path="/fundraisers/:pageNumber" component={FundraiserListScreen} exact />
-          <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
+          <Route path="/fundraiser/:id" component={FundraiserScreen} exact />
           <Route path="/sign-in" component={UserSignInScreen} exact />
           <Route path="/forgot-password" component={UserPasswordResetScreen} exact />
           <Route path="/supported-provinces" component={SupportedProvinceScreen} exact />
@@ -113,6 +115,7 @@ function App() {
           <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
           <Route path="/legal" component={LegalContactInfoScreen} exact />
           <Route path="/common-questions" component={CommonQuestionScreen} exact />
+
           <ProtectedRoute
             authenticate={isUserLoggedIn}
             path="/start-fundraiser"
@@ -152,6 +155,12 @@ function App() {
             authenticate={isUserAdmin}
             path="/admin/fundraiser/:id/edit"
             component={EditFundraiserScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/analytics"
+            component={AnalyticsScreen}
             exact
           />
           <Route component={PageNotFoundScreen} />

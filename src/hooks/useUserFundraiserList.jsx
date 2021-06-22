@@ -25,7 +25,9 @@ const useUserFundraiserList = ({ pageNumber }) => {
         key: uuidv4(),
         variant,
         action: (key) => (
-          <SnackbarButton onClick={() => closeSnackbar(key)}>dismiss</SnackbarButton>
+          <SnackbarButton className="snackbar-btn" onClick={() => closeSnackbar(key)}>
+            dismiss
+          </SnackbarButton>
         ),
       },
     });
