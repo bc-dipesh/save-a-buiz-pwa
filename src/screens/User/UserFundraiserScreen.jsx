@@ -1,13 +1,12 @@
-import { Typography } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
 import Paginate from '../../components/Paginate';
+import SkeletonCard from '../../components/skeletons/SkeletonCard';
 import useUserFundraiserList from '../../hooks/useUserFundraiserList';
 
 const Children = ({ loading, error, fundraisers, pages, page }) => {
@@ -15,20 +14,8 @@ const Children = ({ loading, error, fundraisers, pages, page }) => {
     return (
       <Row>
         {[1, 2, 3].map(() => (
-          <Col key={uuidv4()}>
-            <Card>
-              <Skeleton variant="rect" height={200} />
-              <Card.Body>
-                <Card.Title>
-                  <Typography variant="h5">
-                    <Skeleton />
-                  </Typography>
-                </Card.Title>
-              </Card.Body>
-              <Card.Footer>
-                <Skeleton variant="text" height={10} />
-              </Card.Footer>
-            </Card>
+          <Col key={uuidv4()} className="my-3" sm={12} md={4} lg={3}>
+            <SkeletonCard />
           </Col>
         ))}
       </Row>
