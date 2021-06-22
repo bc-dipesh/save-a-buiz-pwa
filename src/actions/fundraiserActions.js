@@ -133,9 +133,10 @@ const listFundraiserDetails = (id) => async (dispatch) => {
 /**
  * Update fundraiser action.
  *
- * @param  {*} fundraiser  The fundraiser to be updated.
+ * @param  {*} fundraiser  The updated fundraiser object.
+ * @param  {Number} id  The id of the fundraiser to update.
  */
-const updateFundraiser = (fundraiser) => async (dispatch, getState) => {
+const updateFundraiser = (fundraiser, id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: FUNDRAISER_UPDATE_REQUEST,
@@ -145,7 +146,9 @@ const updateFundraiser = (fundraiser) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
-    await axios.put(`${BASE_URL}/${fundraiser._id}`, fundraiser, {
+    const {
+      data: { data },
+    } = await axios.put(`${BASE_URL}/${id}`, fundraiser, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
@@ -153,6 +156,7 @@ const updateFundraiser = (fundraiser) => async (dispatch, getState) => {
     });
 
     dispatch({ type: FUNDRAISER_UPDATE_SUCCESS });
+    dispatch({ type: FUNDRAISER_DETAILS_SUCCESS, payload: data });
     dispatch({ type: FUNDRAISER_UPDATE_RESET });
   } catch (error) {
     const errorMessage =
@@ -161,6 +165,7 @@ const updateFundraiser = (fundraiser) => async (dispatch, getState) => {
       type: FUNDRAISER_UPDATE_FAIL,
       payload: errorMessage || 'Something went wrong',
     });
+    dispatch({ type: FUNDRAISER_UPDATE_RESET });
   }
 };
 

@@ -85,13 +85,13 @@ const SubscribeToNewsLetterForm = () => {
       <Form noValidate onSubmit={handleSubmit(submitSubscriptionRequest)}>
         <Form.Group className="my-3" controlId="formGroupEmail">
           <Form.Label>
-            Subscribe to our newsletter{' '}
+            Subscribe to our newsletter
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
               fill="currentColor"
-              className="bi bi-newspaper"
+              className="bi bi-newspaper mx-2"
               viewBox="0 0 16 16"
             >
               <path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
