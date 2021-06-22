@@ -56,9 +56,10 @@ const Children = ({ loading, error, fundraisers, pages, page }) => {
   );
 };
 
-const UserFundraiserScreen = ({ history, match }) => {
-  const { pageNumber } = match.params;
-  const { loading, error, fundraisers, pages, page } = useUserFundraiserList(history, pageNumber);
+const UserFundraiserScreen = ({ match }) => {
+  const { loading, error, fundraisers, pages, page } = useUserFundraiserList(match.params);
+
+  console.log(pages);
 
   return (
     <Container className="mt-5">
@@ -110,9 +111,6 @@ Children.propTypes = {
 };
 
 UserFundraiserScreen.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
   match: PropTypes.shape({
     params: PropTypes.shape({
       pageNumber: PropTypes.string,

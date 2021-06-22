@@ -9,7 +9,7 @@ import {
 import { getUserFundraiserList } from '../actions/userActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
-const useUserFundraiserList = (pageNumber) => {
+const useUserFundraiserList = ({ pageNumber }) => {
   const dispatch = useDispatch();
 
   const userFundraiser = useSelector((state) => state.userFundraiser);

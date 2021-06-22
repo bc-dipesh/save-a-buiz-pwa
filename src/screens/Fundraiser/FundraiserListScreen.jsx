@@ -23,7 +23,7 @@ const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
             <FundraiserCard fundraiser={fundraiser} />
           </Col>
         ))}
-        <Paginate keyword={keyword} pages={pages} page={page} url="/page" />
+        <Paginate keyword={keyword} pages={pages} page={page} url="/fundraisers" />
       </>
     );
   }
@@ -38,8 +38,6 @@ const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
 };
 
 const FundraiserListScreen = ({ match }) => {
-  // extract the search keyword if present
-  // and send it to the custom hook
   const { loading, error, fundraisers, pages, page } = useFundraiserList(match.params);
 
   return (

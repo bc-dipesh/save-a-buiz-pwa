@@ -9,7 +9,7 @@ const Paginate = ({ pages, page, keyword = '', url = '' }) =>
       {[...Array(pages).keys()].map((x) => (
         <LinkContainer
           key={x + 1}
-          to={keyword ? `/search/${keyword}/page/${x + 1}` : `${url}/${x + 1}`}
+          to={keyword ? `/search/${keyword}/fundraisers/${x + 1}` : `${url}/${x + 1}`}
         >
           <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
         </LinkContainer>

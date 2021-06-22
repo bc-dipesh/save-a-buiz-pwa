@@ -19,9 +19,9 @@ const SearchBox = ({ history }) => {
   const searchFundraiser = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
-      history.push(`/search/${keyword}`);
+      history.push(`/search/${keyword}/fundraisers/1`);
     } else {
-      history.push('/fundraisers');
+      history.push('/fundraisers/1');
     }
   };
 
@@ -136,7 +136,7 @@ const Header = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav className="mr-auto my-2 my-lg-0" navbarScroll>
               <NavDropdown title="Discover" id="navbarScrollingDropdown">
-                <LinkContainer to="/fundraisers">
+                <LinkContainer to="/fundraisers/1">
                   <NavDropdown.Item>Fundraisers</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

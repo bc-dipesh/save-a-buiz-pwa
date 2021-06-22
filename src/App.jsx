@@ -97,9 +97,12 @@ function App() {
         <Switch>
           <Route path="/" component={HomeScreen} exact />
           <Route path="/search/:keyword" component={FundraiserListScreen} exact />
-          <Route path="/search/:keyword/page/:pageNumber" component={FundraiserListScreen} exact />
-          <Route path="/fundraisers" component={FundraiserListScreen} exact />
-          <Route path="/page/:pageNumber" component={FundraiserListScreen} exact />
+          <Route
+            path="/search/:keyword/fundraisers/:pageNumber"
+            component={FundraiserListScreen}
+            exact
+          />
+          <Route path="/fundraisers/:pageNumber" component={FundraiserListScreen} exact />
           <Route path="/fundraisers/:id" component={FundraiserScreen} exact />
           <Route path="/sign-in" component={UserSignInScreen} exact />
           <Route path="/forgot-password" component={UserPasswordResetScreen} exact />
