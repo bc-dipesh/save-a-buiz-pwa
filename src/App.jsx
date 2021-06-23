@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import {
   closeSnackbar as closeSnackbarAction,
@@ -94,7 +94,7 @@ function App() {
   useGaTracker();
 
   return (
-    <Router>
+    <>
       <ScrollToTop />
       <Header />
       <main>
@@ -170,7 +170,7 @@ function App() {
         </Switch>
       </main>
       <Footer />
-    </Router>
+    </>
   );
 }
 
