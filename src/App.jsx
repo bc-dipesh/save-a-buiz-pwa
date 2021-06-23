@@ -12,6 +12,7 @@ import Header from './components/Header';
 import Notifier from './components/Notifier';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
+import useGaTracker from './hooks/useGaTracker';
 import AboutScreen from './screens/About/AboutScreen';
 import AnalyticsScreen from './screens/Admin/AnalyticsScreen';
 import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
@@ -89,6 +90,8 @@ function App() {
       'info'
     );
   }
+
+  useGaTracker();
 
   return (
     <Router>
