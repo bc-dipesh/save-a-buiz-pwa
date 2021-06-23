@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import {
   closeSnackbar as closeSnackbarAction,
@@ -12,7 +12,7 @@ import Header from './components/Header';
 import Notifier from './components/Notifier';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
-import useGaTracker from './hooks/useGaTracker';
+import useAppVisitCount from './hooks/useAppVisitCount';
 import AboutScreen from './screens/About/AboutScreen';
 import AnalyticsScreen from './screens/Admin/AnalyticsScreen';
 import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
@@ -80,6 +80,14 @@ function App() {
     setIsNewVersionAvailable(true);
   };
 
+  const location = useLocation();
+  const { updateAppVisitCount } = useAppVisitCount();
+
+  useEffect(() => {
+    // update app visit
+    updateAppVisitCount();
+  }, [location]);
+
   // make app work offline
   serviceWorkerRegistration.register({ onUpdate: onServiceWorkerUpdate });
 
@@ -90,8 +98,6 @@ function App() {
       'info'
     );
   }
-
-  useGaTracker();
 
   return (
     <>

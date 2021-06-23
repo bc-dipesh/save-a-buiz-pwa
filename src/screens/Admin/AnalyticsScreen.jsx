@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import { Paper, Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
-import { Col, Button, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import {
   Bar,
   BarChart,
@@ -15,8 +16,9 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import Message from '../../components/Message';
 import InfoCard from '../../components/InfoCard';
+import Message from '../../components/Message';
+import useAppVisitCount from '../../hooks/useAppVisitCount';
 import useAnalytics from './hooks/useAnalytics';
 
 const AnalyticsScreen = () => {
@@ -71,7 +73,7 @@ const AnalyticsScreen = () => {
     },
   ];
 
-  const InfoCards = ({ loading, error, data }) => {
+  const InfoCards = ({ loading, error, data, appVisitCount }) => {
     const usersIcon = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -115,6 +117,21 @@ const AnalyticsScreen = () => {
           fill="evenodd"
           d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"
         />
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+      </svg>
+    );
+
+    const graphIcon = (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        className="bi bi-clipboard-data"
+        viewBox="0 0 16 16"
+      >
+        <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
         <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
         <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
       </svg>
@@ -164,7 +181,7 @@ const AnalyticsScreen = () => {
             </Col>
           </Row>
           <Row xs={12}>
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={4}>
               <Card className="my-2">
                 <CardContent>
                   <Typography variant="h2" component="p">
@@ -177,7 +194,20 @@ const AnalyticsScreen = () => {
               </Card>
             </Col>
 
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={4}>
+              <Card className="my-2">
+                <CardContent>
+                  <Typography variant="h2" component="p">
+                    <Skeleton width={40} />
+                  </Typography>
+                  <Typography className="mt-2" variant="h5" component="p">
+                    <Skeleton width={100} />
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Col>
+
+            <Col xs={12} sm={4}>
               <Card className="my-2">
                 <CardContent>
                   <Typography variant="h2" component="p">
@@ -215,7 +245,7 @@ const AnalyticsScreen = () => {
             </Col>
           </Row>
           <Row xs={12}>
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={4}>
               <InfoCard
                 icon={usersIcon}
                 title="Users Registered Today"
@@ -223,12 +253,16 @@ const AnalyticsScreen = () => {
               />
             </Col>
 
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={4}>
               <InfoCard
                 icon={piggyBankIcon}
                 title="Fundraisers Created Today"
                 value={data?.fundraiserCreatedToday}
               />
+            </Col>
+
+            <Col xs={12} sm={4}>
+              <InfoCard icon={graphIcon} title="Times App Visited" value={appVisitCount} />
             </Col>
           </Row>
         </>
@@ -245,11 +279,19 @@ const AnalyticsScreen = () => {
   };
 
   const { loading, error, data } = useAnalytics();
+  const { appVisitCount } = useAppVisitCount();
+
+  const infoCardProps = {
+    loading,
+    error,
+    data,
+    appVisitCount,
+  };
 
   return (
     <Container className="mt-3">
       <h1 className="my-3">Important Analytics Gathered From The App</h1>
-      <InfoCards loading={loading} error={error} data={data} />
+      <InfoCards {...infoCardProps} />
 
       <Row xs={12} className="mt-3">
         <Col>
