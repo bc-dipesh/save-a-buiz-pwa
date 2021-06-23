@@ -21,6 +21,7 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_REGISTER_RESET,
   USER_UPDATE_FAIL,
   USER_UPDATE_PASSWORD_FAIL,
   USER_UPDATE_PASSWORD_REQUEST,
@@ -63,7 +64,7 @@ const register =
     try {
       dispatch({ type: USER_REGISTER_REQUEST });
       const {
-        data: { data },
+        data: { message },
       } = await axios.post(
         `${AUTH_ROUTE_BASE_URL}/register`,
         {
@@ -74,9 +75,7 @@ const register =
         },
         axiosConfig
       );
-      dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
+      dispatch({ type: USER_REGISTER_SUCCESS, payload: message });
     } catch (error) {
       const errorMessage =
         error.response && error.response.data.data ? error.response.data.data : error.response;
@@ -84,6 +83,7 @@ const register =
         type: USER_REGISTER_FAIL,
         payload: errorMessage || 'Something went wrong',
       });
+      dispatch({ type: USER_REGISTER_RESET });
     }
   };
 

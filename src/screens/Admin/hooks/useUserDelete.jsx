@@ -45,8 +45,6 @@ const useUserDelete = () => {
       displaySnackbar('User successfully deleted.');
     } else if (error) {
       displaySnackbar(error, 'error');
-    } else if (loading) {
-      displaySnackbar('Deleting user please wait...', 'info');
     }
   }, [dispatch, loading, error, success]);
 

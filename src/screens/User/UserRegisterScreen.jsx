@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button as SnackbarButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Button as SnackbarButton } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
+import * as yup from 'yup';
+import {
+  closeSnackbar as closeSnackbarAction,
+  enqueueSnackbar as enqueueSnackbarAction,
+} from '../../actions/snackbarActions';
 import { register as registerUser } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
-import Loader from '../../components/Loader';
-import {
-  enqueueSnackbar as enqueueSnackbarAction,
-  closeSnackbar as closeSnackbarAction,
-} from '../../actions/snackbarActions';
+import { USER_REGISTER_RESET } from '../../constants/userConstants';
 import { mobilePhoneNumberRegEx, passwordRegex } from '../../utils/regex';
 
 const userRegisterSchema = yup.object().shape({
@@ -67,7 +67,8 @@ const UserRegisterScreen = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) {
-      displaySnackbar('You have successfully registered to the app.');
+      displaySnackbar(userInfo);
+      dispatch({ type: USER_REGISTER_RESET });
       history.push(redirect);
     }
     if (error) {
@@ -82,7 +83,6 @@ const UserRegisterScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Register</h1>
-      {loading && <Loader />}
       <Form noValidate onSubmit={handleSubmit(submitUserRegistrationForm)} className="py-3">
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
@@ -148,6 +148,9 @@ const UserRegisterScreen = ({ location, history }) => {
         </Form.Group>
 
         <Button type="submit" variant="outline-primary">
+          {loading && (
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          )}{' '}
           Register
         </Button>
       </Form>

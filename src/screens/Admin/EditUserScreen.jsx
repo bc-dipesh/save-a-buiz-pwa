@@ -41,7 +41,7 @@ const EditUserScreen = ({ match, history }) => {
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate;
 
-  const { success: successDelete, handleDelete } = useUserDelete();
+  const { loading: loadingDelete, success: successDelete, handleDelete } = useUserDelete();
 
   const dispatch = useDispatch();
 
@@ -168,6 +168,9 @@ const EditUserScreen = ({ match, history }) => {
         </Button>
       </Form>
       <Button onClick={deleteUser} variant="outline-danger">
+        {loadingDelete && (
+          <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+        )}{' '}
         Delete user
       </Button>
     </Container>
