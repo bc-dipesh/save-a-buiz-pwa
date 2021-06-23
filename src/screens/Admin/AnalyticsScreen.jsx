@@ -22,57 +22,6 @@ import useAppVisitCount from '../../hooks/useAppVisitCount';
 import useAnalytics from './hooks/useAnalytics';
 
 const AnalyticsScreen = () => {
-  const webPageVisitorsData = [
-    {
-      name: 'January',
-      visitors: 4000,
-    },
-    {
-      name: 'February',
-      visitors: 3000,
-    },
-    {
-      name: 'March',
-      visitors: 2000,
-    },
-    {
-      name: 'April',
-      visitors: 27100,
-    },
-    {
-      name: 'May',
-      visitors: 1890,
-    },
-    {
-      name: 'June',
-      visitors: 2390,
-    },
-    {
-      name: 'July',
-      visitors: 3490,
-    },
-    {
-      name: 'August',
-      visitors: 3490,
-    },
-    {
-      name: 'September',
-      visitors: 3490,
-    },
-    {
-      name: 'October',
-      visitors: 3490,
-    },
-    {
-      name: 'November',
-      visitors: 3490,
-    },
-    {
-      name: 'December',
-      visitors: 3490,
-    },
-  ];
-
   const InfoCards = ({ loading, error, data, appVisitCount }) => {
     const usersIcon = (
       <svg
@@ -298,9 +247,9 @@ const AnalyticsScreen = () => {
           <Paper className="p-4" elevation={3}>
             <h2 className="mb-5">Monthly App Visitors</h2>
             <ResponsiveContainer height={500}>
-              <LineChart data={webPageVisitorsData}>
+              <LineChart data={data?.monthlyAppVisits}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
