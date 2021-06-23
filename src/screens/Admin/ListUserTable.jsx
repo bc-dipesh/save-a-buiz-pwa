@@ -44,6 +44,7 @@ const ListUserTable = ({ users }) => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Mobile Phone Number</TableCell>
               <TableCell>Is Admin</TableCell>
               <TableCell>Edit / Delete</TableCell>
             </TableRow>
@@ -53,6 +54,7 @@ const ListUserTable = ({ users }) => {
               <TableRow hover role="checkbox" tabIndex={-1} key={user._id}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell>{user.mobilePhoneNumber}</TableCell>
                 <TableCell>
                   {user.isAdmin ? (
                     <svg
