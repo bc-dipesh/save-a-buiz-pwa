@@ -71,57 +71,6 @@ const AnalyticsScreen = () => {
     },
   ];
 
-  const donationsData = [
-    {
-      name: 'January',
-      donations: 4000,
-    },
-    {
-      name: 'February',
-      donations: 3000,
-    },
-    {
-      name: 'March',
-      donations: 2000,
-    },
-    {
-      name: 'April',
-      donations: 2780,
-    },
-    {
-      name: 'May',
-      donations: 1890,
-    },
-    {
-      name: 'June',
-      donations: 2390,
-    },
-    {
-      name: 'July',
-      donations: 3490,
-    },
-    {
-      name: 'August',
-      donations: 3490,
-    },
-    {
-      name: 'September',
-      donations: 3490,
-    },
-    {
-      name: 'October',
-      donations: 3490,
-    },
-    {
-      name: 'November',
-      donations: 3490,
-    },
-    {
-      name: 'December',
-      donations: 3490,
-    },
-  ];
-
   const InfoCards = ({ loading, error, data }) => {
     const usersIcon = (
       <svg
@@ -267,15 +216,15 @@ const AnalyticsScreen = () => {
       <Row xs={12} className="mt-4">
         <Col>
           <Paper className="p-4" elevation={3}>
-            <h2 className="mb-5">Monthly Donations in Fundraisers</h2>
+            <h2 className="mb-5">Monthly Donation Count In Fundraisers</h2>
             <ResponsiveContainer height={500}>
-              <BarChart data={donationsData}>
+              <BarChart data={data?.monthlyDonations}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="donations" fill="#8884d8" />
+                <Bar dataKey="donationCount" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
           </Paper>
