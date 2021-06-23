@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Paper } from '@material-ui/core';
+import { Paper, Card, CardContent, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 import { Col, Button, Container, Row } from 'react-bootstrap';
@@ -35,7 +35,7 @@ const AnalyticsScreen = () => {
     },
     {
       name: 'April',
-      visitors: 2780,
+      visitors: 27100,
     },
     {
       name: 'May',
@@ -122,19 +122,75 @@ const AnalyticsScreen = () => {
 
     if (loading) {
       return (
-        <Row xs={12}>
-          <Col xs={12} sm={4}>
-            <Skeleton variant="text" />
-          </Col>
+        <>
+          <Row xs={12}>
+            <Col xs={12} sm={4}>
+              <Card className="my-2">
+                <CardContent>
+                  <Typography variant="h2" component="p">
+                    <Skeleton width={40} />
+                  </Typography>
+                  <Typography className="mt-2" variant="h5" component="p">
+                    <Skeleton width={100} />
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Col>
 
-          <Col xs={12} sm={4}>
-            <Skeleton variant="text" />{' '}
-          </Col>
+            <Col xs={12} sm={4}>
+              <Card className="my-2">
+                <CardContent>
+                  <Typography variant="h2" component="p">
+                    <Skeleton width={40} />
+                  </Typography>
+                  <Typography className="mt-2" variant="h5" component="p">
+                    <Skeleton width={100} />
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Col>
 
-          <Col xs={12} sm={4}>
-            <Skeleton variant="text" />{' '}
-          </Col>
-        </Row>
+            <Col xs={12} sm={4}>
+              <Card className="my-2">
+                <CardContent>
+                  <Typography variant="h2" component="p">
+                    <Skeleton width={40} />
+                  </Typography>
+                  <Typography className="mt-2" variant="h5" component="p">
+                    <Skeleton width={100} />
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Col>
+          </Row>
+          <Row xs={12}>
+            <Col xs={12} sm={6}>
+              <Card className="my-2">
+                <CardContent>
+                  <Typography variant="h2" component="p">
+                    <Skeleton width={40} />
+                  </Typography>
+                  <Typography className="mt-2" variant="h5" component="p">
+                    <Skeleton width={80} />
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Col>
+
+            <Col xs={12} sm={6}>
+              <Card className="my-2">
+                <CardContent>
+                  <Typography variant="h2" component="p">
+                    <Skeleton width={40} />
+                  </Typography>
+                  <Typography className="mt-2" variant="h5" component="p">
+                    <Skeleton width={100} />
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Col>
+          </Row>
+        </>
       );
     }
 
