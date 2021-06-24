@@ -6,7 +6,7 @@ import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../actions/snackbarActions';
-import { getUserFundraiserList } from '../actions/userActions';
+import { getUserFundraiserList } from '../actions/fundraiserActions';
 import { checkIsInternetConnected } from '../utils/commonFunctions';
 
 const useUserFundraiserList = ({ pageNumber }) => {

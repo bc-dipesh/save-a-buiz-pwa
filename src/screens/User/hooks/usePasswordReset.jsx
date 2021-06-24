@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 import { resetPassword } from '../../../actions/authActions';
-import { RESET_PASSWORD_RESET } from '../../../constants/authConstants';
+import { AUTH_FORGOT_PASSWORD_RESET } from '../../../constants/authConstants';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
@@ -67,11 +67,11 @@ const usePasswordReset = () => {
   useEffect(() => {
     if (error) {
       displaySnackbar(error, 'error');
-      dispatch({ type: RESET_PASSWORD_RESET });
+      dispatch({ type: AUTH_FORGOT_PASSWORD_RESET });
     }
     if (success) {
       displaySnackbar(resetMessage);
-      dispatch({ type: RESET_PASSWORD_RESET });
+      dispatch({ type: AUTH_FORGOT_PASSWORD_RESET });
     }
   }, [dispatch, error, success]);
 

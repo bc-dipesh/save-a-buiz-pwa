@@ -7,12 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { logout } from '../actions/authActions';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../actions/snackbarActions';
-import { logout } from '../actions/userActions';
-import { isUserLoggedIn, isUserAdmin } from '../utils/commonFunctions';
+import { isUserAdmin, isUserLoggedIn } from '../utils/commonFunctions';
 
 const SearchBox = ({ history }) => {
   const [keyword, setKeyword] = useState('');

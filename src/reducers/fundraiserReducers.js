@@ -1,25 +1,28 @@
 import {
-  FUNDRAISER_CREATE_REQUEST,
-  FUNDRAISER_CREATE_SUCCESS,
   FUNDRAISER_CREATE_FAIL,
+  FUNDRAISER_CREATE_REQUEST,
   FUNDRAISER_CREATE_RESET,
-  FUNDRAISER_LIST_REQUEST,
-  FUNDRAISER_LIST_SUCCESS,
-  FUNDRAISER_LIST_FAIL,
-  TOP_THREE_FUNDRAISER_REQUEST,
-  TOP_THREE_FUNDRAISER_SUCCESS,
-  TOP_THREE_FUNDRAISER_FAIL,
+  FUNDRAISER_CREATE_SUCCESS,
+  FUNDRAISER_DELETE_FAIL,
+  FUNDRAISER_DELETE_REQUEST,
+  FUNDRAISER_DELETE_RESET,
+  FUNDRAISER_DELETE_SUCCESS,
+  FUNDRAISER_DETAILS_FAIL,
   FUNDRAISER_DETAILS_REQUEST,
   FUNDRAISER_DETAILS_SUCCESS,
-  FUNDRAISER_DETAILS_FAIL,
-  FUNDRAISER_DELETE_REQUEST,
-  FUNDRAISER_DELETE_SUCCESS,
-  FUNDRAISER_DELETE_FAIL,
-  FUNDRAISER_DELETE_RESET,
-  FUNDRAISER_UPDATE_REQUEST,
-  FUNDRAISER_UPDATE_SUCCESS,
+  FUNDRAISER_LIST_FAIL,
+  FUNDRAISER_LIST_REQUEST,
+  FUNDRAISER_LIST_SUCCESS,
   FUNDRAISER_UPDATE_FAIL,
+  FUNDRAISER_UPDATE_REQUEST,
   FUNDRAISER_UPDATE_RESET,
+  FUNDRAISER_UPDATE_SUCCESS,
+  TOP_THREE_FUNDRAISER_FAIL,
+  TOP_THREE_FUNDRAISER_REQUEST,
+  TOP_THREE_FUNDRAISER_SUCCESS,
+  USER_FUNDRAISER_FAIL,
+  USER_FUNDRAISER_REQUEST,
+  USER_FUNDRAISER_SUCCESS,
 } from '../constants/fundraiserConstants';
 
 const fundraiserCreateReducer = (state = {}, action) => {
@@ -121,6 +124,24 @@ const fundraiserDeleteReducer = (state = {}, action) => {
   }
 };
 
+const userFundraiserReducer = (state = { fundraisers: [] }, action) => {
+  switch (action.type) {
+    case USER_FUNDRAISER_REQUEST:
+      return { ...state, loading: true };
+    case USER_FUNDRAISER_SUCCESS:
+      return {
+        loading: false,
+        fundraisers: action.payload.data,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
+    case USER_FUNDRAISER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export {
   fundraiserCreateReducer,
   fundraiserListReducer,
@@ -128,4 +149,5 @@ export {
   fundraiserDetailsReducer,
   fundraiserUpdateReducer,
   fundraiserDeleteReducer,
+  userFundraiserReducer,
 };

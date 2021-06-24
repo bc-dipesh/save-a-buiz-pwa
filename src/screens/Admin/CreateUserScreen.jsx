@@ -1,44 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Button as SnackbarButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { Button, Container, Form, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import * as yup from 'yup';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
 import { register as registerUser } from '../../actions/authActions';
-import FormContainer from '../../components/FormContainer';
 import { AUTH_REGISTER_RESET } from '../../constants/authConstants';
-import { mobilePhoneNumberRegEx, passwordRegex } from '../../utils/regex';
+import useUserRegister from '../../hooks/useUserRegister';
 
-const userRegisterSchema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().email().required(),
-  mobilePhoneNumber: yup.string().matches(mobilePhoneNumberRegEx),
-  password: yup
-    .string()
-    .matches(
-      passwordRegex,
-      'Password must contain a minimum of 8 characters, one uppercase, one lowercase, one number and one special case character'
-    ),
-  confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
-});
-
-const UserRegisterScreen = ({ location, history }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(userRegisterSchema),
-  });
+const CreateUserScreen = ({ location, history }) => {
+  const { register, handleSubmit, errors } = useUserRegister();
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
@@ -81,8 +58,11 @@ const UserRegisterScreen = ({ location, history }) => {
   };
 
   return (
-    <FormContainer>
-      <h1>Register</h1>
+    <Container>
+      <Link to="/admin/list-user" className="btn btn-outline-primary mt-5">
+        Go Back
+      </Link>
+      <h1 className="my-3">Create User</h1>
       <Form noValidate onSubmit={handleSubmit(submitUserRegistrationForm)} className="py-3">
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
@@ -151,21 +131,14 @@ const UserRegisterScreen = ({ location, history }) => {
           {loading && (
             <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
           )}{' '}
-          Register
+          Create User
         </Button>
       </Form>
-
-      <Row className="py-3">
-        <Col>
-          Have an account?{' '}
-          <Link to={redirect ? `/sign-in?redirect=${redirect}` : '/sign-in'}>Sign In</Link>
-        </Col>
-      </Row>
-    </FormContainer>
+    </Container>
   );
 };
 
-UserRegisterScreen.propTypes = {
+CreateUserScreen.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string,
   }),
@@ -174,4 +147,4 @@ UserRegisterScreen.propTypes = {
   }),
 };
 
-export default UserRegisterScreen;
+export default CreateUserScreen;

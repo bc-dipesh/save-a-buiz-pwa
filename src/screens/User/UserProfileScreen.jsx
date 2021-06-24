@@ -14,7 +14,7 @@ import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
-import { getUserProfile, updateUserPassword, updateUserProfile } from '../../actions/userActions';
+import { getUserProfile, updateUserPassword, updateUserProfile } from '../../actions/authActions';
 import { checkIsInternetConnected } from '../../utils/commonFunctions';
 import { mobilePhoneNumberRegEx } from '../../utils/regex';
 

@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
+import { login } from '../../actions/authActions';
 import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
-import { login } from '../../actions/userActions';
 import FormContainer from '../../components/FormContainer';
 import { checkIsInternetConnected, isUserLoggedIn } from '../../utils/commonFunctions';
 

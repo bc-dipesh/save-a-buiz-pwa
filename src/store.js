@@ -1,28 +1,31 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+import { analyticsReducer } from './reducers/analyticsReducers';
 import {
-  fundraiserCreateReducer,
-  fundraiserDetailsReducer,
-  fundraiserListReducer,
-  fundraiserUpdateReducer,
-  topThreeFundraiserReducer,
-  fundraiserDeleteReducer,
-} from './reducers/fundraiserReducers';
-import snackbarReducer from './reducers/snackbarReducers';
-import {
-  userDeleteReducer,
-  userFundraiserReducer,
-  userListReducer,
+  resetPasswordReducer,
   userLoginReducer,
   userProfileReducer,
   userRegisterReducer,
   userUpdatePasswordReducer,
   userUpdateProfileReducer,
+} from './reducers/authReducers';
+import {
+  fundraiserCreateReducer,
+  fundraiserDeleteReducer,
+  fundraiserDetailsReducer,
+  fundraiserListReducer,
+  fundraiserUpdateReducer,
+  topThreeFundraiserReducer,
+  userFundraiserReducer,
+} from './reducers/fundraiserReducers';
+import snackbarReducer from './reducers/snackbarReducers';
+import {
+  getUserReducer,
+  userDeleteReducer,
+  userListReducer,
   userUpdateReducer,
 } from './reducers/userReducers';
-import { resetPasswordReducer } from './reducers/authReducers';
-import { analyticsReducer } from './reducers/analyticsReducers';
 
 const reducer = combineReducers({
   fundraiserCreate: fundraiserCreateReducer,
@@ -34,6 +37,7 @@ const reducer = combineReducers({
   userProfile: userProfileReducer,
   userFundraiser: userFundraiserReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userGet: getUserReducer,
   userList: userListReducer,
   userUpdate: userUpdateReducer,
   userUpdatePassword: userUpdatePasswordReducer,

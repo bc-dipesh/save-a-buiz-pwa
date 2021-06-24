@@ -14,7 +14,7 @@ import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
-import { getUserProfile, updateUser } from '../../actions/userActions';
+import { getUserById, updateUser } from '../../actions/userActions';
 import { USER_UPDATE_RESET } from '../../constants/userConstants';
 import { checkIsInternetConnected } from '../../utils/commonFunctions';
 import useUserDelete from './hooks/useUserDelete';
@@ -35,8 +35,8 @@ const EditUserScreen = ({ match, history }) => {
   const userId = match.params.id;
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const userProfile = useSelector((state) => state.userProfile);
-  const { loading, error, user } = userProfile;
+  const userGet = useSelector((state) => state.userGet);
+  const { loading, error, user } = userGet;
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate;
@@ -73,7 +73,7 @@ const EditUserScreen = ({ match, history }) => {
       setValue('email', user.email);
       setIsAdmin(user.isAdmin);
     } else {
-      dispatch(getUserProfile(userId));
+      dispatch(getUserById(userId));
     }
     if (error || errorUpdate) {
       displaySnackbar(error || errorUpdate, 'error');

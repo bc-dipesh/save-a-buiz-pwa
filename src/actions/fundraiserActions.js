@@ -20,16 +20,11 @@ import {
   TOP_THREE_FUNDRAISER_REQUEST,
   TOP_THREE_FUNDRAISER_SUCCESS,
   TOP_THREE_FUNDRAISER_FAIL,
+  USER_FUNDRAISER_REQUEST,
+  USER_FUNDRAISER_SUCCESS,
+  USER_FUNDRAISER_FAIL,
 } from '../constants/fundraiserConstants';
-
-let BASE_URL;
-
-// set a base url of the api based on the current environment
-if (process.env.NODE_ENV === 'production') {
-  BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
-} else {
-  BASE_URL = 'http://localhost:5000/api/v1/fundraiser';
-}
+import { USERS_ROUTE, FUNDRAISERS_ROUTE } from '../constants/urlConstants';
 
 const createFundraiser =
   ({ location, title, goal, description, image, youTubeVideoLink }) =>
@@ -50,7 +45,7 @@ const createFundraiser =
       const {
         data: { data },
       } = await axios.post(
-        `${BASE_URL}`,
+        `${FUNDRAISERS_ROUTE}`,
         {
           location,
           title,
@@ -78,7 +73,9 @@ const listFundraisers =
     try {
       dispatch({ type: FUNDRAISER_LIST_REQUEST });
 
-      const { data } = await axios.get(`${BASE_URL}/?keyword=${keyword}&pageNumber=${pageNumber}`);
+      const { data } = await axios.get(
+        `${FUNDRAISERS_ROUTE}/?keyword=${keyword}&pageNumber=${pageNumber}`
+      );
       dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
     } catch (error) {
       const errorMessage =
@@ -94,7 +91,7 @@ const listFundraisersNoPaginate = () => async (dispatch) => {
   try {
     dispatch({ type: FUNDRAISER_LIST_REQUEST });
 
-    const { data } = await axios.get(`${BASE_URL}`);
+    const { data } = await axios.get(`${FUNDRAISERS_ROUTE}`);
     dispatch({ type: FUNDRAISER_LIST_SUCCESS, payload: data });
   } catch (error) {
     const errorMessage =
@@ -110,7 +107,7 @@ const listTopThreeFundraisers = () => async (dispatch) => {
   try {
     dispatch({ type: TOP_THREE_FUNDRAISER_REQUEST });
 
-    const { data } = await axios.get(`${BASE_URL}/top-3`);
+    const { data } = await axios.get(`${FUNDRAISERS_ROUTE}/top-3`);
     dispatch({ type: TOP_THREE_FUNDRAISER_SUCCESS, payload: data });
   } catch (error) {
     const errorMessage =
@@ -134,7 +131,7 @@ const listFundraiserDetails = (id) => async (dispatch) => {
 
     const {
       data: { data },
-    } = await axios.get(`${BASE_URL}/${id}`);
+    } = await axios.get(`${FUNDRAISERS_ROUTE}/${id}`);
     dispatch({ type: FUNDRAISER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const errorMessage =
@@ -164,7 +161,7 @@ const updateFundraiser = (fundraiser, id) => async (dispatch, getState) => {
 
     const {
       data: { data },
-    } = await axios.put(`${BASE_URL}/${id}`, fundraiser, {
+    } = await axios.put(`${FUNDRAISERS_ROUTE}/${id}`, fundraiser, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
@@ -200,7 +197,7 @@ const deleteFundraiser = (id) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
-    await axios.delete(`${BASE_URL}/${id}`, {
+    await axios.delete(`${FUNDRAISERS_ROUTE}/${id}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -219,6 +216,46 @@ const deleteFundraiser = (id) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Get list of fundraiser created by
+ * the currently signed in user.
+ *
+ */
+const getUserFundraiserList =
+  (pageNumber = '') =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: USER_FUNDRAISER_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const { data } = await axios.get(
+        `${USERS_ROUTE}/${userInfo.user._id}/fundraisers?pageNumber=${pageNumber}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+
+      dispatch({
+        type: USER_FUNDRAISER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response && error.response.data.data ? error.response.data.data : error.response;
+      dispatch({
+        type: USER_FUNDRAISER_FAIL,
+        payload: errorMessage || 'Something went wrong',
+      });
+    }
+  };
+
 export {
   createFundraiser,
   listFundraisers,
@@ -227,4 +264,5 @@ export {
   listFundraiserDetails,
   updateFundraiser,
   deleteFundraiser,
+  getUserFundraiserList,
 };

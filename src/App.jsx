@@ -15,6 +15,7 @@ import ScrollToTop from './components/ScrollToTop';
 import useAppVisitCount from './hooks/useAppVisitCount';
 import AboutScreen from './screens/About/AboutScreen';
 import AnalyticsScreen from './screens/Admin/AnalyticsScreen';
+import CreateUserScreen from './screens/Admin/CreateUserScreen';
 import EditFundraiserScreen from './screens/Admin/EditFundraiserScreen';
 import EditUserScreen from './screens/Admin/EditUserScreen';
 import ListFundraiserScreen from './screens/Admin/ListFundraiserScreen';
@@ -170,6 +171,12 @@ function App() {
             authenticate={isUserAdmin}
             path="/admin/analytics"
             component={AnalyticsScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/create-user"
+            component={CreateUserScreen}
             exact
           />
           <Route component={PageNotFoundScreen} />

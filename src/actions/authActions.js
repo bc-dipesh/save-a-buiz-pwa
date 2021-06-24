@@ -1,23 +1,135 @@
 import axios from 'axios';
 import {
-  RESET_PASSWORD_FAIL,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
+  AUTH_FORGOT_PASSWORD_REQUEST,
+  AUTH_FORGOT_PASSWORD_SUCCESS,
+  AUTH_FORGOT_PASSWORD_FAIL,
+  AUTH_LOGIN_FAIL,
+  AUTH_LOGIN_REQUEST,
+  AUTH_LOGIN_SUCCESS,
+  AUTH_LOGOUT,
+  AUTH_PROFILE_FAIL,
+  AUTH_PROFILE_REQUEST,
+  AUTH_PROFILE_SUCCESS,
+  AUTH_REGISTER_FAIL,
+  AUTH_REGISTER_REQUEST,
+  AUTH_REGISTER_RESET,
+  AUTH_REGISTER_SUCCESS,
+  AUTH_UPDATE_PASSWORD_FAIL,
+  AUTH_UPDATE_PASSWORD_REQUEST,
+  AUTH_UPDATE_PASSWORD_RESET,
+  AUTH_UPDATE_PASSWORD_SUCCESS,
+  AUTH_UPDATE_PROFILE_FAIL,
+  AUTH_UPDATE_PROFILE_REQUEST,
+  AUTH_UPDATE_PROFILE_RESET,
+  AUTH_UPDATE_PROFILE_SUCCESS,
 } from '../constants/authConstants';
-
-let AUTH_ROUTE_BASE_URL;
-
-// set a base url of the api based on the current environment
-if (process.env.NODE_ENV === 'production') {
-  AUTH_ROUTE_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
-} else {
-  AUTH_ROUTE_BASE_URL = 'http://localhost:5000/api/v1/auth';
-}
+import { AUTH_ROUTE } from '../constants/urlConstants';
 
 const axiosConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
+};
+
+/**
+ * Create a user for the app.
+ *
+ * @param  {} user The user object to register.
+ */
+const register =
+  ({ name, email, mobilePhoneNumber, password }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: AUTH_REGISTER_REQUEST });
+      const {
+        data: { message },
+      } = await axios.post(
+        `${AUTH_ROUTE}/register`,
+        {
+          name,
+          email,
+          mobilePhoneNumber,
+          password,
+        },
+        axiosConfig
+      );
+      dispatch({ type: AUTH_REGISTER_SUCCESS, payload: message });
+    } catch (error) {
+      const errorMessage =
+        error.response && error.response.data.data ? error.response.data.data : error.response;
+      dispatch({
+        type: AUTH_REGISTER_FAIL,
+        payload: errorMessage || 'Something went wrong',
+      });
+      dispatch({ type: AUTH_REGISTER_RESET });
+    }
+  };
+
+/**
+ * Login user to the app.
+ *
+ * @param  {} email     Email address of the user.
+ * @param  {} password  Password of the user.
+ */
+const login = (email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUTH_LOGIN_REQUEST,
+    });
+
+    const {
+      data: { data },
+    } = await axios.post(`${AUTH_ROUTE}/login`, { email, password }, axiosConfig);
+    dispatch({
+      type: AUTH_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: AUTH_LOGIN_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
+/**
+ * Get user profile of the current user.
+ *
+ */
+const getUserProfile = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: AUTH_PROFILE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const {
+      data: { data },
+    } = await axios.get(`${AUTH_ROUTE}/profile`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({
+      type: AUTH_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: AUTH_PROFILE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
 };
 
 /**
@@ -30,25 +142,128 @@ const axiosConfig = {
 const resetPassword = (email) => async (dispatch) => {
   try {
     dispatch({
-      type: RESET_PASSWORD_REQUEST,
+      type: AUTH_FORGOT_PASSWORD_REQUEST,
     });
 
     const {
       data: {
         data: { message },
       },
-    } = await axios.post(`${AUTH_ROUTE_BASE_URL}/forgot-password`, email, axiosConfig);
+    } = await axios.post(`${AUTH_ROUTE}/forgot-password`, email, axiosConfig);
 
-    dispatch({ type: RESET_PASSWORD_SUCCESS, success: true, payload: message });
+    dispatch({ type: AUTH_FORGOT_PASSWORD_SUCCESS, success: true, payload: message });
   } catch (error) {
     const errorMessage =
       error.response && error.response.data.data ? error.response.data.data : error.response;
     dispatch({
-      type: RESET_PASSWORD_FAIL,
+      type: AUTH_FORGOT_PASSWORD_FAIL,
       payload: errorMessage || 'Something went wrong',
     });
   }
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { resetPassword };
+/**
+ * Update currently signed in user profile.
+ *
+ * @param  {} user  The user to be updated.
+ */
+const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: AUTH_UPDATE_PROFILE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const {
+      data: { data },
+    } = await axios.put(`${AUTH_ROUTE}/profile`, user, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    dispatch({
+      type: AUTH_UPDATE_PROFILE_SUCCESS,
+      payload: data,
+    });
+
+    dispatch({ type: AUTH_UPDATE_PROFILE_RESET });
+
+    // update userInfo in the local storage
+    localStorage.removeItem('userInfo');
+    userInfo.user = data;
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: AUTH_UPDATE_PROFILE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+  }
+};
+
+/**
+ * Update current user password.
+ *
+ * @param {String} currentPassword  The current password.
+ * @param {String} newPassword      The new password.
+ * @returns
+ */
+const updateUserPassword =
+  ({ currentPassword, newPassword }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUTH_UPDATE_PASSWORD_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      await axios.put(
+        `${AUTH_ROUTE}/update-password`,
+        { currentPassword, newPassword },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+
+      dispatch({ type: AUTH_UPDATE_PASSWORD_SUCCESS });
+      dispatch({ type: AUTH_UPDATE_PASSWORD_RESET });
+    } catch (error) {
+      const errorMessage =
+        error.response && error.response.data.data ? error.response.data.data : error.response;
+      dispatch({
+        type: AUTH_UPDATE_PASSWORD_FAIL,
+        payload: errorMessage || 'Something went wrong',
+      });
+    }
+  };
+
+/**
+ * Removes userInfo from local storage
+ * that logs out user from the app.
+ */
+const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo');
+  dispatch({ type: AUTH_LOGOUT });
+};
+
+export {
+  register,
+  login,
+  getUserProfile,
+  updateUserProfile,
+  resetPassword,
+  updateUserPassword,
+  logout,
+};
