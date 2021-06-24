@@ -33,6 +33,17 @@
     <meta name="msapplication-TileColor" content="#00aba9" />
 
     <title>SaveABuiz</title>
+
+    <!-- one signal push notifications -->
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function () {
+        OneSignal.init({
+          appId: 'fca4e2e3-f952-4017-8fb7-74be069f3864',
+        });
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
