@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button as SnackbarButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';

@@ -16,7 +16,9 @@ const Children = ({ loading, error, fundraisers }) => {
   }
   return (
     <Container className="my-5">
-      <Message variant="danger">Something went wrong</Message>
+      <Message title="Error" variant="error">
+        Something went wrong
+      </Message>{' '}
       <Button variant="outline-primary" onClick={() => window.location.reload()}>
         Refresh page ?
       </Button>

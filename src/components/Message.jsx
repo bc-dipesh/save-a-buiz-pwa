@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Alert from 'react-bootstrap/Alert';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
-const Message = ({ variant, children }) => {
-	const [show, setShow] = useState(true);
+const Message = ({ variant, title, children }) => {
+  const [show, setShow] = useState(true);
 
-	if (show) {
-		return (
-			<Alert variant={variant} onClick={() => setShow(!show)}>
-				{children}
-			</Alert>
-		);
-	}
-	return <> </>;
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  if (show) {
+    return (
+      <Alert className="mb-3" severity={variant} onClose={handleClose}>
+        <AlertTitle>{title}</AlertTitle>
+        {children}
+      </Alert>
+    );
+  }
+  return <> </>;
 };
 
 Message.defaultProps = {
-	variant: 'info',
+  variant: 'info',
 };
 
 Message.propTypes = {
-	variant: PropTypes.string,
-	children: PropTypes.string.isRequired,
+  variant: PropTypes.string,
+  title: PropTypes.string,
+  children: PropTypes.string.isRequired,
 };
 
 export default Message;

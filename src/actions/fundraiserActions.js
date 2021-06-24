@@ -28,7 +28,7 @@ let BASE_URL;
 if (process.env.NODE_ENV === 'production') {
   BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
 } else {
-  BASE_URL = 'http://localhost:5000/api/v1/fundraisers';
+  BASE_URL = 'http://localhost:5000/api/v1/fundraiser';
 }
 
 const createFundraiser =
