@@ -21,6 +21,7 @@ import {
 } from './reducers/fundraiserReducers';
 import snackbarReducer from './reducers/snackbarReducers';
 import {
+  createUserReducer,
   getUserReducer,
   userDeleteReducer,
   userListReducer,
@@ -37,6 +38,7 @@ const reducer = combineReducers({
   userProfile: userProfileReducer,
   userFundraiser: userFundraiserReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userCreate: createUserReducer,
   userGet: getUserReducer,
   userList: userListReducer,
   userUpdate: userUpdateReducer,

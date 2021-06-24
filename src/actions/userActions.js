@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { USERS_ROUTE } from '../constants/urlConstants';
 import {
+  USER_CREATE_REQUEST,
+  USER_CREATE_SUCCESS,
+  USER_CREATE_FAIL,
+  USER_CREATE_RESET,
   USER_GET_REQUEST,
   USER_GET_SUCCESS,
   USER_GET_FAIL,
@@ -26,6 +30,34 @@ const axiosConfig = (getState) => {
       Authorization: `Bearer ${userInfo.token}`,
     },
   };
+};
+
+/**
+ * Create a new user.
+ *
+ * @param  {} user  The user object to be created.
+ */
+const createUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_CREATE_REQUEST,
+    });
+
+    const {
+      data: { data },
+    } = await axios.post(`${USERS_ROUTE}`, user, axiosConfig(getState));
+
+    dispatch({ type: USER_CREATE_SUCCESS, payload: data });
+    dispatch({ type: USER_CREATE_RESET });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.data ? error.response.data.data : error.response;
+    dispatch({
+      type: USER_CREATE_FAIL,
+      payload: errorMessage || 'Something went wrong',
+    });
+    dispatch({ type: USER_CREATE_RESET });
+  }
 };
 
 /**
@@ -135,4 +167,4 @@ const deleteUserById = (id) => async (dispatch, getState) => {
   }
 };
 
-export { getUserById, getUserList, updateUser, deleteUserById };
+export { createUser, getUserById, getUserList, updateUser, deleteUserById };

@@ -10,14 +10,11 @@ import {
   closeSnackbar as closeSnackbarAction,
   enqueueSnackbar as enqueueSnackbarAction,
 } from '../../actions/snackbarActions';
-import { register as registerUser } from '../../actions/authActions';
-import { AUTH_REGISTER_RESET } from '../../constants/authConstants';
-import useUserRegister from '../../hooks/useUserRegister';
+import { createUser } from '../../actions/userActions';
+import useUserCreate from './hooks/useUserCreate';
 
-const CreateUserScreen = ({ location, history }) => {
-  const { register, handleSubmit, errors } = useUserRegister();
-
-  const redirect = location.search ? location.search.split('=')[1] : '/';
+const CreateUserScreen = ({ history }) => {
+  const { register, handleSubmit, errors } = useUserCreate();
 
   const dispatch = useDispatch();
 
@@ -39,22 +36,21 @@ const CreateUserScreen = ({ location, history }) => {
     });
   };
 
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const userCreate = useSelector((state) => state.userCreate);
+  const { loading, error, user } = userCreate;
 
   useEffect(() => {
-    if (userInfo) {
-      displaySnackbar(userInfo);
-      dispatch({ type: AUTH_REGISTER_RESET });
-      history.push(redirect);
+    if (user) {
+      displaySnackbar('User Successfully created.');
+      history.push('/admin/list-user');
     }
     if (error) {
       displaySnackbar(error, 'error');
     }
-  }, [history, userInfo, redirect, error]);
+  }, [history, user, error]);
 
-  const submitUserRegistrationForm = (data) => {
-    dispatch(registerUser(data));
+  const handleCreateUserForm = (data) => {
+    dispatch(createUser(data));
   };
 
   return (
@@ -63,7 +59,7 @@ const CreateUserScreen = ({ location, history }) => {
         Go Back
       </Link>
       <h1 className="my-3">Create User</h1>
-      <Form noValidate onSubmit={handleSubmit(submitUserRegistrationForm)} className="py-3">
+      <Form noValidate onSubmit={handleSubmit(handleCreateUserForm)} className="py-3">
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -139,9 +135,6 @@ const CreateUserScreen = ({ location, history }) => {
 };
 
 CreateUserScreen.propTypes = {
-  location: PropTypes.shape({
-    search: PropTypes.string,
-  }),
   history: PropTypes.shape({
     push: PropTypes.func,
   }),

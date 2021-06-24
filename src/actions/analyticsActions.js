@@ -5,15 +5,7 @@ import {
   ANALYTICS_REQUEST_FAIL,
   ANALYTICS_RESET,
 } from '../constants/analyticsConstants';
-
-let ANALYTICS_BASE_URL;
-
-// set a base url of the api based on the current environment
-if (process.env.NODE_ENV === 'production') {
-  ANALYTICS_BASE_URL = 'https://save-a-buiz-api.herokuapp.com/api/v1/analytics';
-} else {
-  ANALYTICS_BASE_URL = 'http://localhost:5000/api/v1/analytics';
-}
+import { ANALYTICS_ROUTE } from '../constants/urlConstants';
 
 /**
  * Get application analytics action.
@@ -31,7 +23,7 @@ const getAnalytics = () => async (dispatch, getState) => {
 
     const {
       data: { data },
-    } = await axios.get(`${ANALYTICS_BASE_URL}`, {
+    } = await axios.get(`${ANALYTICS_ROUTE}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },

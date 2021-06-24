@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { mobilePhoneNumberRegEx, passwordRegex } from '../utils/regex';
+import { mobilePhoneNumberRegEx, passwordRegex } from '../../../utils/regex';
 
-const userRegisterSchema = yup.object().shape({
+const userCreateSchema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
   mobilePhoneNumber: yup.string().matches(mobilePhoneNumberRegEx),
@@ -16,13 +16,13 @@ const userRegisterSchema = yup.object().shape({
   confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
 });
 
-const useUserRegister = () => {
+const useUserCreate = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(userRegisterSchema),
+    resolver: yupResolver(userCreateSchema),
   });
 
   return {
@@ -32,4 +32,4 @@ const useUserRegister = () => {
   };
 };
 
-export default useUserRegister;
+export default useUserCreate;
