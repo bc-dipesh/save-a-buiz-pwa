@@ -46,7 +46,7 @@ const EditFundraiserScreen = ({ match, history }) => {
   const { loading, error, fundraiser } = fundraiserDetails;
   const fundraiserUpdate = useSelector((state) => state.fundraiserUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = fundraiserUpdate;
-  const { success: successDelete, handleDelete } = useFundraiserDelete();
+  const { loading: loadingDelete, success: successDelete, handleDelete } = useFundraiserDelete();
 
   const dispatch = useDispatch();
 
@@ -233,6 +233,9 @@ const EditFundraiserScreen = ({ match, history }) => {
         </Button>
       </Form>
       <Button onClick={deleteFundraiser} className="mt-3" variant="outline-danger">
+        {loadingDelete && (
+          <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+        )}{' '}
         Delete Fundraiser
       </Button>
     </Container>

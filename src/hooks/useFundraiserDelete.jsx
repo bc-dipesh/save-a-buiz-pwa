@@ -45,8 +45,6 @@ const useFundraiserDelete = () => {
       displaySnackbar('Fundraiser successfully deleted.');
     } else if (error) {
       displaySnackbar(error, 'error');
-    } else if (loading) {
-      displaySnackbar('Deleting fundraiser please wait...', 'info');
     }
   }, [dispatch, loading, error, success]);
 
