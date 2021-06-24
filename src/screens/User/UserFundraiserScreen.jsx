@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
@@ -22,6 +23,18 @@ const Children = ({ loading, error, fundraisers, pages, page }) => {
     );
   }
   if (!error) {
+    if (fundraisers.length === 0) {
+      return (
+        <Container>
+          <Message title="No Fundraisers" variant="info">
+            You&apos;ve not created any fundraiser.
+          </Message>
+          <Link to="/start-fundraiser">
+            <Button variant="outline-primary">Create Fundraiser ?</Button>
+          </Link>
+        </Container>
+      );
+    }
     return (
       <>
         {fundraisers.map((fundraiser) => (

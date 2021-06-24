@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
 import Paginate from '../../components/Paginate';
@@ -16,6 +17,18 @@ const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
     ));
   }
   if (!error) {
+    if (fundraisers.length === 0) {
+      return (
+        <Container>
+          <Message title="No Fundraisers" variant="info">
+            Please visit this page after sometime.
+          </Message>
+          <Link to="/start-fundraiser">
+            <Button variant="outline-primary">Or Create Fundraiser ?</Button>
+          </Link>
+        </Container>
+      );
+    }
     return (
       <>
         {fundraisers.map((fundraiser) => (
@@ -44,7 +57,7 @@ const FundraiserListScreen = ({ match }) => {
 
   return (
     <>
-      <Container style={{ backgroundColor: '#fbf8f6' }} fluid>
+      <Container className="pb-5" style={{ backgroundColor: '#fbf8f6' }} fluid>
         <Container>
           <Row className="justify-content-center">
             <h2 className="mt-5 mb-3">Browse fundraisers</h2>
