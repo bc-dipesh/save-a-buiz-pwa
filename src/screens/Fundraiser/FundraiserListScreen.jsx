@@ -8,7 +8,7 @@ import Paginate from '../../components/Paginate';
 import SkeletonCard from '../../components/skeletons/SkeletonCard';
 import useFundraiserList from '../../hooks/useFundraiserList';
 
-const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
+const Children = React.memo(({ loading, error, fundraisers, pages, page, keyword }) => {
   if (loading) {
     return [1, 2, 3].map((item) => (
       <Col key={item} className="my-3" sm={12} md={4} lg={3}>
@@ -50,7 +50,7 @@ const Children = ({ loading, error, fundraisers, pages, page, keyword }) => {
       </Button>
     </Container>
   );
-};
+});
 
 const FundraiserListScreen = ({ match }) => {
   const { loading, error, fundraisers, pages, page } = useFundraiserList(match.params);

@@ -10,7 +10,7 @@ import Paginate from '../../components/Paginate';
 import SkeletonCard from '../../components/skeletons/SkeletonCard';
 import useUserFundraiserList from '../../hooks/useUserFundraiserList';
 
-const Children = ({ loading, error, fundraisers, pages, page }) => {
+const Children = React.memo(({ loading, error, fundraisers, pages, page }) => {
   if (loading) {
     return (
       <Row>
@@ -56,7 +56,7 @@ const Children = ({ loading, error, fundraisers, pages, page }) => {
       </Button>
     </Container>
   );
-};
+});
 
 const UserFundraiserScreen = ({ match }) => {
   const { loading, error, fundraisers, pages, page } = useUserFundraiserList(match.params);

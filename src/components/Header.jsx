@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Button as SnackbarButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -191,4 +191,4 @@ LoggedInUserLinks.propTypes = {
   email: PropTypes.string,
 };
 
-export default Header;
+export default memo(Header);

@@ -38,7 +38,7 @@ const useTopThreeFundraiser = () => {
     } else {
       displaySnackbar('No internet. Please check your internet connection and try again', 'info');
     }
-  }, [dispatch]);
+  }, []);
 
   return { loading, error, fundraisers };
 };

@@ -62,6 +62,10 @@ const differenceFromCurrentDate = (dateToSubtract) => {
   return currentDate.getDate() - new Date(dateToSubtract).getDate();
 };
 
+const reloadPage = () => {
+  window.location.reload();
+};
+
 export {
   isUserLoggedIn,
   isUserAdmin,
@@ -69,4 +73,5 @@ export {
   calculateProgress,
   numFormatter,
   differenceFromCurrentDate,
+  reloadPage,
 };
