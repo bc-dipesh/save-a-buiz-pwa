@@ -35,6 +35,7 @@ import UserProfileScreen from './screens/User/UserProfileScreen';
 import UserRegisterScreen from './screens/User/UserRegisterScreen';
 import UserSignInScreen from './screens/User/UserSignInScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding/WhatIsCrowdfundingScreen';
+import ProcessDonation from './screens/Fundraiser/ProcessDonation';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUserAdmin, isUserLoggedIn } from './utils/commonFunctions';
 
@@ -142,6 +143,12 @@ function App() {
             authenticate={isUserLoggedIn}
             path="/user/fundraisers/:pageNumber"
             component={UserFundraiserScreen}
+          />
+          <ProtectedRoute
+            authenticate={isUserLoggedIn}
+            path="/process-donation"
+            component={ProcessDonation}
+            exact
           />
           <ProtectedRoute
             authenticate={isUserAdmin}

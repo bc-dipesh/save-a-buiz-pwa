@@ -34,18 +34,7 @@ const DonationForm = ({ fundraiserId }) => {
               Please enter a valid donation amount to donate.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="my-3" controlId="comment">
-            <Form.Label>What would you like to say with the donation?</Form.Label>
-            <Form.Control
-              typ="text"
-              placeholder="Enter any message you would like to send with your donation"
-              {...register('comment')}
-              isInvalid={!!errors.comment?.message}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide a valid message.
-            </Form.Control.Feedback>
-          </Form.Group>
+
           <Row className="justify-content-start mt-3">
             <Col xs={4} sm={6} lg={4}>
               <Button variant="secondary" type="submit">

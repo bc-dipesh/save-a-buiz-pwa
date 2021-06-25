@@ -1,6 +1,6 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import { PropTypes } from 'prop-types';
-import { React } from 'react';
+import React from 'react';
 import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';

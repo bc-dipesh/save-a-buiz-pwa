@@ -13,6 +13,10 @@ import {
   FUNDRAISER_LIST_FAIL,
   FUNDRAISER_LIST_REQUEST,
   FUNDRAISER_LIST_SUCCESS,
+  FUNDRAISER_UPDATE_DONATION_FAIL,
+  FUNDRAISER_UPDATE_DONATION_REQUEST,
+  FUNDRAISER_UPDATE_DONATION_RESET,
+  FUNDRAISER_UPDATE_DONATION_SUCCESS,
   FUNDRAISER_UPDATE_FAIL,
   FUNDRAISER_UPDATE_REQUEST,
   FUNDRAISER_UPDATE_RESET,
@@ -109,6 +113,21 @@ const fundraiserUpdateReducer = (state = {}, action) => {
   }
 };
 
+const fundraiserUpdateDonationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FUNDRAISER_UPDATE_DONATION_REQUEST:
+      return { loading: true };
+    case FUNDRAISER_UPDATE_DONATION_SUCCESS:
+      return { loading: false, success: true };
+    case FUNDRAISER_UPDATE_DONATION_RESET:
+      return {};
+    case FUNDRAISER_UPDATE_DONATION_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 const fundraiserDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case FUNDRAISER_DELETE_REQUEST:
@@ -148,6 +167,7 @@ export {
   topThreeFundraiserReducer,
   fundraiserDetailsReducer,
   fundraiserUpdateReducer,
+  fundraiserUpdateDonationReducer,
   fundraiserDeleteReducer,
   userFundraiserReducer,
 };

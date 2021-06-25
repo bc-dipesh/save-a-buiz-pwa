@@ -1,7 +1,7 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button as SnackbarButton } from '@material-ui/core';
-import axios from 'axios';
-import qs from 'qs';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -14,11 +14,9 @@ import {
 import { checkIsInternetConnected } from '../../../utils/commonFunctions';
 
 const AMT_FIELD_ERR = 'Please enter a valid donation amount to donate.';
-const CMNT_FIELD_ERR = 'Please enter a valid message.';
 
 const donationSchema = yup.object().shape({
   donationAmount: yup.number(AMT_FIELD_ERR).required(AMT_FIELD_ERR),
-  comment: yup.string(CMNT_FIELD_ERR).required(CMNT_FIELD_ERR),
 });
 
 const useDonationForm = (fundraiserId) => {
@@ -60,32 +58,41 @@ const useDonationForm = (fundraiserId) => {
 
   const sendPaymentRequestToEsewa = async (donationAmount) => {
     setIsLoading(true);
-    const currentPageUrl = window.location.href;
-
     // set eSewa credentials
     const pid = fundraiserId;
     const scd = 'EPAYTEST';
-    const su = currentPageUrl;
-    const fu = currentPageUrl;
+    const su = 'http://angry-lalande-da8a76.netlify.app/process-donation';
+    const fu = 'http://angry-lalande-da8a76.netlify.app/process-donation';
     const url = 'https://uat.esewa.com.np/epay/main';
 
     try {
       // submit donation amount to eSewa
-      await axios.post(
-        url,
-        qs.stringify({
-          tAmt: donationAmount,
-          amt: donationAmount,
-          txAmt: 0,
-          psc: 0,
-          pdc: 0,
-          scd,
-          pid,
-          su,
-          fu,
-        }),
-        { headers: { 'Content-type': 'application/x-www-form-urlencoded' } }
-      );
+      const params = {
+        amt: donationAmount,
+        psc: 0,
+        pdc: 0,
+        txAmt: 0,
+        tAmt: donationAmount,
+        pid,
+        scd,
+        su,
+        fu,
+      };
+
+      const form = document.createElement('form');
+      form.setAttribute('method', 'POST');
+      form.setAttribute('action', url);
+
+      for (const key in params) {
+        const hiddenField = document.createElement('input');
+        hiddenField.setAttribute('type', 'hidden');
+        hiddenField.setAttribute('name', key);
+        hiddenField.setAttribute('value', params[key]);
+        form.appendChild(hiddenField);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
     } catch (error) {
       displaySnackbar('Something went wrong. Please try again later.', 'error');
     }
