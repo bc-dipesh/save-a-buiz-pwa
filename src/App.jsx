@@ -37,7 +37,7 @@ import UserSignInScreen from './screens/User/UserSignInScreen';
 import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding/WhatIsCrowdfundingScreen';
 import ProcessDonation from './screens/Fundraiser/ProcessDonation';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import { isUserAdmin, isUserLoggedIn } from './utils/commonFunctions';
+import { isUserAdmin, isUserLoggedIn, reloadPage } from './utils/commonFunctions';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -48,7 +48,7 @@ function App() {
       waitingWorker.postMessage({ type: 'SKIP_WAITING' });
     }
     setIsNewVersionAvailable(false);
-    window.location.reload();
+    reloadPage();
   };
 
   const dispatch = useDispatch();

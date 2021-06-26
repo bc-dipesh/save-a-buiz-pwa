@@ -115,6 +115,7 @@ const listTopThreeFundraisers = () => async (dispatch) => {
   } catch (error) {
     const errorMessage =
       error.response && error.response.data.data ? error.response.data.data : error.response;
+
     dispatch({
       type: TOP_THREE_FUNDRAISER_FAIL,
       payload: errorMessage || 'Something went wrong',

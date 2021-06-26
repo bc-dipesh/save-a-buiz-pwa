@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
 import Paginate from '../../components/Paginate';
 import SkeletonCard from '../../components/skeletons/SkeletonCard';
 import useUserFundraiserList from '../../hooks/useUserFundraiserList';
+import { reloadPage } from '../../utils/commonFunctions';
 
 const Children = React.memo(({ loading, error, fundraisers, pages, page }) => {
   if (loading) {
@@ -23,18 +23,6 @@ const Children = React.memo(({ loading, error, fundraisers, pages, page }) => {
     );
   }
   if (!error) {
-    if (fundraisers.length === 0) {
-      return (
-        <Container>
-          <Message title="No Fundraisers" variant="info">
-            You&apos;ve not created any fundraiser.
-          </Message>
-          <Link to="/start-fundraiser">
-            <Button variant="outline-primary">Create Fundraiser ?</Button>
-          </Link>
-        </Container>
-      );
-    }
     return (
       <>
         {fundraisers.map((fundraiser) => (
@@ -51,7 +39,7 @@ const Children = React.memo(({ loading, error, fundraisers, pages, page }) => {
       <Message title="Error" variant="error">
         Something went wrong
       </Message>{' '}
-      <Button variant="outline-primary" onClick={() => window.location.reload()}>
+      <Button variant="outline-primary" onClick={reloadPage}>
         Refresh page ?
       </Button>
     </Container>
