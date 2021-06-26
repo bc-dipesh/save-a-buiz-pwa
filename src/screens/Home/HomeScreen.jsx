@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
 import SkeletonCard from '../../components/skeletons/SkeletonCard';
@@ -19,18 +18,6 @@ const Children = React.memo(() => {
     ));
   }
   if (!error) {
-    if (fundraisers.length === 0) {
-      return (
-        <Container>
-          <Message title="No Fundraisers" variant="info">
-            There are no fundraisers to calculate top three fundraisers.
-          </Message>
-          <Link to="/start-fundraiser">
-            <Button variant="outline-primary">Create Fundraiser ?</Button>
-          </Link>
-        </Container>
-      );
-    }
     return fundraisers.map((fundraiser) => (
       <Col key={fundraiser._id} className="my-3" sm={12} md={4} lg={3}>
         <FundraiserCard fundraiser={fundraiser} />
