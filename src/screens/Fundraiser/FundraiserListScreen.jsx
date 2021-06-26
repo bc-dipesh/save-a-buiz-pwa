@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import FundraiserCard from '../../components/FundraiserCard';
 import Message from '../../components/Message';
 import Paginate from '../../components/Paginate';
@@ -10,25 +9,13 @@ import useFundraiserList from '../../hooks/useFundraiserList';
 
 const Children = React.memo(({ loading, error, fundraisers, pages, page, keyword }) => {
   if (loading) {
-    return [1, 2, 3].map((item) => (
+    return [1, 2, 3, 4].map((item) => (
       <Col key={item} className="my-3" sm={12} md={4} lg={3}>
         <SkeletonCard />
       </Col>
     ));
   }
   if (!error) {
-    if (fundraisers.length === 0) {
-      return (
-        <Container>
-          <Message title="No Fundraisers" variant="info">
-            Please visit this page after sometime.
-          </Message>
-          <Link to="/start-fundraiser">
-            <Button variant="outline-primary">Or Create Fundraiser ?</Button>
-          </Link>
-        </Container>
-      );
-    }
     return (
       <>
         {fundraisers.map((fundraiser) => (

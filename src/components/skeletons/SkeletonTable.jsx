@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
-const SkeletonUserLisTable = ({ columns }) => (
+const SkeletonTable = ({ columns }) => (
   <Table striped bordered hover responsive className="table-sm">
     <thead>
       <tr>
@@ -16,7 +16,7 @@ const SkeletonUserLisTable = ({ columns }) => (
       </tr>
     </thead>
     <tbody>
-      {[1, 2, 3].map(() => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => (
         <tr key={uuidv4()}>
           {[...Array(columns).keys()].map(() => (
             <td key={uuidv4()}>
@@ -29,8 +29,8 @@ const SkeletonUserLisTable = ({ columns }) => (
   </Table>
 );
 
-SkeletonUserLisTable.propTypes = {
+SkeletonTable.propTypes = {
   columns: PropTypes.number.isRequired,
 };
 
-export default SkeletonUserLisTable;
+export default SkeletonTable;

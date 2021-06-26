@@ -14,7 +14,7 @@ const Children = React.memo(({ loading, error, fundraisers, pages, page }) => {
   if (loading) {
     return (
       <Row>
-        {[1, 2, 3].map(() => (
+        {[1, 2, 3, 4].map(() => (
           <Col key={uuidv4()} className="my-3" sm={12} md={4} lg={3}>
             <SkeletonCard />
           </Col>

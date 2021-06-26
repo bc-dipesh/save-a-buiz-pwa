@@ -3,13 +3,13 @@ import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from '../../components/Message';
-import SkeletonUserListTable from '../../components/skeletons/SkeletonUserListTable';
+import SkeletonTable from '../../components/skeletons/SkeletonTable';
 import useUserList from './hooks/useUserList';
 import ListUserTable from './ListUserTable';
 
 const Children = ({ loading, error, users }) => {
   if (loading) {
-    return <SkeletonUserListTable columns={4} />;
+    return <SkeletonTable columns={4} />;
   }
   if (!error) {
     return <ListUserTable users={users} />;

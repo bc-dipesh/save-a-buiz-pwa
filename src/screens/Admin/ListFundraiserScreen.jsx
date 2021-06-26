@@ -4,13 +4,13 @@ import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from '../../components/Message';
-import SkeletonUserListTable from '../../components/skeletons/SkeletonUserListTable';
+import SkeletonTable from '../../components/skeletons/SkeletonTable';
 import useFundraiserListNoPaginate from './hooks/useFundraiserListNoPaginate';
 import ListFundraiserTable from './ListFundraiserTable';
 
 const Children = ({ loading, error, fundraisers }) => {
   if (loading) {
-    return <SkeletonUserListTable columns={6} />;
+    return <SkeletonTable columns={6} />;
   }
   if (!error) {
     return <ListFundraiserTable fundraisers={fundraisers} />;
