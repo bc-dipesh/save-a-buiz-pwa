@@ -21,7 +21,15 @@ const FundraiserCard = ({ fundraiser }) => {
   return (
     <Card>
       <Link to={`/fundraiser/${_id}`}>
-        {image && <Card.Img variant="top" src={`${BASE_URL}/${image}`} alt={title} />}
+        {image && (
+          <Card.Img
+            variant="top"
+            src={`${BASE_URL}/${image}`}
+            alt={title}
+            width="304"
+            height="152"
+          />
+        )}
       </Link>
       <Card.Body>
         <Card.Title>
