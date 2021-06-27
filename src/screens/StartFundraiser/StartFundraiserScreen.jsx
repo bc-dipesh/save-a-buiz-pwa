@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import Skeleton from '@material-ui/lab/Skeleton';
 import axios from 'axios';
@@ -67,23 +68,28 @@ const StartFundraiserScreen = ({ history }) => {
   const [isImageUploading, setIsImageUploading] = useState(false);
 
   const imageUploadHandler = async (e) => {
-    const file = e.target.files[0];
+    const image = e.target.files[0];
     const formData = new FormData();
-    formData.append('image', file);
-    setIsImageUploading(true);
 
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-
-      const {
-        data: { data },
-      } = await axios.post(`${API_END_POINT}`, formData, config);
-      setValue('image', data);
-      setIsImageUploading(false);
+      // check if image is valid
+      if (image.name.toLowerCase().match(/\.(jpg|jpeg|png)$/)) {
+        formData.append('image', image);
+        setIsImageUploading(true);
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+        const {
+          data: { data },
+        } = await axios.post(`${API_END_POINT}`, formData, config);
+        setValue('image', data);
+        setIsImageUploading(false);
+      } else {
+        setIsImageUploading(false);
+        displaySnackbar('Please upload a valid image', 'error');
+      }
     } catch (error) {
       setIsImageUploading(false);
       displaySnackbar(error, 'error');
