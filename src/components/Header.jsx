@@ -111,6 +111,9 @@ const AdminUserLinks = () => (
     <LinkContainer to="/admin/list-fundraiser">
       <NavDropdown.Item>Fundraisers</NavDropdown.Item>
     </LinkContainer>
+    <LinkContainer to="/admin/list-news-letter-subscribers">
+      <NavDropdown.Item>Newsletter Subscribers</NavDropdown.Item>
+    </LinkContainer>
   </NavDropdown>
 );
 

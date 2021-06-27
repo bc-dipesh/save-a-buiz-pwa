@@ -38,6 +38,8 @@ import WhatIsCrowdfundingScreen from './screens/WhatIsCrowdfunding/WhatIsCrowdfu
 import ProcessDonation from './screens/Fundraiser/ProcessDonation';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUserAdmin, isUserLoggedIn, reloadPage } from './utils/commonFunctions';
+import SubscriberListScreen from './screens/Admin/SubscriberListScreen';
+import SubscriberAction from './screens/Admin/SubscriberAction';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -184,6 +186,18 @@ function App() {
             authenticate={isUserAdmin}
             path="/admin/create-user"
             component={CreateUserScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/list-news-letter-subscribers"
+            component={SubscriberListScreen}
+            exact
+          />
+          <ProtectedRoute
+            authenticate={isUserAdmin}
+            path="/admin/list-news-letter-subscribers/:id/action/:email"
+            component={SubscriberAction}
             exact
           />
           <Route component={PageNotFoundScreen} />
