@@ -83,7 +83,6 @@ const LoggedInUserLinks = ({ history, name, email }) => {
       <LinkContainer to="/user/fundraisers/1">
         <NavDropdown.Item>Your fundraisers</NavDropdown.Item>
       </LinkContainer>
-      <NavDropdown.Item>Donations you&apos;ve made</NavDropdown.Item>
       <LinkContainer to="/user/profile">
         <NavDropdown.Item>Account settings</NavDropdown.Item>
       </LinkContainer>
