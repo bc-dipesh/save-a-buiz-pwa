@@ -1,15 +1,25 @@
+/* eslint-disable import/no-mutable-exports */
 // backend api url endpoints
-// const AUTH_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
-// const USERS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
-// const FUNDRAISERS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
-// const ANALYTICS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/analytics';
-// const NEWS_LETTER_SUBSCRIBERS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/subscribe-to-news-letter';
+let AUTH_ROUTE = '';
+let USERS_ROUTE = '';
+let FUNDRAISERS_ROUTE = '';
+let ANALYTICS_ROUTE = '';
+let NEWS_LETTER_SUBSCRIBERS_ROUTE = '';
 
-const AUTH_ROUTE = 'http://localhost:5000/api/v1/auth';
-const USERS_ROUTE = 'http://localhost:5000/api/v1/users';
-const FUNDRAISERS_ROUTE = 'http://localhost:5000/api/v1/fundraisers';
-const ANALYTICS_ROUTE = 'http://localhost:5000/api/v1/analytics';
-const NEWS_LETTER_SUBSCRIBERS_ROUTE = 'http://localhost:5000/api/v1/subscribe-to-news-letter';
+if (process.env.NODE_ENV === 'development') {
+  AUTH_ROUTE = 'http://localhost:5000/api/v1/auth';
+  USERS_ROUTE = 'http://localhost:5000/api/v1/users';
+  FUNDRAISERS_ROUTE = 'http://localhost:5000/api/v1/fundraisers';
+  ANALYTICS_ROUTE = 'http://localhost:5000/api/v1/analytics';
+  NEWS_LETTER_SUBSCRIBERS_ROUTE = 'http://localhost:5000/api/v1/subscribe-to-news-letter';
+} else {
+  AUTH_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/auth';
+  USERS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/users';
+  FUNDRAISERS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/fundraisers';
+  ANALYTICS_ROUTE = 'https://save-a-buiz-api.herokuapp.com/api/v1/analytics';
+  NEWS_LETTER_SUBSCRIBERS_ROUTE =
+    'https://save-a-buiz-api.herokuapp.com/api/v1/subscribe-to-news-letter';
+}
 
 export {
   AUTH_ROUTE,
