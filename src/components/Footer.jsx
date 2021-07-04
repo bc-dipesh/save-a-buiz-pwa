@@ -189,10 +189,10 @@ const Footer = () => (
               &copy; 2021 SaveABuiz
             </Col>
             <Col xs={3} sm={2}>
-              <a href="https://facebook.com">Terms</a>
+              <Link to="/terms-and-conditions">Terms</Link>
             </Col>
             <Col xs={3} sm={2}>
-              <a href="https://facebook.com">Privacy</a>
+              <Link to="/privacy-policy">Privacy</Link>
             </Col>
             <Col xs={3} sm={2}>
               <Link to="/legal">Legal</Link>

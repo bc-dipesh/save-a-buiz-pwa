@@ -40,6 +40,8 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUserAdmin, isUserLoggedIn, reloadPage } from './utils/commonFunctions';
 import SubscriberListScreen from './screens/Admin/SubscriberListScreen';
 import SubscriberAction from './screens/Admin/SubscriberAction';
+import TermsAndConditionScreen from './screens/TermsAndCondition/TermsAndConditionScreen';
+import PrivacyPolicyScreen from './screens/PrivacyPolicy/PrivacyPolicyScreen';
 
 function App() {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -128,6 +130,8 @@ function App() {
           <Route path="/what-is-crowdfunding" component={WhatIsCrowdfundingScreen} exact />
           <Route path="/legal" component={LegalContactInfoScreen} exact />
           <Route path="/common-questions" component={CommonQuestionScreen} exact />
+          <Route path="/terms-and-conditions" component={TermsAndConditionScreen} exact />
+          <Route path="/privacy-policy" component={PrivacyPolicyScreen} exact />
 
           <ProtectedRoute
             authenticate={isUserLoggedIn}

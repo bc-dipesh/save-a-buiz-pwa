@@ -77,7 +77,12 @@ const UserSignInScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      <Form noValidate onSubmit={handleSubmit(submitUserLoginForm)} className="py-3">
+      <Form
+        noValidate
+        onSubmit={handleSubmit(submitUserLoginForm)}
+        className="py-3"
+        data-testid="signInForm"
+      >
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
