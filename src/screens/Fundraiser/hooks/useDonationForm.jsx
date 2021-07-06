@@ -61,8 +61,8 @@ const useDonationForm = (fundraiserId) => {
     // set eSewa credentials
     const pid = fundraiserId;
     const scd = 'EPAYTEST';
-    const su = 'http://angry-lalande-da8a76.netlify.app/process-donation';
-    const fu = 'http://angry-lalande-da8a76.netlify.app/process-donation';
+    const su = 'http://saveabuiz.me/process-donation';
+    const fu = 'http://saveabuiz.me/process-donation';
     const url = 'https://uat.esewa.com.np/epay/main';
 
     try {
